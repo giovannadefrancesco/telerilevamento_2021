@@ -1,4 +1,4 @@
-#Time series analysis: analisi di serie multitemporale di dati da satellite
+e#Time series analysis: analisi di serie multitemporale di dati da satellite
 #Greenland increase of temperature, ovvero il potenziale aumento di temperatura in Groenlandia 
 #Data and code from Emanuela Cosma
 
@@ -47,7 +47,7 @@ plot(lst_2015)
 rlist <- list.files(pattern="lst") #pattern sarebbe la parte in comune
 rlist
 
-#Si applica la funzione raster a tutta la lista tramite lapply
+#Si applica la funzione raster a tutta la lista e per importarli si è utilizzata la funzione lapply
 import<-lapply(rlist,raster)
 import
 
@@ -55,6 +55,11 @@ import
 TGr<-stack(import)
 plot(TGr)
 
+#File dove ci sono i valori dei vari anni
+plotRGB(TGr, 1, 2, 3, stretch="lin")
+#nel livello Red, si mette il file 1 (2000), nel livello Green il file 2(2005) e nel livello Blue il file 3(2010)
 
+plotRGB(TGr, 2, 3, 4 stretch="lin")
+#nel livello Red, si mette il file 2 (2005), nel livello Green il file 3 (2010) e nel livello Blue il file 4(2015)
 
 
