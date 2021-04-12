@@ -39,3 +39,22 @@ plot(lst_2000)
 plot(lst_2005)
 plot(lst_2010)
 plot(lst_2015)
+
+#Metodo per importare tutte le immaginin insieme
+#lapplay: si può applicare una certa funzione a una lista di file
+#Si procede creando una lista tramite la funzione list.files
+#list of files
+rlist <- list.files(pattern="lst") #pattern sarebbe la parte in comune
+rlist
+
+#Si applica la funzione raster a tutta la lista tramite lapply
+import<-lapply(rlist,raster)
+import
+
+# Si procede con il costruire il pacchetto di file con la funzione stack
+TGr<-stack(import)
+plot(TGr)
+
+
+
+
