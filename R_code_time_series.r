@@ -99,5 +99,19 @@ melt
 levelplot(melt)
 #Vengono rappresentati i valori di scioglimento dei ghiacci: più è alto 
 #il valore maggiore sarà lo scioglimento.
+
+#Si esegue la sottrazione tra il primo dato e il secondo a cui si associa un nome
+#Per legare i due tipi di dati si mette il $
+melt_amount <- melt$X2007annual_melt - melt$X1979annual_melt
+
+#Si crea un'altra ColorRampPalette
+clb <- colorRampPalette(c("blue","white","red"))(100)
+#I colori + bassi sono in blu, i colori medi in bianco, i colori alti in rosso
+
+#Si esegue prima un plot
+plot(melt_amount, col=clb)
+
+#e poi un level plot
+levelplot(melt_amount, col.regions=clb)
  
 
