@@ -4,6 +4,8 @@ e#Time series analysis: analisi di serie multitemporale di dati da satellite
 
 # install.packages("raster")
 library(raster)
+# install.packages("rasterVis")
+library(rasterVis)
 
 setwd("C:/lab/greenland") # Windows
 
@@ -62,4 +64,40 @@ plotRGB(TGr, 1, 2, 3, stretch="lin")
 plotRGB(TGr, 2, 3, 4 stretch="lin")
 #nel livello Red, si mette il file 2 (2005), nel livello Green il file 3 (2010) e nel livello Blue il file 4(2015)
 
+plotRGB(TGr, 4, 3, 2, stretch="lin")
+#nel livello Red, si mette il file 4 (2015), nel livello Green il file 3 (2010) e nel livello Blue il file 2(2005)
+
+#Questa funzione disegna grafici di livello e grafici di contorno.
+levelplot(TGr)#grafico con tutte e 4 le mappe 
+levelplot(TGr$lst_2000)#grafico con una singola mappa di come varia la temperatura nell'area in esame
+
+#Per cambiare i colori per abbelire il plot
+cl<- colorRampPalette(c("blue","light blue", "pink","red"))(100)
+#Per cambiare il colore della mappa finale
+levelplot(TGr, col.regions=cl)
+#La differenza tra plot e levelplot è la compattezza, le coordinate sono messe solo su alcuni assi,
+#la legenda è unica e i colori sono migliori
+
+#Per cambiare i titoli delle immagini
+levelplot(TGr,col.regions=cl, names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+
+# Si imposta come titolo generale la variazione del LST nel tempo
+levelplot(TGr,col.regions=cl, main="LST variation in time",
+          names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
+
+# Melt, dati in riferimento allo scioglimento dei ghiacciai
+#Si crea una lista 
+meltlist <- list.files(pattern="melt")
+#Si importano i file con la funzione lapplay
+melt_import <- lapply(meltlist,raster)
+#Si raggruppano tutti i file con la funzione stack, mettendoli tutti insieme
+melt <- stack(melt_import)
+#Per vedere informazioni più specifiche dei dati
+melt
+
+#Si esegue un level plot con i dati melt
+levelplot(melt)
+#Vengono rappresentati i valori di scioglimento dei ghiacci: più è alto 
+#il valore maggiore sarà lo scioglimento.
+ 
 
