@@ -25,6 +25,6 @@ plot(albedo, col=cl)
 #la funzione aggregate della variabile originale albedo con un certo fattore 100
 #viene assegnata al nome albedores
 albedores <- aggregate(albedo, fact=100)
-# si diminuiscolo le informazioni di 1000 volte
+# si diminuiscolo le informazioni di 10 000 volte
 #Si esegue il plot
 plot(albedores, col=cl)
