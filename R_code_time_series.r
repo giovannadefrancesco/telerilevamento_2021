@@ -1,4 +1,4 @@
-e#Time series analysis: analisi di serie multitemporale di dati da satellite
+#Time series analysis: analisi di serie multitemporale di dati da satellite
 #Greenland increase of temperature, ovvero il potenziale aumento di temperatura in Groenlandia 
 #Data and code from Emanuela Cosma
 
