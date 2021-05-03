@@ -36,3 +36,11 @@ par(mfrow=c(2,1))
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretc="lin")
 #immagine 300x300 pixel ed è la più sgranata 
 plotRGB(p224r63_2011res, r=4, g=3, b=2, stretc="lin")
+
+#La funzione per fare la PCA ("Principal Components Analysis)che consiste nel prendono i  dati originali e passiamo in asse lungo 
+#la variabilità maggiore e l'altro asse lungo la variabilità minore, è rasterPCA-->prende il pacchetto di dati e va a compattarli in un numero minore di bande
+p224r63_2011res_pca <-rasterPCA(p224r63_2011res)
+
+
+
+
