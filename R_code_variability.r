@@ -130,4 +130,4 @@ p3 <- ggplot() +
   ggtitle("Standard deviation of PC1 by turboo colour scale")
 
 #Per mettere le 3 immagini in un'unica schermata
-grid.arrange(p1, p2, p3, nrow=1)
+grid.arrange(p1, p2, p3, nrow=1
