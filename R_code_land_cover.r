@@ -1,6 +1,6 @@
 #R_code_land_cover.r
 
-#Si richiamano le librerie di cui abbbiamo bisogno:
+#Si richiamano le librerie di cui si ha bisogno:
 library(raster)
 #install.packages("RStoolbox") #classification
 library(RStoolbox)
@@ -9,7 +9,7 @@ library(ggplot2)
 #install.packages("gridExtra")
 library(gridExtra) #for grid arrange
 
-#Si sceglie la cartella da dove si andranno a leggere i dati
+#Si sceglie la cartella dove si andranno a leggere i dati
 setwd("C:/lab/") # Windows
 
 #b1=NIR, b2=red, b3= green
