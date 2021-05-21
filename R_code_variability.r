@@ -79,3 +79,5 @@ summary(sentpca$model)
 # Standard deviation     77.3362848 53.5145531 5.765599616      0
 # Proportion of Variance  0.6736804  0.3225753 0.003744348      0
 # Cumulative Proportion   0.6736804  0.9962557 1.000000000      1
+
+# The first PCA contains explains 67.36804 % of the original information
