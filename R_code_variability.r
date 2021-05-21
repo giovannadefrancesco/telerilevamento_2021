@@ -98,8 +98,36 @@ clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red
 plot(pc1sd5, col=clsd)
 
 # La funzione "source" serve per richiamare un pezzo di codice che si è gia creato  
+
 # Deviazione standard di una finestra 7x7 pixel
+# source ("source_test_lezione.r.txt")
 # pc1 <-sentpca$map$PC1
 # pc1sd7 <- focal (pc1, w=matrix(1/49, nrow=7, ncol=7), fun=sd)
 # plot(pc1sd7)
+
+# With the source function you can upload code from outside!
+# Con la funzione sorgente puoi caricare il codice dall'esterno!
 source ("source_test_lezione.r.txt")
+source ("source_ggplot.r.txt")
+
+# https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+# La x e la y sono le coordinate geografiche e dentro c'è il valore della deviazione standard
+p1 <- ggplot() +
+  geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
+  scale_fill_viridis()  +
+  ggtitle("Standard deviation of PC1 by viridis colour scale")
+
+#Si cambia la scala di colori della library viridis e si utilizza magma
+p2 <- ggplot() +
+  geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
+  scale_fill_viridis(option = "magma")  +
+  ggtitle("Standard deviation of PC1 by magma colour scale")
+
+#Si cambia la scala di colori della library viridis e si utilizza turbo
+p3 <- ggplot() +
+  geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
+  scale_fill_viridis(option = "turbo")  +
+  ggtitle("Standard deviation of PC1 by turboo colour scale")
+
+#Per mettere le 3 immagini in un'unica schermata
+grid.arrange(p1, p2, p3, nrow=1)
