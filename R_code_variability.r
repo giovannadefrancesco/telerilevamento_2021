@@ -1,8 +1,12 @@
 # R_code_variability.r
 
-# Si caricano le librerie di cui si ha bisogno
+# Si caricano le librerie di cui si ha bisogno:
 library(raster)
 library(RStoolbox)
+library(ggplot2) #for ggplot plotting
+library(gridExtra) # for plotting ggplots together --> mettere insieme tanti plot di ggplot
+#install.packages("viridis")
+library (viridis) # for ggplot colouring --> serve per colorare i plot di ggplot
 
 # Si sceglie la cartella dove si andranno a leggere i dati
 setwd("C:/lab/") # Windows
@@ -67,10 +71,13 @@ ndvisd5 <- focal(ndvi, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100) 
 plot(ndvisd5, col=clsd
 
+# PCA
 # La funzione rasterPCA calcola la PCA in modalità R e restituisce un RasterBrick
 # con più livelli di punteggi PCA  
 sentpca <- rasterPCA(sent)
 plot(sentpca$map)
+# Per vedere le informazioni
+sentpca
   
 # Summary del modello 
 summary(sentpca$model)
@@ -80,4 +87,19 @@ summary(sentpca$model)
 # Proportion of Variance  0.6736804  0.3225753 0.003744348      0
 # Cumulative Proportion   0.6736804  0.9962557 1.000000000      1
 
-# The first PCA contains explains 67.36804 % of the original information
+# Si è intorno al 67.36804% di variabilità dalla prima componente
+# The first PC contains explains 67.36804% of the original information
+  
+# Per misurare la deviazione standard di una singola banda all'interno di una mappa
+pc1 <-sentpca$map$PC1
+
+pc1sd5 <- focal (pc1, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
+plot(pc1sd5, col=clsd)
+
+# La funzione "source" serve per richiamare un pezzo di codice che si è gia creato  
+# Deviazione standard di una finestra 7x7 pixel
+# pc1 <-sentpca$map$PC1
+# pc1sd7 <- focal (pc1, w=matrix(1/49, nrow=7, ncol=7), fun=sd)
+# plot(pc1sd7)
+source ("source_test_lezione.r.txt")
