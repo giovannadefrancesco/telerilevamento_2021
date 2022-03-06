@@ -1,20 +1,27 @@
-#DAY 1
-# My first code in R for remote sensing
+# GIORNO 1
+# My first code in R for remote sensing!
 # Il mio primo codice in R per il telerilevamento!
 
-# install.packages("raster")
-library(raster)
+setwd("C:/lab/")#Serve per impostare la cartella di lavoro, nella quale verranno
+                #salvati/cercati di default i file.      
 
-#Per Windows
-setwd("C:/lab/")
+#install.packages("raster") serve per installare il pacchetto raster
 
-#Questa funzione serve ad importare un'immagine satellitare
-#infatti, la funzione brick serve per importare tutto il pacchetto elle immagini satellitari
+library(raster) #Carico il pacchetto raster, non si mettono le virgolette 
+                #perchè è già in R.
+
+#La funzione brick serve ad importare un'immagine satellitare infatti,
+#importa tutto il pacchetto delle immagini satellitari inun'unica immagine 
+#satellitare. In questo caso si usano le virgolette perchè questo file si 
+#trova esterno a R. In seguito, questa funzione viene associata ad un nome.
 p224r63_2011 <- brick("p224r63_2011_masked.grd")
+
+#Questo serve per vedere le informazioni del file contenente le immagini satellitari
 p224r63_2011
+
 #Questo comando serve per plottare le varie immagini
 plot(p224r63_2011)
-
+# Il software applica una scala di colori di dafault e le varie bande si indicano con
 # Bande Landsat
 # B1: blu
 # B2: verde
