@@ -7,7 +7,7 @@ setwd("C:/lab/")#Serve per impostare la cartella di lavoro, nella quale verranno
 
 #install.packages("raster") #serve per installare il pacchetto raster
 
-library(raster) #Carico il pacchetto raster, non si mettono le virgolette 
+library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgolette 
                 #perchè è già in R.
 
 #La funzione brick serve ad importare un'immagine satellitare infatti,
