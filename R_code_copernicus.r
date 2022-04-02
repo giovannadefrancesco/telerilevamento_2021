@@ -10,7 +10,7 @@ library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgol
 library(ncdf4) #Viene caricato il pacchetto ncdf4, non vengono messe le virgolette 
                #perchè è già in R.
 
-#Si sceglie la cartella da dove si andranno a leggere i dati.Servirà per impostare 
+#Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.      
 setwd("C:/lab/") # Windows
 
