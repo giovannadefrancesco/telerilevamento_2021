@@ -1,4 +1,7 @@
 #R_code_multivariate_analysis.r
+#L'analisi multivariata si utilizza, per esempio, per diminuire un set di variabili
+#che si hanno a disposizione oppure per testare la capacità di un fiume di scavare
+#una certa valle.
 
 library(raster) #Viene caricato il pacchetto raster.
 library(RStoolbox) #Viene caricato il pacchetto RStoolbox.
