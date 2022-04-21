@@ -1,156 +1,188 @@
-#R code vegetation indices.r
+# R_code_variability_temp.r
 
+#Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
+#install.packages("raster") #Viene installato il pacchetto raster.
 library(raster) #Viene caricato il pacchetto raster.
-library(RStoolbox) #Viene caricato il pacchetto RStoolbox per calcolare l'indice 
-                   #di vegetazione.
 
-#install.packages("rasterdiv") #serve per installare il pacchetto rasterdiv.
-library(rasterdiv) #Viene caricato il pacchetto rasterdiv per l'NDVI mondiale.
-library(rasterVis) #Viene caricato il pacchetto rasterVis.
+#install.packages("RStoolbox") #Viene installato il pacchetto RStoolbox per 
+                               #eseguire la classificazione.
+library(RStoolbox)#Viene caricato il pacchetto RStoolbox
 
+#install.packages("ggplot2") #Viene installato il pacchetto ggplot2.
+library(ggplot2) #Viene caricato il pacchetto ggplot2.
+
+#install.packages("gridExtra") #Viene installato il pacchetto gridExtra.
+library(gridExtra) #Viene caricato il pacchetto gridExtra per la disposizione 
+                  #della griglia e serve per mettere insieme tanti plot di ggplot.
+
+#install.packages("viridis") #Viene installato il pacchetto viridis per la gestione 
+                            #dei colori.
+library (viridis) #Viene caricato il pacchetto viridis per colorare i plot di ggplot.
+ 
 #Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/") # Windows
 
-#Si utilizza la funzione brick che serve a caricare un pacco di dati.
-#Prima immagine:
-defor1 <- brick("defor1.jpg")
-#Seconda immagine:
-defor2 <- brick("defor2.jpg")
+#Viene importata l'immagine tramite la funzione brick a cui si assegna un nome: 
+sent <- brick("sentinel.png")
 
 #Le bande sono divise in questo modo:
 #B1=NIR,infrarosso vicino;
 #B2=red;
-#B3=green.
+#B3=green
 
-#Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#par su due righe e 1 colonna:
-par(mfrow=c(2,1))
-plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
-#Rispetto alla prima immagine, nella seconda immagine si vede che in questa
-#zona c'è stato un considerevole impatto dell'agricoltura.
-#Inoltre si nota che il fiume nell'imagine sopra aveva molti più solidi disciolti
-#e quindi il colore appare molto diverso rispetto a quella di sotto, dove molto
-#probabilmente in quel momento aveva meno solidi disciolti.
+#Si plotta l'immagine con i tre livelli di default: r=1, g=2, b=3
+plotRGB(sent, stretch="lin") #si utilizza uno strech lineare
+#pltRGB (sent, r=1, g=2, b=3, stretch="lin")
 
-#Per visualizzare le informazioni delle immagini:
-defor1
-defor2
+#Si plotta l'immagine con tre livelli ordinati in modo diverso dal plot precedente:
+plotRGB(sent, r=2, g=1, b=3, stretch="lin")
+#Tutta la roccia (calcare) è in fucsia mentre la vegetazione è in verde fluorescente, 
+#l'acqua è rappresentata in nero.
 
-#Calcolo dell'indice di vegetazione:
-#PRIMA SITUAZIONE
-#difference vegetation index
-#Per calcolare questo indice bisogna fare la differenza tra il near infrared 
-#della defor1, (ovvero defor1.1 ) meno il red della defor1 (defor1.2).
-dvi1 <- defor1$defor1.1 - defor1$defor1.2
-dev.off() #per togliere la disposizione del par precedente.
-#Questo plot evidenzia molto bene quanta e in che stato di salute è la vegetazione:
-plot (dvi1)
-#Tutta la parte del fiume e dei primi punti agricoli sono molto chiare, tendenti 
-#al giallino/marronicio mentre tutta la parte della vegetazone della Foresta
-#Amazzonica è molto verde.
+#Bisogna trovare come si chiamano le bande dell'immagine sentinel.
+#Per vedere le informazioni dell 'immagine:
+sent
+#Si unisce l'immagine sentinel.1 all'immagine sent e la si associa ad un nome
+#più semplice.
+#Banda numero 1 è il near infra-red:
+nir <- sent$sentinel.1
+#Banda numero 2 è il red:
+red <- sent$sentinel.2
 
-#Specifying a color scheme
-#Si sceglie una nuova colorRampPalette per rendere ancora meglio l'idea di questo
-#indice di vegetazione.
-cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
-#Si effettua il plot:
-plot(dvi1, col=cl, main="DVI at time 1") #main serve per aggiungere il titolo al plot.
-#Tutto quello che è rosso fortissimo è vegetazione mentre tutto quello che è 
-#giallo sono le coltivazioni.
+#Si esegue il calcolo del ndvi:
+ndvi <- (nir-red) / (nir+red)
+#Per plottare il calcolo appena eseguito si scrive:
+plot(ndvi)
+#Dal plot dove si vede il bianco e il marroncino non c'è vegetazione (si tratta 
+#di acqua, rocce e crepacci), le parti in giallino e verde più chiaro sono le 
+#parti di bosco e le parti in verde scuro sono le praterie sommitali.
 
-#SECONDA SITUAZIONE
-#difference vegetation index
-#Si fa la stessa cosa ma per DVI2:
-dvi2 <- defor2$defor2.1 - defor2$defor2.2
-#Il plot evidenzia molto bene la differenza di vegetazione
-plot (dvi2)
+#Per cambiare i colori si utilizza una colorRampPalette:
+cl <- colorRampPalette(c('black','white','red','magenta','green'))(100)
+#Si esegue il plot della nuova immagine:
+plot(ndvi,col=cl)
+ 
+#Si calcola la variabilità di questa immagine, quindi la deviazione standard
+#e la si associa a un oggetto (ndvisd3) con una finestra mobile di 3x3 pixel:
+ndvisd3 <- focal(ndvi, w=matrix(1/9, nrow=3, ncol=3), fun=sd) #fun=sd-->deviazione standard
+#Si esegue il plot:
+plot(ndvisd3)
+#Per cambiare i colori si utilizza una nuova colorRampPalette:
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
+#Si esegue il plot:
+plot(ndvisd3, col=clsd)
+#Dal plot si nota che dove di vedono colori tendenti al rosso e al giallo si ha
+#una deviazione standard più alta verde e blu un pò più bassa ed è presente nelle 
+#zone più omogenee dove c'è la roccia nuda mentre aumenta, quindi è più verde, 
+#nelle zone dove si passa da roccia nuda alla parte vegetata, poi la deviazione 
+#standard ritorna ad essere omogenea su tutte le parti vegetate.
+#Si hanno delle piccole zone a nord in rosa che hanno una deviazione standard 
+#in aumento che corrispondono ai picchi più alti dei crepacci.
 
-#Specifying a color scheme
-#Si sceglie una nuova colorRampPalette per rendere ancora meglio l'idea di questo
-#indice di vegetazione.
-cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
-#Si effettua il plot:
-plot(dvi2, col=cl, main="DVI at time 2")
+#Per calcolare la MEDIA della biomassa.
+#Mean ndvi with focal:
+ndvimean3 <- focal(ndvi, w=matrix(1/9, nrow=3, ncol=3), fun=mean)
+#Si utilizza la stessa colorRampPalette di prima:
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
+#Si esegue il plot:
+plot(ndvimean3, col=clsd)
+#Dal plot esce che i valori molto alti (colore giallo) si hanno nelle praterie 
+#di alta quota e quindi nella parte semi-naturale (boschi, coniferi e latifoglie)
+#e invece dei valori più bassi per quanto riguarda la roccia nuda.
 
-#Tramite la funzione par si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
-par(mfrow=c(2,1))
-plot(dvi1, col=cl, main="DVI at time 1")
-plot(dvi2, col=cl, main="DVI at time 2")
+#Si sceglie di utilizzare come grandezza della griglia (13x13)
+ndvisd13 <- focal(ndvi, w=matrix(1/169, nrow=13, ncol=13), fun=sd)
+#Si utilizza la stessa colorRampPalette:
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100) 
+#Si esegue il plot:
+plot(ndvisd13, col=clsd)
 
-#Si effettua una differenza dell'indice di vegetazione fra i 2 DVI:
-difdvi <- dvi1 - dvi2
-dev.off() #per togliere la disposizione del par precedente
-#Si sceglie una nuova colorRampPalette:
-cld <- colorRampPalette(c('blue','white','red'))(100)
-#Si effettua il plot:
-plot(difdvi, col=cld)
-#Dove si hanno valori di differenza più alti, si ha il colore rosso mentre dove
-#la differenza è più bassa si hanno le parti bianche e ele parti celesti. 
-#La restituzione di questa mappa dice quali sono i punti dove c'è stata una 
-#"sofferenza", si intende la deforestazione da parte della vegetazione nel tempo.
+#Si sceglie di utilizzare come grandezza della griglia (5x5)
+ndvisd5 <- focal(ndvi, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
+#Si utilizza la stessa colorRampPalette:
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100) 
+#Si esegue il plot:
+plot(ndvisd5, col=clsd)
 
-#Calcolo di ndvi, ovvero si normalizza dvi, per le 2 situazioni:
-#NDVI1=(NIR-RED)/(NIR+RED), con NDVI si possono paragonare immagini che hanno
-#risoluzione radiometrica diversa in entrata, cioè qualsiasi tipo di immagine.
-#Il range del NDVI varia tra -1 e 1.
-#Calcolo del NDVI1:
-ndvi1 <- (defor1$defor1.1 - defor1$defor1.2) / (defor1$defor1.1 + defor1$defor1.2)
-#Si effettua il plot:
-plot(ndvi1, col=cl)
+#PCA
+#Si prende un sistema a multibande, si calcola una PCA e si utilizza solo la 
+#prima componente principale.
+#La funzione rasterPCA che si trova nel pacchetto RStoolbox, calcola la PCA in
+#modalità R e restituisce un RasterBrick con più livelli di punti PCA:
+sentpca <- rasterPCA(sent)
+#Si esegue il plot del modello insieme alla mappa:
+plot(sentpca$map)
+#La prima PCA è molto simile all'informazione originale mentre man mano che si 
+#passa da una componente principale (PC) all'altra, diminuisce il numero di 
+#informazioni.
+#Per vedere le informazioni:
+sentpca
+  
+#Summary del modello per vedere quanta variabilità iniziale spiegano le singole
+#componenti. Si vedrà qual è la proporzione di variabilità spiegata da ogni 
+#singola componente. 
+summary(sentpca$model)
+#Importance of components: 
+#                         Comp.1     Comp.2     Comp.3    Comp.4
+#Standard deviation     77.3362848 53.5145531 5.765599616      0
+#Proportion of Variance  0.6736804  0.3225753 0.003744348      0
+#Cumulative Proportion   0.6736804  0.9962557 1.000000000      1
 
-#Si può utilizzare anche un altro metodo:
-#ndiv <- div1 / (defor1$defor1.1 + defor1$defor2.2)
-#plot (ndiv1, col=cl)
+#Si è intorno al 67.36804% di variabilità dalla prima componente.
+#The first PC contains explains 67.36804% of the original information.
+  
+#Si unisce l'immagine sentpca alla mappa e alla prima componente (PC1) e infine
+#si associa ad un oggetto (pc1):
+pc1 <-sentpca$map$PC1 
+#Si misura la deviazione standard e si sceglie come grandezza della griglia (5x5):
+pc1sd5 <- focal (pc1, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
+#Si utilizza la stessa colorRampPalette:
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
+#Si esegue il plot di pc1sd5:
+plot(pc1sd5, col=clsd)
 
-#Calcolo del NDVI2 con lo stesso procedimento di prima:
-ndvi2 <- (defor2$defor2.1 - defor2$defor2.2) / (defor2$defor2.1 + defor2$defor2.2)
-#Si effettua il plot:
-plot(ndvi2, col=cl)
-#Dal plot si nota che le zone più chiare c'è stata una perdita di vegetazione.
+#La funzione "source" serve per richiamare un pezzo di codice che si è gia creato. 
+#Deviazione standard di una finestra 7x7 pixel
+#source ("source_test_lezione.r.txt")
+#pc1 <-sentpca$map$PC1
+#pc1sd7 <- focal (pc1, w=matrix(1/49, nrow=7, ncol=7), fun=sd)
+#plot(pc1sd7)
 
-#Per fare in modo che si effettuino questi calcoli in modo più speditivo, è
-#possibile utilizzare nel pacchetto RStoolbox una funzione che si chiama 
-#spectralIndices che calcola direttamente diversi indici, come appunto NDVI oppure 
-#il SAVI che riguarda i suoli etc.
+#With the source function you can upload code from outside!
+#Con la funzione sorgente è possibile caricare il codice dall'esterno!
+source ("source_test_lezione.r.txt")
+source ("source_ggplot.r.txt")
 
-#RStoolbox:spectralIndices che si imposta in questo modo e si esegue per entrambe
-#le immagini: defor1 e defor2.
-#PRIMA IMMAGINE (defor1):
-vi1 <- spectralIndices(defor1, green = 3, red = 2, nir = 1)
-#Si effettua il plot:
-plot(vi1, col=cl)
+#https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 
-#SECONDA IMMAGINE (defor2):
-vi2 <- spectralIndices(defor2, green = 3, red = 2, nir = 1)
-#Si effettua il plot:
-plot(vi2, col=cl)
+#THE COLOR SCALES
+#The package contains eight color scales: “viridis”, the primary choice, and five
+#alternatives with similar properties - “magma”, “plasma”, “inferno”, “civids”,
+#“mako”, and “rocket” -, and a rainbow color map - “turbo”.
 
-#Si effettua una differenza dell'indice di vegetazione fra i 2 NDVI:
-difndvi <- ndvi1 - ndvi2
-#Si sceglie una nuova colorRampPalette:
-cld <- colorRampPalette(c('blue','white','red'))(100)
-#Si effettua il plot:
-plot(difndvi, col=cld)
+#Si vuole plottare tramite ggplot i dati, quinid prima cosa da fare è creare 
+#una finestra vuota tramite la funzione ggplot, poi si definisce il tipo di geometria 
+#tramite il comando geom_raster che in questo caso sarà rettangolare e infine si passano 
+#a definire le estetiche (ovvero cosa si vuole plottare) che in questo caso sono
+#la x e la y-->le coordinate geografiche e come fill, quindi valore di riempimento 
+#si mette lo strato/layer. Dentro c'è il valore della deviazione standard.
+p1 <- ggplot() +
+  geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
+  scale_fill_viridis()  + #serve per utilizzare una delle legende di viridis.
+  ggtitle("Standard deviation of PC1 by viridis colour scale") #si inserisce il titolo.
 
-#Worldwide NDVI-->NDVI mondiale
-plot(copNDVI)
-#In questo plot è presente anche l'acqua (rappresentata in celeste), quindi bisogna 
-#trovare il modo di toglierla. A tal proposito esiste una funzione per cambiare
-#dei valori in altri valori e si chiama "reclassify" che serve a trasformare i 
-#pixels con i valori 253,254 e 255 (acqua) in non valori. 
-copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
-#Si effettua il plot:
-plot(copNDVI)
-#Si nota che all'equatore, nella parte del Nord Europa e nel Nord America si ha 
-#NDVI più alto mentre è più passo in corrispondenza dei deserti. 
+#Si cambia la scala di colori della library viridis e si utilizza magma:
+p2 <- ggplot() +
+  geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
+  scale_fill_viridis(option = "magma")  +
+  ggtitle("Standard deviation of PC1 by magma colour scale")
 
-#La funzione levelplot serve per vedere la media dei valori sulle righe e sulle 
-#colonne e si trova all'interno del pacchetto rasterVis.
-levelplot(copNDVI) 
-#Questo plot è una rappresentazione dei valori medi di come respira la terra dal 
-#1999 al 2017: i valori più alti sono quelli della foresta amazzonica, delle foreste
-#del centro Africa, del Nord Europa, del Nord Asia e del Nord America.
-#Tutto il resto è molto basso come valore e si trovano dove si hanno i deserti 
-#e le grandi distese di neve.
+#Si cambia la scala di colori della library viridis e si utilizza turbo
+p3 <- ggplot() +
+  geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
+  scale_fill_viridis(option = "turbo")  +
+  ggtitle("Standard deviation of PC1 by turboo colour scale")
+
+#Per mettere le 3 immagini in un'unica schermata si utilizza grid.arrange:
+grid.arrange(p1, p2, p3, nrow=1) #1 riga e 3 colonne con le rispettive legende.
