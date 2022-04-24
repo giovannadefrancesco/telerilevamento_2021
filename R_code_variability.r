@@ -1,4 +1,4 @@
-# R_code_variability_temp.r
+#R_code_variability_temp.r
 
 #Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
 #install.packages("raster") #Viene installato il pacchetto raster.
