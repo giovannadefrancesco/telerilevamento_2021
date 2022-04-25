@@ -23,50 +23,51 @@
 #Il mio primo codice in R per il telerilevamento!
 
 setwd("C:/lab/")#Serve per impostare la cartella di lavoro, nella quale verranno
-                #salvati/cercati di default i file.      
+                #salvati/cercati di default i files.      
 
-#install.packages("raster") #serve per installare il pacchetto raster
-
-library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgolette 
+#install.packages("raster") #serve per installare il pacchetto raster.
+library(raster) #viene caricato il pacchetto raster, non vengono messe le virgolette 
                 #perchè è già in R.
 
-#La funzione brick serve ad importare un'immagine satellitare infatti,
+#La funzione brick serve per importare un'immagine satellitare. Infatti,
 #importa tutte le bande delle immagini satellitari in un'unica immagine 
 #satellitare. In questo caso si usano le virgolette perchè questo file si 
 #trova esterno a R. In seguito, questa funzione viene associata ad un nome.
 p224r63_2011 <- brick("p224r63_2011_masked.grd")
 
-#Questo comando serve per vedere le informazioni  (tipo di file, dimensioni,
-#risoluzione ecc) del file contenente le immagini satellitari
-p224r63_2011 #Si tratta della riserva Parakan
+#Questo comando serve per vedere le informazioni (tipo di file, dimensioni,
+#risoluzione ecc) del file contenente le immagini satellitari.
+p224r63_2011 #Si tratta della riserva Parakan.
 
-#Questo comando serve per plottare le varie immagini
+#Questo comando serve per plottare le varie immagini:
 plot(p224r63_2011)
 
 #COLOUR CHANGE
-#colorRampPalette--> stabilisce la variazione dei colori (i colori che si vedono 
+#colorRampPalette --> stabilisce la variazione dei colori (i colori che si vedono 
 #con le singole bande sono numeri, ovvero i valori di riflettanza in una certa
 #lunghezza d'onda).
-#La c prima delle parentesi indica una serie di elementi che si chiama vettore 
-#o array il numero 100 tra parentesi indica quanti livelli diversi dei 3 colori 
-#scelti si vuole inserire nella scala di colori.
-#A tale funzione si associa un nome/un oggetto, in questo caso cl
+#La "c" prima delle parentesi indica una serie di elementi che si chiama vettore 
+#o array. Il numero 100 tra parentesi indica quanti livelli diversi dei 3 colori 
+#scelti si vogliono inserire nella scala di colori.
+#A tale funzione si associa un nome/un oggetto, in questo caso "cl":
 cl<-colorRampPalette(c("black", "grey","light grey"))(100)
 
-#Adesso, bisogna fare il plot della nuova immagine usando questa nuova scala di 
-#colori dove con il col si indica l'argomento e si assegna=cl
+#Si esegue il plot della nuova immagine usando questa nuova scala di 
+#colori, dove con il "col" si indica l'argomento e si assegna "cl":
 plot(p224r63_2011, col=cl)
 #In questo modo si è utilizzata una legenda personale che si basa dal nero fino 
 #al grigio chiaro. 
 
 ##GIORNO 2
 #COLOUR CHANGE NEW
-#Se si vuole inserire una nuova scala di colori:
+#Si inserisce una nuova scala di colori:
 cl<-colorRampPalette(c("blue","green","grey","red","magenta","yellow"))(100)
+#e si esegue il plot:
 plot(p224r63_2011, col=cl)
 
-#Se si vuole inserire una nuova scala di colori:
+#Si inserire una nuova scala di colori:
 cls<-colorRampPalette(c("red","pink","orange","purple"))(100)
+#e si esegue il plot:
 plot(p224r63_2011, col=cls)
 #in questo caso si avranno i valori di riflettanza più alti in rosso e valori di
 #riflettanza più alti in viola per ogni banda.
@@ -82,7 +83,7 @@ plot(p224r63_2011, col=cls)
 # B6: infrarosso termico o lontano 
 # B7: infrarosso medio 
 
-#dev.off-->questa funzione ripulisce la finestra grafica
+#dev.off-->questa funzione ripulisce la finestra grafica.
 dev.off()
 
 #Si vuole vedere plottata solo la banda blu, B1 dell'immagine
@@ -91,21 +92,21 @@ dev.off()
 plot(p224r63_2011$B1_sre)
 
 #Esercizio:
-#plot band 1 with a predefined color ramp palette
-#plottare la banda 1 con una scala di colori a piacere 
+#Plot band 1 with a predefined color ramp palette.
+#Viene plottata la banda 1 con una scala di colori a piacere:
 cls<-colorRampPalette(c("red","pink","orange","purple"))(100)
+#Si esegue il plot:
 plot(p224r63_2011$B1_sre, col=cls)
 
 dev.off() #serve per chiudere la finestra precedente 
 
-#Si vuole effettuare un plot delle singole bande con la funzione par che serve 
+#Si vuole effettuare un plot delle singole bande con la funzione "par" che serve 
 #per fare un settaggio dei parametri grafici di un certo grafico che si vuole 
 #creare.
-#comando par(mfrow=1 row, 2 colums) dove mf sta per multiframe e row=riga, 
+#Il comando par(mfrow=1 row, 2 colums) dove "mf" sta per multiframe e row=riga, 
 #serve per visualizzare il prossimo grafico, che a sua volta contiene grafici
 #interni con disposizione in 1 riga e 2 colonne.
-#In sintesi, la funzione par serve a stabilire come si vuole fare il plottaggio.
-
+#In sintesi, la funzione "par" serve a stabilire come si vuole fare il plottaggio.
 par(mfrow=c(1,2)) #con par(mfrow...) si ha prima il numero di righe 
 plot(p224r63_2011$B1_sre)
 plot(p224r63_2011$B2_sre)
@@ -113,13 +114,13 @@ plot(p224r63_2011$B2_sre)
 #E' possibile anche invertire la disposizione delle immagini, ovvero disporre 
 #le immagigin in 2 righe e 1 colonna
 par(mfrow=c(2,1))
-#nel caso si decidesse di utilizzare prima le colonne si scriverebbe: par(mfcol..)
+#Nel caso si decidesse di utilizzare prima le colonne si scriverebbe: par(mfcol..).
 plot(p224r63_2011$B1_sre)
 plot(p224r63_2011$B2_sre)
 
 #Plot the first four bands of Landsat:
 #Plottare le prime 4 bande di Landsat:
-par(mfrow=c(4,1)) #le immagini verranno visualizzate in 4 righe e 1 colonna
+par(mfrow=c(4,1)) #le immagini verranno visualizzate in 4 righe e 1 colonna.
 plot(p224r63_2011$B1_sre)
 plot(p224r63_2011$B2_sre)
 plot(p224r63_2011$B3_sre)
@@ -127,39 +128,42 @@ plot(p224r63_2011$B4_sre)
 
 #Se si volessero  plottare e disporre le immagini in una disposizione "quadrata" 
 #a quadrat of bands...:
-par(mfrow=c(2,2)) #le immagini verranno visualizzate in 2 righe e 2 colonne
+par(mfrow=c(2,2)) #le immagini verranno visualizzate in 2 righe e 2 colonne.
 plot(p224r63_2011$B1_sre)
 plot(p224r63_2011$B2_sre)
 plot(p224r63_2011$B3_sre)
 plot(p224r63_2011$B4_sre)
 
-#Per ogni banda, si mette una colorRamPalette che richiami, appunto, quella banda
-par(mfrow=c(2,2)) #si visualizza il grafico in modo che abbia 2 righe e 2 colonne
+#Per ogni banda, si mette una colorRampPalette che richiami, appunto, quella banda:
+par(mfrow=c(2,2)) #si visualizza il grafico in modo che abbia 2 righe e 2 colonne.
 clb <- colorRampPalette(c("dark blue","blue","light blue")) (100) #Si crea una
-                                   #colorRamPalette che ricorda il blu
+                                   #colorRampPalette che ricorda il blu
 plot(p224r63_2011$B1_sre, col=clb) #si è plottata la banda del blu con questa
-                                   #colorRamPalette
+                                   #colorRampPalette
 
 #Si aggiunge la banda del verde:
 clg <- colorRampPalette(c("dark green","green","light green")) (100)
-plot(p224r63_2011$B2_sre, col=clg)
+plot(p224r63_2011$B2_sre, col=clg) #si è plottata la banda del green con questa
+                                   #colorRampPalette
 
 #Si aggiunge la banda del rosso:
 clr <- colorRampPalette(c("dark red","red","pink")) (100)
-plot(p224r63_2011$B3_sre, col=clr)
+plot(p224r63_2011$B3_sre, col=clr) #si è plottata la banda del red con questa
+                                   #colorRampPalette
 
 #Si aggiunge la banda dell'infrarosso vicino:
 clnir <- colorRampPalette(c("red","orange","yellow")) (100)
-plot(p224r63_2011$B4_sre, col=clnir)
-
+plot(p224r63_2011$B4_sre, col=clnir) #si è plottata la banda del NIR con questa
+                                   #colorRampPalette
 dev.off()
 
 ####GIORNO 4
 #Visualizing data by RGB plotting
 #Si cercherà di capire cosa sia un plotting in RGB
-library(raster) #viene richiamata la libreria raster
-setwd("C:/lab/") #si seleziona la cartella di lavoro e quindi, di riferimento
-p224r63_2011 <- brick("p224r63_2011_masked.grd") #vengono ricaricati i dati
+
+library(raster) #viene richiamata la libreria raster.
+setwd("C:/lab/") #si seleziona la cartella di lavoro e di riferimento.
+p224r63_2011 <- brick("p224r63_2011_masked.grd") #vengono ricaricati i dati.
 
 #Le varie bande di LANDSAT:
 # B1: blu (blue) 
@@ -170,14 +174,15 @@ p224r63_2011 <- brick("p224r63_2011_masked.grd") #vengono ricaricati i dati
 # B6: infrarosso termico o lontano 
 # B7: infrarosso medio 
 
-#Plot RGB (RedGreenBlue), si ha un oggetto raster multi-layered quindi, con molti 
-#bande e attraverso lo schema RedGreenBlue si utilizzeranno.
+#Plot RGB (RedGreenBlue), si ha un oggetto raster multi-layered, con molti 
+#bande e si utilizzeranno attraverso lo schema RedGreenBlue.
 #Il comando consiste in plotRGB seguito dal nome dell'immagine Landsat originale 
-#che contiene tutte le bande,poi bisogna specificare quali componenti si vogliono 
+#che contiene tutte le bande, poi bisogna specificare quali componenti si vogliono 
 #associare ad ogni singola banda di Landsat:
 plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")#Stretch serve per "stirare" 
                                                    #le immagini da cui uscirà 
                                                    #un'immagine a colori naturali.
+
 #Si è saltata una banda per utilizzare l'infrarosso vicino montandolo sulla componente
 #red dello schema RGB.
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin") #in questo caso tutta la 
@@ -206,10 +211,10 @@ dev.off()
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin") #stretch lineare.
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist") #histogram stretching aumenta 
                                                      #lo strech e ha una penenza 
-                                                     #+ elevata nei valori intermedi.
+                                                     #più elevata nei valori intermedi.
 dev.off()
 #par natural colours, false colour and false colours with histogram stretching. 
-#par con colori naturali, falsi colori e falsi colori con  histogram stretching. 
+#par per colori naturali, falsi colori e falsi colori con  histogram stretching. 
 par(mfrow=c(3,1)) #la disposizione delle immagini sarà in 3 righe e 1 colonna
 plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin") #stretch lineare.
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin") #stretch lineare.
@@ -220,15 +225,15 @@ dev.off()
 
 ##### GIORNO 5
 install.packages("RStoolbox") #serve per installare il pacchetto RStoolbox.
-library(RStoolbox)##Carico il pacchetto RStoolbox.
+library(RStoolbox) #Si carica il pacchetto RStoolbox.
 
-#Multitemporal set: si inserisce anche l'immagine del 1988
-# p224r63_1988_masked
+#Multitemporal set: si inserisce anche l'immagine del 1988:
+#p224r63_1988_masked
 p224r63_1988 <- brick("p224r63_1988_masked.grd")
-#la funzione brick importa un intero set di bande, creando un RasterBrick (blocco 
+#La funzione brick importa un intero set di bande, creando un RasterBrick (blocco 
 #di diversi raster messi tutti insieme).
-p224r63_1988 #serve per vedere le informazioni inirenti l'immagine del 1988
-plot(p224r63_1988) #plotta le singole bande dell'immagine
+p224r63_1988 #serve per vedere le informazioni inirenti l'immagine del 1988.
+plot(p224r63_1988) #plotta le singole bande dell'immagine.
 
 #Le varie bande di LANDSAT:
 # B1: blu (blue) 
@@ -247,7 +252,7 @@ plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin") #tutto quello in rosso rappr
                                                     #la vegetazione nel 1988.
 
 #Per vedere le differenze tra il 1988e il 2011 si mettono a confronto le 2 immagini 
-#in 2 righe e 1 colonna   
+#in 2 righe e 1 colonna   utilizzando il comando "par". 
 par(mfrow=c(2,1))
 plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
@@ -283,6 +288,8 @@ library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgol
 library(rasterVis) #il pacchetto rasterVis consiste in metodi di visualizzazione
                    #per i dati raster.
 
+#Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
+#la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/greenland") # Windows
 
 #Con questo codice si lavorerà su come importare un blocco di dati tutti insieme
@@ -295,7 +302,7 @@ setwd("C:/lab/greenland") # Windows
 #Ogni file rappresenta la stima della temperatura (lst) e derivano da Copernicus.
 
 #La funzione per caricare i singoli dati/singoli strati e NON un pacchetto di dati, 
-#si chiama raster.
+#si chiama "raster".
 
 #Importazione PRIMA IMMAGINE del 2000:
 #Si assegna la funzione raster all'oggetto lst_2000.tif (si utilizzano le virgolette 
@@ -322,7 +329,7 @@ lst_2015 <- raster ("lst_2015.tif")
 #Viene plottata la quarta immagine:
 plot(lst_2015)
 
-#Creazione di un multi-pannel con le 4 immagini, utilizzando il comando par: 
+#Creazione di un multi-pannel con le 4 immagini, utilizzando il comando "par": 
 par(mfrow=c(2,2))
 plot(lst_2000)
 plot(lst_2005)
@@ -330,27 +337,27 @@ plot(lst_2010)
 plot(lst_2015)
 
 #Metodo per importare tutte le immaginin insieme:
-#lapplay: si può applicare una certa funzione (raster) a una lista di file.
-#Si procede creando una lista tramite la funzione list.files di tutti i file lst
-#e applicare a tutti la funzione raster.
+#"lapplay": si può applicare una certa funzione (raster) a una lista di file.
+#Si procede creando una lista tramite la funzione list.files di tutti i file che 
+#contengono la parola "lst" e a tutti si applica la funzione raster.
 rlist <- list.files(pattern="lst") #pattern è quella "scritta" che hanno in comune
                                    #nei loro nomi i files. Quest'ultimo oggetto 
-                                   #poi. si associa a un nome.
-rlist #è la lista di tutti i file, dentro la cartelle greenland, che hanno al 
+                                   #poi, si associa a un nome.
+rlist #è la lista di tutti i file, dentro la cartella Greenland che hanno al 
       #loro interno la scritta lst.
 #Si vuole ottenere quella famosa lista di file, alla quale applicare la funzione
-#raster con la funzione lapply.
+#"raster" con la funzione "lapply".
 
-#Si applica la funzione raster a tutta la lista tramite lapply.
-#La funzione  lapply viene applicata a tutta la lista di file che si è appena creata 
-#utilizzando la funzione raster che importa tutti i file, a cui si associa un nome
-#(in questo caso import):
+#Si applica la funzione "raster" a tutta la lista tramite "lapply".
+#La funzione  "lapply" viene applicata a tutta la lista di file che si è appena creata 
+#utilizzando la funzione "raster" che importa tutti i file, a cui si associa un nome
+#"import":
 import<-lapply(rlist,raster)
 import
 #Si sono importati 4 file singolarmente.
 
 #Si procede con il costruire il pacchetto di file tutto insieme utilizzando la 
-#funzione stack e a cui si associa un nome (TGr):
+#funzione "stack" e a cui si associa un nome (TGr):
 TGr<-stack(import)
 TGr #si hanno tutte le informazioni utili del RasterStack.
 plot(TGr) #in questo modo viene plottato il singolo file.
@@ -378,8 +385,8 @@ plotRGB(TGr, 2, 3, 4, stretch="lin")
 #Si ottiene un'immagine molto simile a quella precedente con la parte blu che 
 #riguarda i valori più alti.
 
-#E' possibile anche invertire, ovvero mettere nel livello Red, si mette il file
-#4 (2015), nel livello Green il file 3 (2010) e nel livello blue il file 2 (2005).
+#E' possibile anche invertire, ovvero mettere nel livello Red il file4 (2015), 
+#nel livello Green il file 3 (2010) e nel livello Blue il file 2 (2005).
 plotRGB(TGr, 4, 3, 2, stretch="lin")
 dev.off()
 
@@ -389,11 +396,11 @@ levelplot(TGr)#grafico con tutte e 4 le mappe.
 levelplot(TGr$lst_2000)#grafico con una singola mappa di come varia la temperatura
                        #nell'area in esame.
 #Dal grafico plottato si nota che dove sono presenti i ghiacci, si ha un valore 
-#di lst più basso.
+#di "lst" più basso.
 
-#Per cambiare i colori eabbelire il plot si utilizza una colorRampPalette
+#Per cambiare i colori e abbelire il plot si utilizza una colorRampPalette
 cl<- colorRampPalette(c("blue","light blue", "pink","red"))(100)
-#Per cambiare il colore della mappa finale si utilizza col.regions.
+#Per cambiare il colore della mappa finale si utilizza "col.regions".
 levelplot(TGr, col.regions=cl)
 #Facendo questo plot con dei nuovi colori che si sono stabiliti, è possibile 
 #vedere multitemporalmente cosa è successo in questa zona di studio.
@@ -401,25 +408,25 @@ levelplot(TGr, col.regions=cl)
 #colore celeste, una temperatura un po' più alta, da un anno all'altro. 
 #Si nota un trend di cambiamento di temperatura dal 2000 al 2015.
 
-#A differenza della funzione plot, la funzione levelplot è più compatta, inoltre
-#le coordinate sono messe solo sul primo asse y e il primo asse x sotto,la 
-#legenda è unica e i colori sono migliori.
+#A differenza della funzione "plot", la funzione "levelplot" è più compatta.
+#Inoltre, le coordinate sono messe solo sul primo asse y e il primo asse x sotto,
+#mentre la legenda è unica e i colori sono migliori.
 
 #Per cambiare i titoli delle immagini:
 levelplot(TGr,col.regions=cl, names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
-#names.attr è l'argomento della funzione levelplot per nominare i singoli attributi
+#"names.attr" è l'argomento della funzione levelplot per nominare i singoli attributi
 #e si inseriscono i 4 blocchi, siccome si tratta di un vettore di 4 cose diverse
-#bisogna aggiungere anche la c.
+#bisogna aggiungere anche la "c".
 
-#Si imposta come titolo generale la variazione del LSTnel tempo con la 
-#funzione main (si mettono tra virgolette perchè si tratta di un testo):
+#Si imposta come titolo generale la variazione del LST nel tempo con la 
+#funzione "main" (si mettono tra virgolette perchè si tratta di un testo):
 levelplot(TGr,col.regions=cl, main="LST variation in time",
           names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
 
 #Melt, dati in riferimento allo scioglimento dei ghiacciai:
 #Visto che si hanno tante immagini, si crea una lista:
 meltlist <- list.files(pattern="melt")
-#Si importano i file con la funzione lapplay:
+#Si importano i file con la funzione "lapplay":
 melt_import <- lapply(meltlist,raster)
 #Si raggruppano tutti i file con la funzione stack, mettendoli tutti insieme:
 melt <- stack(melt_import)
@@ -464,7 +471,7 @@ library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgol
                 #perchè è già in R.
 
 #install.packages("ncdf4") #serve per installare il pacchetto ncdf4 ed è la 
-#libreria per leggere netCDF, si tratta di un formato di dati.
+                           #libreria per leggere netCDF, si tratta di un formato di dati.
 library(ncdf4) #Viene caricato il pacchetto ncdf4, non vengono messe le virgolette 
                #perchè è già in R.
 
@@ -473,15 +480,15 @@ library(ncdf4) #Viene caricato il pacchetto ncdf4, non vengono messe le virgolet
 setwd("C:/lab/") # Windows
 
 #Si assegna un nome da dare al dataset a cui viene associato la funzione
-#raster perchè si tratta di un singolo layer.
+#"raster" perchè si tratta di un singolo layer.
 albedo <-raster("c_gls_ALBH_202006130000_GLOBE_PROBAV_V1.5.1.nc")
 
 #Si vedono tutte le informazioni del dataset:
 albedo
 
-#Si assegnano dei colori tramite un ColorRamPalette
+#Si assegnano dei colori tramite una ColorRampPalette:
 cl <- colorRampPalette(c('light blue','green','red','yellow'))(100) 
-#Plot della variabile albedo
+#Si plotta la variabile albedo:
 plot(albedo, col=cl)
 #Dal plot si nota che la zona rossa è dove viene riflessa più energia solare
 #(ovviamente la parte dei deserti è quella che riflette di più, in qunato il 
@@ -510,12 +517,12 @@ plot(albedores, col=cl)
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file. 
 setwd("C:/lab/greenland") # Windows
 
+#install.packages('tinytex') #Serve per installare il pacchetto tinytex.
+library(tinytex) #Viene caricato il pacchetto tinytex.
 
-#install.packages('knitr') #serve per installare il pacchetto knitr..
-#install.packages('tinytex')
+#install.packages('knitr') #Serve per installare il pacchetto knitr.
 library (knitr) #Viene caricato il pacchetto knitr, non vengono messe le virgolette 
                 #perchè è già in R.
-library(tinytex) #Viene caricato il pacchetto tinytex.
 #knitr è un pacchetto R che integra informatica e reporting. Incorporando il codice 
 #nei documenti di testo, l'analisi, i risultati e la discussione sono tutti in un 
 #unico posto. I file possono essere elaborati in una vasta gamma di formati di 
@@ -527,7 +534,7 @@ library(tinytex) #Viene caricato il pacchetto tinytex.
 #La funzione che si utilizza è snitch a cui si aggiunge il primo argomento che 
 #sarebbe il nome del file che si mette fra virgolette perchè si esce da R.
 
-#L'altro argomento è il tamplate che si chiama "misc" e il file si chiama 
+#L'altro argomento è "tamplate" che si chiama "misc" e il file si chiama 
 #"knitr-template.Rnw", dopodichè si aggiunge il pacchetto che si andrà ad utilizzare.
 stitch("R_code_greenland.r.txt", template=system.file("misc", "knitr-template.Rnw", package="knitr"))
 
@@ -566,8 +573,8 @@ plot(p224r63_2011)
 #Si plottano i valori della banda 1 blu contro i valori della banda 2 del verde
 #in questo modo:
 plot(p224r63_2011$B1_sre, p224r63_2011$B2_sre, col="red", pch=19, cex=2)
-#per mettere in evidenza il plot si utilizza il rosso, il pch si intende il 
-#simbolo che si vuole utilizzare e cex indica la dimensione del parametro grafico
+#per mettere in evidenza il plot si utilizza il rosso, con "pch" si intende il 
+#simbolo che si vuole utilizzare e "cex" indica la dimensione del parametro grafico
 #che si è scelto.
 
 #Dal grafico si vede che le 2 bande sono molto correlate, in statistica
@@ -596,21 +603,21 @@ p224r63_2011res <- aggregate(p224r63_2011, fact=10)
 #Per vedere le informazioni riguardanti la diminuzione si utilizza un fattore di 
 #ricampionamento (ovvero quante volte s vuole diminuire la risoluzione oppure 
 #quante volte si vuole aumentare la grandezza del pixel) pari a 10.
-#Il pixel non sarà più di 30m ma di 300m -->a umentare la grandezza del pixel 
-#significa diminuire la risoluzione,maggiore è il dettaglio, più fitta è la risoluzione.
+#Il pixel non sarà più di 30m ma di 300m -->aumentare la grandezza del pixel 
+#significa diminuire la risoluzione, maggiore è il dettaglio, più fitta è la risoluzione.
 p224r63_2011res
 
-#Per plottare le due immagini e metterle a confronto si utilizza il comando par:
+#Per plottare le due immagini e metterle a confronto si utilizza il comando "par":
 par(mfrow=c(2,1))
 #Si plotta con RGB l'immagine 30x30 pixel (si riporta l'immagine originale (p224r63_2011),
 #alla componente rossa si mette la banda dell'infrarosso, a quella verde si mette
-#il rosso e su quella blu si imposta la verde. Infine, si aggiunge un stretch lineare).
+#il rosso e su quella blu si imposta la verde. Infine, si aggiunge un stretch lineare.
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="lin")
 #Si fa la stessa cosa con l'immagine 300x300 pixel, la quale è più sgranata.
 plotRGB(p224r63_2011res, r=4, g=3, b=2, stretch="lin")
 
 #La funzione PCA ("Principal Components Analysis) consiste nel prendere i 
-#dati originali e si passa un asse lungo la variabilità maggiore e l'altro asse
+#dati originali e si  fa passare un asse lungo la variabilità maggiore e l'altro asse
 #lungo la variabilità minore.
 #La rasterPCA-->prende il pacchetto di dati e va a compattarli in un numero 
 #minore di bande.
@@ -618,9 +625,9 @@ plotRGB(p224r63_2011res, r=4, g=3, b=2, stretch="lin")
 #e la si associa ad un nuovo nome/oggetto (p224r63_2011res_pca).
 p224r63_2011res_pca <-rasterPCA(p224r63_2011res)
 
-#La funzione summay ci dà un sommario del modello. Alla funzine summary, si fa 
+#La funzione "summary" ci dà un sommario del modello. Alla funzine "summary", si fa 
 #seguire il nome di quello che si è appena generato e lo si lega con il simbolo 
-#del dollaro al modello.
+#del $ al modello.
 summary(p224r63_2011res_pca$model)
 #Questo risultato afferma che la PC1 spiega il 99,83% della variabilità del sistema.
 #Mentre con tutte le bande si arriverà al 100%. 
@@ -630,7 +637,7 @@ plot(p224r63_2011res_pca$map)
 #Da questo plot si ottiene che la prima componente ha tanta deformazione
 #quindi, con tanta variabilità mentre l'ultima componente ha il residuo.
 #Il PC1 ha tutte le informazioni: si vede bene la foresta, la parte agricola;
-#la PC7 non si distingue più nulla.
+#nella PC7 non si distingue più nulla.
 #SINTESI: La prima componente è quella che spiega più variabilità.
 
 #Si hanno tutte le informazioni:
@@ -662,10 +669,10 @@ setwd("C:/lab/") # Windows
 #Le librerie che servono per tale codice sono:
 library(raster) #Viene caricato il pacchetto raster.
 library(RStoolbox) #Viene caricato il pacchetto RStoolbox. 
+
 #La funzione brick crea un oggetto RasterBrick, ovvero un oggetto raster 
 #multistrato a cui si associa un nome (so-->solar orbiter).
 so <- brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
-
 #Per vedere i livelli e le varie informazioni:
 so
 
@@ -693,11 +700,11 @@ soc <- unsuperClass(so, nClasses=3)
 #Successivamente, si plotta l'immagine classificata (soc) insieme alla mappa (map):
 plot(soc$map)
 #L'immagine che uscirà fuori da questo plot non sarà sempre uguale, in quanto una
-#volta lanciato il processo unsuperclass si è selezionato un training sets di 
+#volta lanciato il processo "unsuperclass" si è selezionato un training sets di 
 #pixel in entrata.
 
 #Per fare in modo che una classificazione sia sempre la stessa, si usa una 
-#funzione che si chiama set.seed.
+#funzione che si chiama "set.seed".
 set.seed(42)
 
 #E' possibile aumentare il numero delle classi, ad esempio 20.
@@ -710,7 +717,7 @@ plot(soc20$map)
 
 # Download an image from:
 # https://www.esa.int/ESA_Multimedia/Missions/Solar_Orbiter/(result_type)/images
-#Si utilizza di nuovo la funzione brick che crea un oggetto RasterBrick, ovvero
+#Si utilizza di nuovo la funzione "brick" che crea un oggetto RasterBrick, ovvero
 #un oggetto raster multistrato a cui si associa un nome (sun).
 sun <- brick("sun.png")
 
@@ -742,34 +749,35 @@ library(RStoolbox) #Viene caricato il pacchetto RStoolbox.
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/") # Windows
 
-#Si procede con il caricare l'immagine tramite la funzione brick, in quanto si
-#tratta di un immagine in RGB, formata da 3 livelli.
+#Si procede con il caricare l'immagine tramite la funzione "brick", in quanto si
+#tratta di un'immagine in RGB, formata da 3 livelli.
 #(Si ulitzzano le virgolette perchè si esce da R, si prende l'immagine e la si 
-#carica all'interno).In fine tale funzione si assegna ad un  oggetto (gc-->grand canyon).
+#carica all'interno).
+#In fine, tale funzione si assegna ad un oggetto (gc-->grand canyon).
 gc <- brick("dolansprings_oli_2013088_canyon_lrg.jpg")
 #Per visualizzare l'immagine si utilizza il comando plotRGB, ovvero si ha un 
 #oggetto Raster con più strati e con tale comando viene plottato.
 plotRGB(gc, r=1, g=2, b=3, stretch="lin") #si utilizza lo stretch lineare per 
                                           #aumentare la potenza visiva di tutti 
-                                          #i colori possibili
-plotRGB(gc, r=1, g=2, b=3, stretch="hist") #si utilizza lo histogram stretching
+                                          #i colori possibili.
+plotRGB(gc, r=1, g=2, b=3, stretch="hist") #si utilizza lo histogram stretching.
 
 #Si utilizza la funzione unsuperClass per classificare l'immagine che si sta 
 #utilizzando e il numero di classi che in questo caso sono 2.
 #Prima di chiudere la funzione, la si associa ad un oggetto (gcc2).
 gcc2 <- unsuperClass(gc, nClasses=2)
-#per vedere le informazioni:
+#Per vedere le informazioni:
 gcc2
-#per vedere il plot dell'immagine, si plotta l'immagine classificata (gcc2) 
+#Per vedere il plot dell'immagine, si plotta l'immagine classificata (gcc2) 
 #insieme alla mappa (map):
 plot(gcc2$map)
 
 #Come prima con l'unica differenza che si aggiungono più classi e a questa funzione
 #viene associato un nome diverso rispetto al precedente (gcc4):
 gcc4 <- unsuperClass(gc, nClasses=4)
-#per vedere le informazioni
+#Per vedere le informazioni:
 gcc4
-#per vedere il plot dell'immagine, si plotta l'immagine appena classificata (gcc4) 
+#Per vedere il plot dell'immagine, si plotta l'immagine appena classificata (gcc4) 
 #insieme alla mappa (map):
 plot(gcc4$map)
 
@@ -781,8 +789,8 @@ plot(gcc4$map)
 library(raster) #Viene caricato il pacchetto raster.
 
 #install.packages("RStoolbox") #Viene installato il pacchetto RStoolbox per 
-                              #eseguire la classificazione.
-library(RStoolbox)#Viene caricato il pacchetto RStoolbox
+                               #eseguire la classificazione.
+library(RStoolbox)#Viene caricato il pacchetto RStoolbox.
 
 #install.packages("ggplot2") #Viene installato il pacchetto ggplot2.
 library(ggplot2) #Viene caricato il pacchetto ggplot2.
@@ -796,21 +804,21 @@ library(gridExtra) #Viene caricato il pacchetto gridExtra per la disposizione
 setwd("C:/lab/") # Windows
 
 #Le bande sono divise in questo modo:
-#B1=NIR,infrarosso vicino;
+#B1=NIR: infrarosso vicino;
 #B2=red;
 #B3=green.
 
-#Si utilizza la funzione brick che serve a caricare l'intero pacco di dati della
+#Si utilizza la funzione "brick" che serve a caricare l'intero pacco di dati della
 #prima immagine del 1992:
 defor1 <-brick ("defor1.jpg")
-#Vengono plottate le immagini con la funzione plotRGB:
+#Vengono plottate le immagini con la funzione "plotRGB":
 plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 #Vengono plottate le immagini con la funzione ggRGB:
-ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
+ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
 #si ha la stessa immagine plottata con la funzione plotRGB ma con gli assi x ed 
 #y e le varie coordinate spaziali dell'oggetto.
 
-#Si procede con il caricare la seconda immagine del 2006 tramite la funzione brick:
+#Si procede con il caricare la seconda immagine del 2006 tramite la funzione "brick":
 defor2 <-brick ("defor2.jpg")
 #Vengono plottate le immagini con la funzione plotRGB:
 plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
@@ -818,17 +826,17 @@ plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 ggRGB(defor2, r=1, g=2, b=3, stretch="lin")#si utilizza uno strech lineare.
 
 #Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#par su una righe e due colonne:
+#par su 1 righe e 2 colonne:
 par(mfrow=c(1,2))
 plotRGB(defor1, r=1, g=2, b=3, stretch="lin")
 plotRGB(defor2, r=1, g=2, b=3, stretch="lin")
 
-#E' possibile disporre le immagini anche per il plot della funzione ggRGB, non 
-#più con par ma con un'altra funzione chiamata grid.arrange.
+#E' possibile disporre le immagini anche per il "plot" della funzione ggRGB, non 
+#più con "par" ma con un'altra funzione chiamata "grid.arrange".
 #Multiframe with ggplot2 and gridExtra
-p1 <- ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
-p2 <- ggRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
-#Tale funzione viene seguita da p1, p2 e numero di righe=2
+p1 <- ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
+p2 <- ggRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
+#Tale funzione viene seguita da p1, p2 e numero di righe=2:
 grid.arrange(p1, p2, nrow=2)
 
 #--------------------------------------------------------------------------------
@@ -842,13 +850,12 @@ library(RStoolbox) #Viene caricato il pacchetto RStoolbox per calcolare l'indice
 
 #install.packages("rasterdiv") #serve per installare il pacchetto rasterdiv.
 library(rasterdiv) #Viene caricato il pacchetto rasterdiv per l'NDVI mondiale.
-library(rasterVis) #Viene caricato il pacchetto rasterVis.
 
 #Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/") # Windows
 
-#Si utilizza la funzione brick che serve a caricare un pacco di dati.
+#Si utilizza la funzione "brick" che serve a caricare un pacco di dati.
 #Prima immagine:
 defor1 <- brick("defor1.jpg")
 #Seconda immagine:
@@ -860,13 +867,13 @@ defor2 <- brick("defor2.jpg")
 #B3=green.
 
 #Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#par su due righe e 1 colonna:
+#"par" su 2 righe e 1 colonna:
 par(mfrow=c(2,1))
-plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
+plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
+plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
 #Rispetto alla prima immagine, nella seconda immagine si vede che in questa
 #zona c'è stato un considerevole impatto dell'agricoltura.
-#Inoltre si nota che il fiume nell'imagine sopra aveva molti più solidi disciolti
+#Inoltre, si nota che il fiume nell'imagine sopra aveva molti più solidi disciolti
 #e quindi il colore appare molto diverso rispetto a quella di sotto, dove molto
 #probabilmente in quel momento aveva meno solidi disciolti.
 
@@ -880,7 +887,8 @@ defor2
 #Per calcolare questo indice bisogna fare la differenza tra il near infrared 
 #della defor1, (ovvero defor1.1 ) meno il red della defor1 (defor1.2).
 dvi1 <- defor1$defor1.1 - defor1$defor1.2
-dev.off() #per togliere la disposizione del par precedente.
+dev.off() #per togliere la disposizione del "par" precedente.
+
 #Questo plot evidenzia molto bene quanta e in che stato di salute è la vegetazione:
 plot (dvi1)
 #Tutta la parte del fiume e dei primi punti agricoli sono molto chiare, tendenti 
