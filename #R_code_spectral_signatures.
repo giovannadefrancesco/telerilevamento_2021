@@ -1,0 +1,235 @@
+#R_code_spectral_signatures.r
+#Le spectrak signature non sono altro che delle impronte digitali 
+#delle immagini satellitari.
+
+#Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
+#install.packages("raster") #Viene installato il pacchetto raster.
+library(raster) #Viene caricato il pacchetto raster.
+
+#install.packages("rgdal") #Viene installato il pacchetto rgdal che serve per 
+                            #leggere qualsiasi tipo di dato.
+library(rgdal) #Viene caricato il pacchetto rgdal
+
+#install.packages("ggplot2") #Viene installato il pacchetto ggplot2.
+library(ggplot2) #Viene caricato il pacchetto ggplot2.
+
+#1.Set the working directory.
+#Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
+#la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
+setwd("C:/lab/") # Windows
+
+#Si esegue un brick in modo da caricare tutte le bande e si associa un nome:
+defor2 <- brick("defor2.jpg")
+#Se si vogliono vedere le informazioni:
+defor2 #si nota che ci sono 3 bande: 
+#defor2.1, defor2.2, defor2.3 e corrispondodo a:
+#     NIR,      red,    green.
+
+#Si esegue un plot di questa immagine:
+plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare
+#oppure
+plotRGB (defor2, r=1, g=2, b=3, stretch="his")#facendo un histogram strech
+#che invece di utilizzare una linea per trasformare e ampliare la gamma dei 
+#valori, utilizza una curva (chiamata curva logistica),che aumenta la pendenza
+#e quindi le differenze tra i due plot saranno molto più accentuate.
+
+#La funzione per creare firme spettrali si chiama "click" che è contenuta 
+#nel pacchetto "rgdal". Serve per cliccare sulla mappa e avere a disposizione 
+#qualsiasi informazione (in questo caso informazioni relative alla riflettanza).
+click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
+
+#Results:
+#Cliccando sulla mappa una zona vegetata si ottiene:
+#      x     y   cell defor2.1 defor2.2 defor2.3
+#1 273.5 151.5 234016      206        8       23   
+#Si nota che la prima banda corrispondente al NIR ha un valore molto alto di 
+#riflettanza, nella seconda banda che corrisponde al red si ha un valore basso 
+#in quanto assorbe e nella terza banda che sarebbe quella del green si ha un 
+#valore medio basso.
+
+#Invece, cliccando su una zona dove è presente acqua si ottengono i seguenti risultati:
+#      x     y   cell defor2.1 defor2.2 defor2.3
+#1 572.5 245.5 166917       51       80      124   
+#Si nota una riflettanza molto bassa in NIR, una rifrettanza alta in rosso e 
+#molto alta nel verde.
+
+#Bisogna chiudere l'immagine per poter proseguire.
+
+#Si passa a creare un dataframe.
+#Per creare un dataframe si fa uno storage dei dati.
+
+#Si farà una tabellina con quattro colonne: nella prima e nella seconda si 
+#inseriranno il numero delle bande, nella terza la componente foresta e nella
+#quarta la componente acqua
+
+#Define the columns of dataset.
+#Si definiscono le colonne del dataset:
+band <- c(1,2,3) #banda 1,2,3
+forest <- c(206,8,23) #si inseriscono i valori riportati prima per la foresta
+water <- c(51,80,124) #si inseriscono i valori riportati prima per l'acqua
+
+#La funzione per fare la tabella è data.frame:
+spectrals <- data.frame(band, forest, water)
+#Per visualizzare la tabella:
+spectrals 
+#da cui si visualizzerà a video la tabella:
+#band forest water
+#   1    1    206    51
+#   2    2      8    80
+#   3    3     23   124
+
+
+######## MULTITEMPORAL ###############
+#Plot the spectral sign
+#A questo punto si esegue un plot con ggplot2.
+ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le bande e 
+                                #sull'asse y le riflettanze della foresta e dell'acqua.
+  geom_line(aes(y = forest), color ="green") + #geom_line connette le osservazioni
+                                               #che si hanno a seconda del dato 
+                                               #che si #è definito sulla x.
+  geom_line(aes(y = water), color ="blue") + #da cui esce che l'acqua ha un comportamento
+                                             #diametralmente opposto rispetto alla vegetazione.
+  labs(x="band",y="reflectance") #si aggiungono le etichette agli assi.
+
+#Si procede con il fare un'analisi multitemporale su una serie di pixel utilizzando 
+#come immagini la defor1 e la defor2.
+#Si carica l'immagine defor1:
+defor1 <-brick("defor1.jpg")
+#Si esegue un plot dell'immagine defor1 con plotRGB:
+plotRGB (defor1, r=1, g=2, b=3, stretch="lin")#strech lineare
+
+#Spectral signatures defor1
+#Si procede creando delle sprectral signatures dell'immagine defor1:
+click(defor1, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
+
+#Si preme in una zona dove c'è stata deforestazione (sopra la prima ansa del fiume)
+#e si riportano i primi 5 valori.
+#Results:
+#     x     y  cell defor1.1 defor1.2 defor1.3
+#1 59.5 340.5 97878      218       13       30
+#     x     y  cell defor1.1 defor1.2 defor1.3
+#1 88.5 340.5 97907      231       19       44
+#     x     y   cell defor1.1 defor1.2 defor1.3
+#1 98.5 327.5 107199      215       10       27
+#     x     y  cell defor1.1 defor1.2 defor1.3
+#1 92.5 376.5 72207      204       16       33
+#     x     y  cell defor1.1 defor1.2 defor1.3
+#1 72.5 390.5 62191      223       25       50
+#     x     y   cell defor1.1 defor1.2 defor1.3
+#1 156.5 289.5 134389      208       16       31
+
+#Si esegue la stessa operazione per defor2 ma prima bisogna eseguire il plotRGB:
+plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#strech lineare
+click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
+#Results:
+#     x     y  cell defor2.1 defor2.2 defor2.3
+#1 76.5 340.5 98306      192      173      166
+#      x     y  cell defor2.1 defor2.2 defor2.3
+#1 100.5 342.5 96896      206      181      176
+#      x     y   cell defor2.1 defor2.2 defor2.3
+#1 114.5 331.5 104797      171       73       70
+#     x     y  cell defor2.1 defor2.2 defor2.3
+#1 93.5 378.5 71077      207        5       21
+#     x     y  cell defor2.1 defor2.2 defor2.3
+#1 78.5 401.5 54571      193       11       23
+
+#Ora si passa a creare il data.set
+#Define the columns of dataset.
+#Si definiscono le colonne del dataset:
+band <- c(1,2,3) #banda 1,2,3
+time1<- c(218, 13,30) #si inseriscono i valori di defor1 per il primo risultato
+time2 <- c(192,173,166) #si inseriscono i valori di defor2 per il primo risultato
+
+#La funzione per fare la tabella è data.frame:
+spectrals <- data.frame(band, time1, time2)
+#Per visualizzare la tabella:
+spectrals 
+#da cui si visualizzerà a video la tabella:
+#   band time1 time2
+#1    1   218   192
+#2    2    13   173
+#3    3    30   166
+
+#A questo punto si esegue un plot con ggplot2:
+ggplot(spectrals, aes(x=band))+
+  geom_line(aes(y = time1), color ="red") + 
+  geom_line(aes(y = time2), color ="gray") + 
+  labs(x="band",y="reflectance") #si aggiungono le etichette agli assi.
+
+#Dal plot esce una situazione di questo tipo: il pixel del primo periodo (rosso)
+#con pixel tipicamente vegetato che ha un'altissima riflettanza nel NIR e il pixel 
+#del secondo momento (grigio). Nella parte del rosso dove prima si aveva un alto 
+#assorbimento dovuto alla fotosintesi, in questo plot non c'è più.
+#L'infrarosso è ancora alto percho non si è proprio nella zona del suolo nudo ma 
+#piuttosto in una zona intermedia.
+
+#A questa situazione è possibile aggiungere il secondo pixel:
+band <- c(1,2,3) #banda 1,2,3
+time1<- c(218,13,30) #si inseriscono i valori di defor1 per il primo pixel
+time1p2<- c(231,19,44)#si inseriscono i valori di defor1 per il secondo pixel
+time2 <- c(192,173,166) #si inseriscono i valori di defor2 per il primo pixel
+time2p2<- c(206,181,176) #si inseriscono i valori di defor2 per il secondo pixel
+
+#La funzione per fare la tabella è data.frame:
+spectrals <- data.frame(band, time1,time1p2, time2,time1p2)
+#Per visualizzare la tabella:
+spectrals 
+#da cui si visualizzerà a video la tabella:
+#   band time1 time1p2 time2 time1p2.1
+#1    1   218     231   192       231
+#2    2    13      19   173        19
+#3    3    30      44   166        44
+
+ggplot(spectrals, aes(x=band))+
+  geom_line(aes(y = time1), color ="red", linetype="dotted") +  #linetype serve per cambiare 
+                                                                #il modo per visualizzare la linea.
+  geom_line(aes(y = time1p2), color ="red") + 
+  geom_line(aes(y = time2), color ="gray", linetype="dotted") + 
+  geom_line(aes(y = time2p2), color ="gray") + 
+  labs(x="band",y="reflectance")
+#Si nota come si mantiene la stessa situazione.
+
+#Image from Earth Observatory
+#Si esegue lo stesso esercizio ma prendendo un'immagine da Earth Observatory
+#e la si mette nella cartella lab.
+
+#Si esegue un brick in modo da caricare tutte le bande e si associa un nome:
+eo <- brick("June_puzzler.jpg")
+#Si esegue un plot di questa immagine:
+plotRGB (eo, r=1, g=2, b=3, stretch="his") #histogram strech
+
+#Si procede creando delle sprectral signatures dell'immagine:
+click(eo, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
+#Results:
+#     x     y  cell june_puzzler.1 june_puzzler.2 june_puzzler.3
+#1 96.5 378.5 72817            172            113              0
+#     x     y   cell june_puzzler.1 june_puzzler.2 june_puzzler.3
+#1 214.5 275.5 147095             11            150              0
+#     x     y   cell june_puzzler.1 june_puzzler.2 june_puzzler.3
+#1 187.5 318.5 116108             36             33             26
+
+#Ora si passa a creare il data.set
+#Define the columns of dataset.
+#Si definiscono le colonne del dataset:
+band <- c(1,2,3) #banda 1,2,3
+stratumyellow <- c(172,113,0) #si inseriscono i valori dell'immagine per la zona yellow
+stratumgreen <- c(11,150,0) #si inseriscono i valori dell'immagine per la zona green
+stratumblue <- c(36,33,26) #si inseriscono i valori dell'immagine per la zona blue
+
+#La funzione per fare la tabella è data.frame:
+spectralsg <- data.frame(band, stratumyellow, stratumgreen, stratumblue)
+#Per visualizzare la tabella:
+spectralsg 
+#da cui si visualizzerà a video la tabella:
+#   band yellow green blue
+#1    1    172    11   36
+#2    2    113   150   33
+#3    3      0     0   26
+
+#A questo punto si esegue un plot con ggplot2:
+ggplot(spectralsg, aes(x=band))+
+  geom_line(aes(y = stratumyellow), color ="yellow")+ 
+  geom_line(aes(y = stratumgreen), color ="green") + 
+  geom_line(aes(y = stratumblue), color ="blue") 
+  labs(x="band",y="reflectance")
+#Si mota che le 3 formazioni che si sono individuate si differenziano molto.
