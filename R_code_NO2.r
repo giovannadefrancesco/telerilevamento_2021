@@ -1,4 +1,3 @@
-#11. R code NO2
 #R_code_NO2.r
 
 #Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
@@ -21,7 +20,7 @@ setwd("C:/lab/EN") # Windows
 #funzione raster che ha bisogno dell'installazione del pacchetto a cui appartiene: 
 EN01<- raster("EN_0001.png")
 
-#3.Plot the first importaed image with your preferred Color Ramp Palette
+#3.Plot the first importaed image with your preferred ColorRampPalette
 #Si crea una ColorRampPalette:
 cls<-colorRampPalette(c("red","pink","orange","yellow"))(200)
 #Si esegue il plot:
@@ -31,7 +30,7 @@ plot(EN01, col=cls)
 
 #4.Import the last (13th) and plot it with the previous ColorrampPalette:
 #Si importa la tredicesima immagine e viene plottata con la precedente 
-#ColorrampPalette:
+#ColorRampPalette:
 EN0013<- raster("EN_0013.png")
 cls<-colorRampPalette(c("red","pink","orange","yellow"))(200)
 plot(EN0013, col=cls)
@@ -56,7 +55,7 @@ plot(ENdif2, col=cls)
 
 #6.Plot everything, altogether
 #Si passa a plottare tutte e tre le immagini che si sono prodotte:
-#Tramite il comando par le immagini vengono posizionate in 3 righe e una singola colonna:
+#Tramite il comando "par" le immagini vengono posizionate in 3 righe e una singola colonna:
 par(mfrow=c(3,1))
 plot(EN01, col=cls, main="NO2 in January") #si aggiunge il titolo
 plot(EN0013, col=cls, main="NO2 in March")
@@ -65,21 +64,21 @@ plot(ENdif1, col=cls, main="Difference (March-January)")
 #7.Import the whole set
 #Si vuole importare tutto il set di immagini (13) insieme:
 #Per prima cosa si costruisce una lista dei files:
-rlist <-list.files(pattern = "EN") #nel senso tutte le immgini hanno in comune "EN"
+rlist <-list.files(pattern = "EN") #nel senso tutte le immgini hanno in comune "EN".
 #Per vedere le informazioni di questa lista appena creata:
 rlist
 
-#A questo punto si applica la funzione raster tramite la funzione lapply a tutta 
+#A questo punto si applica la funzione raster tramite la funzione "lapply" a tutta 
 #la lista che si è realizzata e la si associa a un oggetto:
 import <-lapply(rlist,raster)
-#Si vedono le imformazioni di questo nuovo oggetto
+#Si vedono le informazioni di questo nuovo oggetto
 import
 #vengono visualizzati a video tutti i singoli layer importati.
 
-#A questo punto è possibile fare uno stack di tutti questi layer:
+#A questo punto è possibile fare uno "stack" di tutti questi layer:
 EN <- stack(import)
 #e infine si esegue il plot:
-plot(EN, col=cls) #si utilizza sempre il colore della ColorrampPalette scelta in 
+plot(EN, col=cls) #si utilizza sempre il colore della ColorRampPalette scelta in 
                   #precedenza.
 #Per vedere le informazioni di EN
 EN
@@ -90,7 +89,7 @@ par(mfrow=c(2,1))
 plot(EN$EN_0001, col=cls) 
 plot(EN$EN_0013, col=cls) 
 #Si tratta dello stesso meccanismo che si è fatto precedentemente però, mettendo
-#le due immagini prese direttamente dallo stack e non dall'importazione
+#le due immagini prese direttamente dallo "stack" e non dall'importazione
 #iniziale.
 
 #9. Compute a PCA over the 13 images.
@@ -111,12 +110,12 @@ summary(ENpca$model)
 #Cumulative Proportion   0.97804999  0.987067068  0.991598781  0.995157151 0.99811639 1.000000000
 
 dev.off()
-#e infine il plotRGB
-plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") ##si utilizza uno strech lineare
+#e infine il plotRGB:
+plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") #si utilizza uno strech lineare.
 #Tutto quello che appare rosso sarebbe quello che si è mantenuto piuttosto stabile 
 #nel tempo.
 
-#Dal summary si vedono le varie componenti e si nota che con la pirma si 
+#Dal "summary" si vedono le varie componenti e si nota che con la pirma si 
 #ha tutta la varianza del sistema.
 
 #10. Compute the local variability (local standard deviation) of the first PCA. 
@@ -125,5 +124,6 @@ plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") ##si utilizza uno strech lineare
 PC1sd <- focal(ENpca$map$PC1, w=matrix(1/9, nrow=3, ncol=3), fun=sd) #fun=sd-->deviazione standard
 #Dato che ENpca$PC1 non è esattamente una mappa, in quanto PC1 è dentro il Raster
 #Brick che a sua volta è ENpca$map.
+
 #Si esegue il plot:
 plot(PC1sd, col=cls)
