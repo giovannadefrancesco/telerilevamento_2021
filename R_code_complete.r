@@ -908,17 +908,17 @@ plot(dvi1, col=cl, main="DVI at time 1") #main serve per aggiungere il titolo al
 #difference vegetation index
 #Si fa la stessa cosa ma per DVI2:
 dvi2 <- defor2$defor2.1 - defor2$defor2.2
-#Il plot evidenzia molto bene la differenza di vegetazione
+#Il plot evidenzia molto bene la differenza di vegetazione:
 plot (dvi2)
 
 #Specifying a color scheme
 #Si sceglie una nuova colorRampPalette per rendere ancora meglio l'idea di questo
-#indice di vegetazione.
+#indice di vegetazione:
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
 #Si effettua il plot:
 plot(dvi2, col=cl, main="DVI at time 2")
 
-#Tramite la funzione par si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
+#Tramite la funzione "par" si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
 par(mfrow=c(2,1))
 plot(dvi1, col=cl, main="DVI at time 1")
 plot(dvi2, col=cl, main="DVI at time 2")
@@ -926,6 +926,7 @@ plot(dvi2, col=cl, main="DVI at time 2")
 #Si effettua una differenza dell'indice di vegetazione fra i 2 DVI:
 difdvi <- dvi1 - dvi2
 dev.off() #per togliere la disposizione del par precedente
+
 #Si sceglie una nuova colorRampPalette:
 cld <- colorRampPalette(c('blue','white','red'))(100)
 #Si effettua il plot:
@@ -1007,7 +1008,7 @@ levelplot(copNDVI)
 #tipi (classi) di copertura fisica della superficie terrestre, ad es. foreste, 
 #praterie, colture, laghi, zone umide. 
 #Le mappe dinamiche della copertura del suolo includono le transizioni delle 
-#classi di copertura del suolo nel tempo e quindi catturano i cambiamenti della
+#classi di copertura del suolo nel tempo e quindi, catturano i cambiamenti della
 #copertura del suolo. Le mappe dell'uso del suolo contengono informazioni spaziali 
 #sulle disposizioni, le attività e gli input che le persone intraprendono in un 
 #determinato tipo di copertura del suolo per produrlo, modificarlo o mantenerlo.
@@ -1038,7 +1039,7 @@ setwd("C:/lab/") # Windows
 #B2=red;
 #B3=green.
 
-#Si utilizza la funzione brick che serve a caricare l'intero pacco di dati della
+#Si utilizza la funzione "brick" che serve a caricare l'intero pacco di dati della
 #prima immagine del 1992:
 defor1 <-brick ("defor1.jpg")
 #Vengono plottate le immagini con la funzione plotRGB:
@@ -1048,21 +1049,21 @@ ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 #si ha la stessa immagine plottata con la funzione plotRGB ma con gli assi x ed 
 #y e le varie coordinate spaziali dell'oggetto.
 
-#Si procede con il caricare la seconda immagine del 2006 tramite la funzione brick:
+#Si procede con il caricare la seconda immagine del 2006 tramite la funzione "brick":
 defor2 <-brick ("defor2.jpg")
 #Vengono plottate le immagini con la funzione plotRGB:
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
+plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
 #Vengono plottate le immagini con la funzione ggRGB:
 ggRGB(defor2, r=1, g=2, b=3, stretch="lin")#si utilizza uno strech lineare.
 
 #Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#par su una righe e due colonne:
+#"par" su 1 riga e 2 colonne:
 par(mfrow=c(1,2))
 plotRGB(defor1, r=1, g=2, b=3, stretch="lin")
 plotRGB(defor2, r=1, g=2, b=3, stretch="lin")
 
 #E' possibile disporre le immagini anche per il plot della funzione ggRGB, non 
-#più con par ma con un'altra funzione chiamata grid.arrange.
+#più con "par" ma con un'altra funzione chiamata "grid.arrange".
 #Multiframe with ggplot2 and gridExtra
 p1 <- ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 p2 <- ggRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
@@ -1088,7 +1089,7 @@ plot(d1c$map)
 #Per la 2 IMMAGINE del 2006.
 #unsupervised classification--> classificazione non supervisionata.
 d2c <- unsuperClass(defor2, nClasses=2)
-#Per avere informazioni su dc2
+#Per avere informazioni su dc2:
 d2c
 #Viene plottata dc2 insieme alla mappa:
 plot(d2c$map)
@@ -1116,6 +1117,7 @@ somma1 <- 305195 + 36097
 somma1
 #e poi si imposta la proporzione:
 prop1 <- freq(d1c$map)/ somma1
+#Per vedere i valori di "prop1":
 prop1
 #value     count
 #[1,] 2.930042e-06 0.8954678 --> 89.54% di foresta
@@ -1127,6 +1129,7 @@ defor2
 somma2 <-342726
 #Per calcolare la proporzione dell'immagine del 2006:
 prop2 <- freq(d2c$map)/ somma2
+#Per vedere i valori di "prop1":
 prop2
 #value     count
 #[1,] 2.917783e-06 0.4789861 --> 47.89% parte agricola
@@ -1140,19 +1143,20 @@ cover <- c("Forest", "Agricolture") #Si mette la "c" perchè si tratta di un vet
 percent_1992 <- c(89.54, 10.45)
 percent_2006 <- c(52.10, 47.89)
 #La funzione per creare un dataframe è-->data.frame a cui poi si assegna un nome.
-percentages <- data.frame(cover, percent_1992, percent_2006 )
+percentages <- data.frame(cover, percent_1992, percent_2006)
+#Se si vogliono vedere le informazioni:
 percentages
 #cover percent_1992 percent_2006
 #1      Forest        89.54        52.10
 #2 Agricolture        10.45        47.89
 
-#Si esegue un grafico con ggplot per il 1992, più precisamente un grafico a barre
-#PRIMO PERIODO
+#Si esegue un grafico con ggplot per il 1992, più precisamente un grafico a barre.
+#PRIMO PERIODO:
 ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(stat="identity", fill="white")
 #Da questo plot si osserva che la parte agricola è molto meno rispetto alla foresta
 
 #Plot dell'immagine del 2006
-#SECONDO PERIODO
+#SECONDO PERIODO:
 ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 #Da questo plot le due barre si sono molto avvicinate, la parte agricola è molto
 #simile alla foresta.
@@ -1201,7 +1205,7 @@ sent <- brick("sentinel.png")
 #B3=green
 
 #Si plotta l'immagine con i tre livelli di default: r=1, g=2, b=3
-plotRGB(sent, stretch="lin") #si utilizza uno strech lineare
+plotRGB(sent, stretch="lin") #si utilizza uno strech lineare.
 #pltRGB (sent, r=1, g=2, b=3, stretch="lin")
 
 #Si plotta l'immagine con tre livelli ordinati in modo diverso dal plot precedente:
@@ -1241,7 +1245,7 @@ plot(ndvisd3)
 clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
 #Si esegue il plot:
 plot(ndvisd3, col=clsd)
-#Dal plot si nota che dove di vedono colori tendenti al rosso e al giallo si ha
+#Dal plot si nota che dove si vedono colori tendenti al rosso e al giallo si ha
 #una deviazione standard più alta verde e blu un pò più bassa ed è presente nelle 
 #zone più omogenee dove c'è la roccia nuda mentre aumenta, quindi è più verde, 
 #nelle zone dove si passa da roccia nuda alla parte vegetata, poi la deviazione 
@@ -1301,7 +1305,7 @@ summary(sentpca$model)
 #Si è intorno al 67.36804% di variabilità dalla prima componente.
 #The first PC contains explains 67.36804% of the original information.
   
-#Si unisce l'immagine sentpca alla mappa e alla prima componente (PC1) e infine
+#Si unisce l'immagine "sentpca" alla mappa e alla prima componente (PC1) e infine,
 #si associa ad un oggetto (pc1):
 pc1 <-sentpca$map$PC1 
 #Si misura la deviazione standard e si sceglie come grandezza della griglia (5x5):
@@ -1362,10 +1366,10 @@ grid.arrange(p1, p2, p3, nrow=1) #1 riga e 3 colonne con le rispettive legende.
 #R_code_NO2.r
 
 #Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
-install.packages("raster") #Viene installato il pacchetto raster.
+#install.packages("raster") #Viene installato il pacchetto raster.
 library(raster) #Viene caricato il pacchetto raster. 
 
-install.packages("RStoolbox") #Viene installato il pacchetto RStoolbox per 
+#install.packages("RStoolbox") #Viene installato il pacchetto RStoolbox per 
 #l'analisi multivariata.
 library(RStoolbox)#Viene caricato il pacchetto RStoolbox
 
@@ -1378,20 +1382,20 @@ setwd("C:/lab/EN") # Windows
 #We will select band 1, but the raster function enables to select other single-band
 
 #Visto che siamo interessati a caricare una sola banda si utilizzerà la 
-#funzione raster che ha bisogno dell'isstalazione del pacchetto a cui appartiene: 
+#funzione raster che ha bisogno dell'installazione del pacchetto a cui appartiene: 
 EN01<- raster("EN_0001.png")
 
-#3.Plot the first importaed image with your preferred Color Ramp Palette
+#3.Plot the first importaed image with your preferred ColorRampPalette
 #Si crea una ColorRampPalette:
 cls<-colorRampPalette(c("red","pink","orange","yellow"))(200)
 #Si esegue il plot:
 plot(EN01, col=cls)
 #Dal plot esce fuori che dove ci sono le zone in giallo significa che in Gennaio
-#si veva una presenza di N02 alto.
+#si aveva una presenza di N02 alto.
 
 #4.Import the last (13th) and plot it with the previous ColorrampPalette:
 #Si importa la tredicesima immagine e viene plottata con la precedente 
-#ColorrampPalette:
+#ColorRampPalette:
 EN0013<- raster("EN_0013.png")
 cls<-colorRampPalette(c("red","pink","orange","yellow"))(200)
 plot(EN0013, col=cls)
@@ -1416,7 +1420,7 @@ plot(ENdif2, col=cls)
 
 #6.Plot everything, altogether
 #Si passa a plottare tutte e tre le immagini che si sono prodotte:
-#Tramite il comando par le immagini vengono posizionate in 3 righe e una singola colonna:
+#Tramite il comando "par" le immagini vengono posizionate in 3 righe e una singola colonna:
 par(mfrow=c(3,1))
 plot(EN01, col=cls, main="NO2 in January") #si aggiunge il titolo
 plot(EN0013, col=cls, main="NO2 in March")
@@ -1425,21 +1429,21 @@ plot(ENdif1, col=cls, main="Difference (March-January)")
 #7.Import the whole set
 #Si vuole importare tutto il set di immagini (13) insieme:
 #Per prima cosa si costruisce una lista dei files:
-rlist <-list.files(pattern = "EN") #nel senso tutte le immgini hanno in comune "EN"
+rlist <-list.files(pattern = "EN") #nel senso tutte le immgini hanno in comune "EN".
 #Per vedere le informazioni di questa lista appena creata:
 rlist
 
-#A questo punto si applica la funzione raster tramite la funzione lapply a tutta 
+#A questo punto si applica la funzione raster tramite la funzione "lapply" a tutta 
 #la lista che si è realizzata e la si associa a un oggetto:
 import <-lapply(rlist,raster)
-#Si vedono le imformazioni di questo nuovo oggetto
+#Si vedono le informazioni di questo nuovo oggetto
 import
 #vengono visualizzati a video tutti i singoli layer importati.
 
-#A questo punto è possibile fare uno stack di tutti questi layer:
+#A questo punto è possibile fare uno "stack" di tutti questi layer:
 EN <- stack(import)
 #e infine si esegue il plot:
-plot(EN, col=cls) #si utilizza sempre il colore della ColorrampPalette scelta in 
+plot(EN, col=cls) #si utilizza sempre il colore della ColorRampPalette scelta in 
                   #precedenza.
 #Per vedere le informazioni di EN
 EN
@@ -1450,7 +1454,7 @@ par(mfrow=c(2,1))
 plot(EN$EN_0001, col=cls) 
 plot(EN$EN_0013, col=cls) 
 #Si tratta dello stesso meccanismo che si è fatto precedentemente però, mettendo
-#le due immagini prese direttamente dallo stack e non dall'importazione
+#le due immagini prese direttamente dallo "stack" e non dall'importazione
 #iniziale.
 
 #9. Compute a PCA over the 13 images.
@@ -1471,12 +1475,12 @@ summary(ENpca$model)
 #Cumulative Proportion   0.97804999  0.987067068  0.991598781  0.995157151 0.99811639 1.000000000
 
 dev.off()
-#e infine il plotRGB
-plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") ##si utilizza uno strech lineare
+#e infine il plotRGB:
+plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") #si utilizza uno strech lineare.
 #Tutto quello che appare rosso sarebbe quello che si è mantenuto piuttosto stabile 
 #nel tempo.
 
-#Dal summary si vedono le varie componenti e si nota che con la pirma si 
+#Dal "summary" si vedono le varie componenti e si nota che con la pirma si 
 #ha tutta la varianza del sistema.
 
 #10. Compute the local variability (local standard deviation) of the first PCA. 
@@ -1485,6 +1489,7 @@ plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") ##si utilizza uno strech lineare
 PC1sd <- focal(ENpca$map$PC1, w=matrix(1/9, nrow=3, ncol=3), fun=sd) #fun=sd-->deviazione standard
 #Dato che ENpca$PC1 non è esattamente una mappa, in quanto PC1 è dentro il Raster
 #Brick che a sua volta è ENpca$map.
+
 #Si esegue il plot:
 plot(PC1sd, col=cls)
 
@@ -1511,7 +1516,7 @@ library(ggplot2) #Viene caricato il pacchetto ggplot2.
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/") # Windows
 
-#Si esegue un brick in modo da caricare tutte le bande e si associa un nome:
+#Si esegue un "brick" in modo da caricare tutte le bande e si associa un nome:
 defor2 <- brick("defor2.jpg")
 #Se si vogliono vedere le informazioni:
 defor2 #si nota che ci sono 3 bande: 
@@ -1519,11 +1524,11 @@ defor2 #si nota che ci sono 3 bande:
 #     NIR,      red,    green.
 
 #Si esegue un plot di questa immagine:
-plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare
+plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare.
 #oppure
 plotRGB (defor2, r=1, g=2, b=3, stretch="his")#facendo un histogram strech
 #che invece di utilizzare una linea per trasformare e ampliare la gamma dei 
-#valori, utilizza una curva (chiamata curva logistica),che aumenta la pendenza
+#valori, utilizza una curva (chiamata curva logistica) che aumenta la pendenza
 #e quindi le differenze tra i due plot saranno molto più accentuate.
 
 #La funzione per creare firme spettrali si chiama "click" che è contenuta 
@@ -1589,7 +1594,7 @@ ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le ba
 #Si carica l'immagine defor1:
 defor1 <-brick("defor1.jpg")
 #Si esegue un plot dell'immagine defor1 con plotRGB:
-plotRGB (defor1, r=1, g=2, b=3, stretch="lin")#strech lineare
+plotRGB (defor1, r=1, g=2, b=3, stretch="lin")#strech lineare.
 
 #Spectral signatures defor1
 #Si procede creando delle sprectral signatures dell'immagine defor1:
@@ -1612,7 +1617,7 @@ click(defor1, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=pun
 #1 156.5 289.5 134389      208       16       31
 
 #Si esegue la stessa operazione per defor2 ma prima bisogna eseguire il plotRGB:
-plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#strech lineare
+plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#strech lineare.
 click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
 #Results:
 #     x     y  cell defor2.1 defor2.2 defor2.3
@@ -1629,9 +1634,9 @@ click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=pun
 #Ora si passa a creare il data.set
 #Define the columns of dataset.
 #Si definiscono le colonne del dataset:
-band <- c(1,2,3) #banda 1,2,3
-time1<- c(218, 13,30) #si inseriscono i valori di defor1 per il primo risultato
-time2 <- c(192,173,166) #si inseriscono i valori di defor2 per il primo risultato
+band <- c(1,2,3) #banda 1,2,3.
+time1<- c(218, 13,30) #si inseriscono i valori di defor1 per il primo risultato.
+time2 <- c(192,173,166) #si inseriscono i valori di defor2 per il primo risultato.
 
 #La funzione per fare la tabella è data.frame:
 spectrals <- data.frame(band, time1, time2)
@@ -1686,7 +1691,7 @@ ggplot(spectrals, aes(x=band))+
 #Si esegue lo stesso esercizio ma prendendo un'immagine da Earth Observatory
 #e la si mette nella cartella lab.
 
-#Si esegue un brick in modo da caricare tutte le bande e si associa un nome:
+#Si esegue un "brick" in modo da caricare tutte le bande e si associa un nome:
 eo <- brick("June_puzzler.jpg")
 #Si esegue un plot di questa immagine:
 plotRGB (eo, r=1, g=2, b=3, stretch="his") #histogram strech
