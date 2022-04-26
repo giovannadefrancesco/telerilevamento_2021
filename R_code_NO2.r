@@ -1,10 +1,11 @@
+#11. R code NO2
 #R_code_NO2.r
 
 #Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
-install.packages("raster") #Viene installato il pacchetto raster.
+#install.packages("raster") #Viene installato il pacchetto raster.
 library(raster) #Viene caricato il pacchetto raster. 
 
-install.packages("RStoolbox") #Viene installato il pacchetto RStoolbox per 
+#install.packages("RStoolbox") #Viene installato il pacchetto RStoolbox per 
 #l'analisi multivariata.
 library(RStoolbox)#Viene caricato il pacchetto RStoolbox
 
@@ -17,7 +18,7 @@ setwd("C:/lab/EN") # Windows
 #We will select band 1, but the raster function enables to select other single-band
 
 #Visto che siamo interessati a caricare una sola banda si utilizzerà la 
-#funzione raster che ha bisogno dell'isstalazione del pacchetto a cui appartiene: 
+#funzione raster che ha bisogno dell'installazione del pacchetto a cui appartiene: 
 EN01<- raster("EN_0001.png")
 
 #3.Plot the first importaed image with your preferred Color Ramp Palette
@@ -26,7 +27,7 @@ cls<-colorRampPalette(c("red","pink","orange","yellow"))(200)
 #Si esegue il plot:
 plot(EN01, col=cls)
 #Dal plot esce fuori che dove ci sono le zone in giallo significa che in Gennaio
-#si veva una presenza di N02 alto.
+#si aveva una presenza di N02 alto.
 
 #4.Import the last (13th) and plot it with the previous ColorrampPalette:
 #Si importa la tredicesima immagine e viene plottata con la precedente 
@@ -126,6 +127,3 @@ PC1sd <- focal(ENpca$map$PC1, w=matrix(1/9, nrow=3, ncol=3), fun=sd) #fun=sd-->d
 #Brick che a sua volta è ENpca$map.
 #Si esegue il plot:
 plot(PC1sd, col=cls)
-
-
-
