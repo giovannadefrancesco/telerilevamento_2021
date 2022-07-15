@@ -1503,7 +1503,7 @@ plot(PC1sd, col=cls)
 
 #12. R code spetral signature
 #R_code_spectral_signatures.r
-#Le spectrak signature non sono altro che delle impronte digitali 
+#Le spectral signature non sono altro che delle impronte digitali 
 #delle immagini satellitari.
 
 #Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
@@ -1530,11 +1530,11 @@ defor2 #si nota che ci sono 3 bande:
 #     NIR,      red,    green.
 
 #Si esegue un plot di questa immagine:
-plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare.
+plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare
 #oppure
 plotRGB (defor2, r=1, g=2, b=3, stretch="his")#facendo un histogram strech
 #che invece di utilizzare una linea per trasformare e ampliare la gamma dei 
-#valori, utilizza una curva (chiamata curva logistica) che aumenta la pendenza
+#valori, utilizza una curva (chiamata curva logistica),che aumenta la pendenza
 #e quindi le differenze tra i due plot saranno molto più accentuate.
 
 #La funzione per creare firme spettrali si chiama "click" che è contenuta 
@@ -1590,7 +1590,7 @@ ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le ba
                                 #sull'asse y le riflettanze della foresta e dell'acqua.
   geom_line(aes(y = forest), color ="green") + #geom_line connette le osservazioni
                                                #che si hanno a seconda del dato 
-                                               #che si #è definito sulla x.
+                                               #che si è definito sulla x.
   geom_line(aes(y = water), color ="blue") + #da cui esce che l'acqua ha un comportamento
                                              #diametralmente opposto rispetto alla vegetazione.
   labs(x="band",y="reflectance") #si aggiungono le etichette agli assi.
@@ -1600,7 +1600,7 @@ ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le ba
 #Si carica l'immagine defor1:
 defor1 <-brick("defor1.jpg")
 #Si esegue un plot dell'immagine defor1 con plotRGB:
-plotRGB (defor1, r=1, g=2, b=3, stretch="lin")#strech lineare.
+plotRGB (defor1, r=1, g=2, b=3, stretch="lin")#strech lineare
 
 #Spectral signatures defor1
 #Si procede creando delle sprectral signatures dell'immagine defor1:
@@ -1623,7 +1623,7 @@ click(defor1, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=pun
 #1 156.5 289.5 134389      208       16       31
 
 #Si esegue la stessa operazione per defor2 ma prima bisogna eseguire il plotRGB:
-plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#strech lineare.
+plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#strech lineare
 click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
 #Results:
 #     x     y  cell defor2.1 defor2.2 defor2.3
@@ -1640,9 +1640,9 @@ click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=pun
 #Ora si passa a creare il data.set
 #Define the columns of dataset.
 #Si definiscono le colonne del dataset:
-band <- c(1,2,3) #banda 1,2,3.
-time1<- c(218, 13,30) #si inseriscono i valori di defor1 per il primo risultato.
-time2 <- c(192,173,166) #si inseriscono i valori di defor2 per il primo risultato.
+band <- c(1,2,3) #banda 1,2,3
+time1<- c(218, 13,30) #si inseriscono i valori di defor1 per il primo risultato
+time2 <- c(192,173,166) #si inseriscono i valori di defor2 per il primo risultato
 
 #La funzione per fare la tabella è data.frame:
 spectrals <- data.frame(band, time1, time2)
@@ -1720,7 +1720,7 @@ stratumyellow <- c(172,113,0) #si inseriscono i valori dell'immagine per la zona
 stratumgreen <- c(11,150,0) #si inseriscono i valori dell'immagine per la zona green
 stratumblue <- c(36,33,26) #si inseriscono i valori dell'immagine per la zona blue
 
-#La funzione per fare la tabella è data.frame:
+#La funzione per fare la tabella è "data.frame":
 spectralsg <- data.frame(band, stratumyellow, stratumgreen, stratumblue)
 #Per visualizzare la tabella:
 spectralsg 
