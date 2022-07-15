@@ -20,11 +20,11 @@ setwd("C:/lab/greenland") # Windows
 #RICORDA:Il formato raster è formato da pixel, quadratini che hanno valori di riflettanza.
 
 #In questo caso non avendo un unico file ma avendone quattro, non è possibile 
-#utilizzare la funzione brick e quindi, bisogna importarli singolarmente.
+#utilizzare la funzione "brick" e quindi, bisogna importarli singolarmente.
 #Ogni file rappresenta la stima della temperatura (lst) e derivano da Copernicus.
 
 #La funzione per caricare i singoli dati/singoli strati e NON un pacchetto di dati, 
-#si chiama raster.
+#si chiama "raster".
 
 #Importazione PRIMA IMMAGINE del 2000:
 #Si assegna la funzione raster all'oggetto lst_2000.tif (si utilizzano le virgolette 
@@ -51,7 +51,7 @@ lst_2015 <- raster ("lst_2015.tif")
 #Viene plottata la quarta immagine:
 plot(lst_2015)
 
-#Creazione di un multi-pannel con le 4 immagini, utilizzando il comando par: 
+#Creazione di un multi-pannel con le 4 immagini, utilizzando il comando "par": 
 par(mfrow=c(2,2))
 plot(lst_2000)
 plot(lst_2005)
@@ -60,69 +60,72 @@ plot(lst_2015)
 
 #Metodo per importare tutte le immaginin insieme:
 #lapplay: si può applicare una certa funzione (raster) a una lista di file.
-#Si procede creando una lista tramite la funzione list.files di tutti i file lst
-#e applicare a tutti la funzione raster.
+#Si procede creando una lista tramite la funzione "list.files" di tutti i file "lst"
+#e si applica a tutti la funzione "raster".
 rlist <- list.files(pattern="lst") #pattern è quella "scritta" che hanno in comune
                                    #nei loro nomi i files. Quest'ultimo oggetto 
-                                   #poi. si associa a un nome.
+                                   #poi si associa a un nome.
 rlist #è la lista di tutti i file, dentro la cartelle greenland, che hanno al 
-      #loro interno la scritta lst.
+      #loro interno la scritta "lst".
 #Si vuole ottenere quella famosa lista di file, alla quale applicare la funzione
-#raster con la funzione lapply.
+#"raster" con la funzione "lapply".
 
-#Si applica la funzione raster a tutta la lista tramite lapply.
-#La funzione  lapply viene applicata a tutta la lista di file che si è appena creata 
-#utilizzando la funzione raster che importa tutti i file, a cui si associa un nome
+#Si applica la funzione "raster" a tutta la lista tramite "lapply".
+#La funzione  "lapply" viene applicata a tutta la lista di file che si è appena creata 
+#utilizzando la funzione "raster" che importa tutti i file, a cui si associa un nome
 #(in questo caso import):
 import<-lapply(rlist,raster)
+#Per vedere le informazioni:
 import
 #Si sono importati 4 file singolarmente.
 
-#Si procede con il costruire il pacchetto di file tutto insieme utilizzando la 
-#funzione stack e a cui si associa un nome (TGr):
+#Si procede con il costruire il pacchetto di file tutto insieme, utilizzando la 
+#funzione "stack" e a cui si associa un nome (TGr):
 TGr<-stack(import)
 TGr #si hanno tutte le informazioni utili del RasterStack.
 plot(TGr) #in questo modo viene plottato il singolo file.
-dev.off
+dev.off() #funzione che serve per chiudere la finestra precedente.
 
 #Per creare un file in cui si sovrappongono le immagini dei vari anni:
 plotRGB(TGr, 1, 2, 3, stretch="lin")
 #nel livello Red, si mette il file 1 (2000), nel livello Green il file 2(2005) e
 #nel livello Blue il file 3(2010).
 
-#In questo caso se si hanno i valori rossi e ciò significa che si hanno valori più 
-#alti di lst nella mappa del 2000;
+#In questo caso se si hanno i valori rossi, ciò significa che si hanno valori più 
+#alti di "lst" nella mappa del 2000;
 
-#Se si hanno valori verdi si hanno valori di lst più alti nella mappa del 2005
+#Se si hanno valori verdi si hanno valori di "lst" più alti nella mappa del 2005
 
-#Se si hanno valori blu si hanno valori di lst più alti nella mappa del 2010.
+#Se si hanno valori blu si hanno valori di "lst" più alti nella mappa del 2010.
 
 #Siccome la mappa che si è plottata con questi ultimi comandi è abbastanza scura
 #nel centro, questo potrebbe significare che si hanno valori più alti nel 2010.
 
-#Si può fare lo stesso ragionamento utilizzando però, le immagini del 2005, 2010 e 2015:
+#Si può estendere lo stesso ragionamento utilizzando però, le immagini del 2005, 
+#2010 e 2015:
 plotRGB(TGr, 2, 3, 4, stretch="lin")
 #nel livello Red, si mette il file 2 (2005), nel livello Green il file 3 (2010) 
 #e nel livello blue il file 4(2015).
+
 #Si ottiene un'immagine molto simile a quella precedente con la parte blu che 
 #riguarda i valori più alti.
 
-#E' possibile anche invertire, ovvero mettere nel livello Red, si mette il file
-#4 (2015), nel livello Green il file 3 (2010) e nel livello blue il file 2 (2005).
+#E' possibile anche invertire, ovvero mettere nel livello Red il file 4 (2015), 
+#nel livello Green il file 3 (2010) e nel livello blue il file 2 (2005).
 plotRGB(TGr, 4, 3, 2, stretch="lin")
-dev.off()
+dev.off()#funzione che serve per chiudere la finestra precedente.
 
 #######GIORNO 7
-#Questa funzione disegna grafici di livello e grafici di contorno.
+#Questa funzione "level plot" disegna grafici di livello e grafici di contorno.
 levelplot(TGr)#grafico con tutte e 4 le mappe.
 levelplot(TGr$lst_2000)#grafico con una singola mappa di come varia la temperatura
                        #nell'area in esame.
 #Dal grafico plottato si nota che dove sono presenti i ghiacci, si ha un valore 
 #di lst più basso.
 
-#Per cambiare i colori eabbelire il plot si utilizza una colorRampPalette
+#Per cambiare i colori e abbelire il "plot" si utilizza una colorRampPalette
 cl<- colorRampPalette(c("blue","light blue", "pink","red"))(100)
-#Per cambiare il colore della mappa finale si utilizza col.regions.
+#Per cambiare il colore della mappa finale si utilizza "col.regions".
 levelplot(TGr, col.regions=cl)
 #Facendo questo plot con dei nuovi colori che si sono stabiliti, è possibile 
 #vedere multitemporalmente cosa è successo in questa zona di studio.
@@ -130,27 +133,28 @@ levelplot(TGr, col.regions=cl)
 #colore celeste, una temperatura un po' più alta, da un anno all'altro. 
 #Si nota un trend di cambiamento di temperatura dal 2000 al 2015.
 
-#A differenza della funzione plot, la funzione levelplot è più compatta, inoltre
-#le coordinate sono messe solo sul primo asse y e il primo asse x sotto,la 
-#legenda è unica e i colori sono migliori.
+#A differenza della funzione "plot", la funzione "levelplot" è più compatta, inoltre
+#le coordinate sono messe solo sul primo asse y e l'asse x sotto,la legenda è 
+#unica e i colori sono migliori.
 
 #Per cambiare i titoli delle immagini:
 levelplot(TGr,col.regions=cl, names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
-#names.attr è l'argomento della funzione levelplot per nominare i singoli attributi
-#e si inseriscono i 4 blocchi, siccome si tratta di un vettore di 4 cose diverse
+#"names.attr" è l'argomento della funzione "levelplot" per nominare i singoli attributi
+#e si inseriscono i 4 blocchi. Siccome si tratta di un vettore di 4 elementi diversi
 #bisogna aggiungere anche la c.
 
-#Si imposta come titolo generale la variazione del LSTnel tempo con la 
-#funzione main (si mettono tra virgolette perchè si tratta di un testo):
+#Si imposta come titolo generale la variazione del LST nel tempo con la 
+#funzione "main" (si mettono tra virgolette perchè si tratta di un testo):
 levelplot(TGr,col.regions=cl, main="LST variation in time",
           names.attr=c("July 2000","July 2005", "July 2010", "July 2015"))
 
-#Melt, dati in riferimento allo scioglimento dei ghiacciai:
-#Visto che si hanno tante immagini, si crea una lista:
+#"Melt", dati in riferimento allo scioglimento dei ghiacciai:
+#Visto che si hanno tante immagini, si crea una lista con i file che hanno lo
+#stesso "pattern":
 meltlist <- list.files(pattern="melt")
-#Si importano i file con la funzione lapplay:
+#Si importano i file con la funzione "lapplay":
 melt_import <- lapply(meltlist,raster)
-#Si raggruppano tutti i file con la funzione stack, mettendoli tutti insieme:
+#Si raggruppano tutti i file con la funzione "stack", mettendoli tutti insieme:
 melt <- stack(melt_import)
 #Per vedere informazioni più specifiche dei dati:
 melt
@@ -159,7 +163,7 @@ levelplot(melt)
 #Vengono rappresentati i valori di scioglimento dei ghiacci: più è alto 
 #il valore, maggiore sarà lo scioglimento. Questo è possibile notarlo tra il
 #primo anno (1979) e l'ultimo anno (2007), la striscia di ghiaccio che si è persa
-#è molto più grande rispetto a quella del'79.
+#è molto più grande rispetto a quella del 1979.
 
 #A tal proposito è possibile eseguire "METRICS ALGEBRA", ovvero algebra applicata
 #a delle matrici.
@@ -179,5 +183,5 @@ plot(melt_amount, col=clb)
 #Per vedere maggiori informazioni, come il minimo e il massimo si scrive:
 melt_amount
 
-#e poi un level plot:
+#e poi un "levelplot":
 levelplot(melt_amount, col.regions=clb)
