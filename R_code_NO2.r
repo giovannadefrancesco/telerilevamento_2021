@@ -8,6 +8,9 @@ library(raster) #Viene caricato il pacchetto raster.
 #l'analisi multivariata.
 library(RStoolbox)#Viene caricato il pacchetto RStoolbox
 
+#install.packages("ggplot2") #Viene installato il pacchetto ggplot2.
+library(ggplot2) #Viene caricato il pacchetto ggplot2.
+
 #1.Set the working directory EN.
 #Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
@@ -17,24 +20,24 @@ setwd("C:/lab/EN") # Windows
 #We will select band 1, but the raster function enables to select other single-band
 
 #Visto che siamo interessati a caricare una sola banda si utilizzerà la 
-#funzione raster che ha bisogno dell'installazione del pacchetto a cui appartiene: 
+#funzione "raster" che ha bisogno dell'installazione del pacchetto a cui appartiene: 
 EN01<- raster("EN_0001.png")
 
-#3.Plot the first importaed image with your preferred ColorRampPalette
+#3.Plot the first importaed image with your preferred Color Ramp Palette
 #Si crea una ColorRampPalette:
 cls<-colorRampPalette(c("red","pink","orange","yellow"))(200)
 #Si esegue il plot:
 plot(EN01, col=cls)
 #Dal plot esce fuori che dove ci sono le zone in giallo significa che in Gennaio
-#si aveva una presenza di N02 alto.
+#si veva una presenza di N02 alto.
 
 #4.Import the last (13th) and plot it with the previous ColorrampPalette:
 #Si importa la tredicesima immagine e viene plottata con la precedente 
-#ColorRampPalette:
+#ColorrampPalette:
 EN0013<- raster("EN_0013.png")
 cls<-colorRampPalette(c("red","pink","orange","yellow"))(200)
 plot(EN0013, col=cls)
-#Dal plot si nota che a da i primi di Gennaio alla fine di Marzo, la situazione
+#Dal plot si nota che dai primi di Gennaio alla fine di Marzo, la situazione
 #è migliorata.
 
 #5.Make the difference between the two images and plot it.
@@ -64,21 +67,21 @@ plot(ENdif1, col=cls, main="Difference (March-January)")
 #7.Import the whole set
 #Si vuole importare tutto il set di immagini (13) insieme:
 #Per prima cosa si costruisce una lista dei files:
-rlist <-list.files(pattern = "EN") #nel senso tutte le immgini hanno in comune "EN".
+rlist <-list.files(pattern = "EN") #nel senso tutte le immgini hanno in comune "EN"
 #Per vedere le informazioni di questa lista appena creata:
 rlist
 
-#A questo punto si applica la funzione raster tramite la funzione "lapply" a tutta 
+#A questo punto si applica la funzione "raster! tramite la funzione lapply a tutta 
 #la lista che si è realizzata e la si associa a un oggetto:
 import <-lapply(rlist,raster)
-#Si vedono le informazioni di questo nuovo oggetto
+#Si vedono le imformazioni di questo nuovo oggetto
 import
 #vengono visualizzati a video tutti i singoli layer importati.
 
-#A questo punto è possibile fare uno "stack" di tutti questi layer:
+#A questo punto è possibile fare uno stack di tutti questi layer:
 EN <- stack(import)
 #e infine si esegue il plot:
-plot(EN, col=cls) #si utilizza sempre il colore della ColorRampPalette scelta in 
+plot(EN, col=cls) #si utilizza sempre il colore della ColorrampPalette scelta in 
                   #precedenza.
 #Per vedere le informazioni di EN
 EN
@@ -89,7 +92,7 @@ par(mfrow=c(2,1))
 plot(EN$EN_0001, col=cls) 
 plot(EN$EN_0013, col=cls) 
 #Si tratta dello stesso meccanismo che si è fatto precedentemente però, mettendo
-#le due immagini prese direttamente dallo "stack" e non dall'importazione
+#le due immagini prese direttamente dallo ""stack e non dall'importazione
 #iniziale.
 
 #9. Compute a PCA over the 13 images.
@@ -109,13 +112,13 @@ summary(ENpca$model)
 #Proportion of Variance  0.01064361  0.009017081  0.004531713  0.003558371 0.00295924 0.001883609
 #Cumulative Proportion   0.97804999  0.987067068  0.991598781  0.995157151 0.99811639 1.000000000
 
-dev.off()
+dev.off() #funzione che serve per chiudere la finestra precedente.
 #e infine il plotRGB:
-plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") #si utilizza uno strech lineare.
+plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") ##si utilizza uno strech lineare
 #Tutto quello che appare rosso sarebbe quello che si è mantenuto piuttosto stabile 
 #nel tempo.
 
-#Dal "summary" si vedono le varie componenti e si nota che con la pirma si 
+#Dal summary si vedono le varie componenti e si nota che con la pirma si 
 #ha tutta la varianza del sistema.
 
 #10. Compute the local variability (local standard deviation) of the first PCA. 
@@ -124,6 +127,5 @@ plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") #si utilizza uno strech lineare.
 PC1sd <- focal(ENpca$map$PC1, w=matrix(1/9, nrow=3, ncol=3), fun=sd) #fun=sd-->deviazione standard
 #Dato che ENpca$PC1 non è esattamente una mappa, in quanto PC1 è dentro il Raster
 #Brick che a sua volta è ENpca$map.
-
 #Si esegue il plot:
 plot(PC1sd, col=cls)
