@@ -466,7 +466,6 @@ melt_amount
 #e poi un "levelplot":
 levelplot(melt_amount, col.regions=clb)
 
-
 #---------------------------------------------------------------------------------
 
 #3. R code Copernicus data
@@ -550,9 +549,6 @@ stitch("R_code_greenland.r.txt", template=system.file("misc", "knitr-template.Rn
 
 #5. R code multivariate analysis
 #R_code_multivariate_analysis.r
-#L'analisi multivariata si utilizza, per esempio, per diminuire un set di variabili
-#che si hanno a disposizione oppure per testare la capacità di un fiume di scavare
-#una certa valle.
 
 library(raster) #Viene caricato il pacchetto raster.
 library(RStoolbox) #Viene caricato il pacchetto RStoolbox.
@@ -562,7 +558,7 @@ library(RStoolbox) #Viene caricato il pacchetto RStoolbox.
 setwd("C:/lab/") # Windows
 
 #Si procede caricando l'immagine con tutte e 7 le bande tramite 
-#la funzione brick che serve per caricare direttamente un pacchetto di dati, a 
+#la funzione "brick" che serve per caricare direttamente un pacchetto di dati, a 
 #cui viene associato un nome (p224r63_2011):
 p224r63_2011 <-brick("p224r63_2011_masked.grd")
 #Per vedere le informazioni delle immagini:
@@ -570,6 +566,7 @@ p224r63_2011
 #Si plotta l'immagine da cui vengono fuori le 7 bande:
 plot(p224r63_2011)
 
+#Le varie bande di LANDSAT sono distribuite in questo modo:
 # B1: blu (blue) 
 # B2: verde (green)
 # B3: rosso (red)
@@ -578,10 +575,10 @@ plot(p224r63_2011)
 # B6: infrarosso termico o lontano 
 # B7: infrarosso medio 
 
-#Si plottano i valori della banda 1 blu contro i valori della banda 2 del verde
+#Si plottano i valori della banda 1 (blu) contro i valori della banda 2 del verde
 #in questo modo:
 plot(p224r63_2011$B1_sre, p224r63_2011$B2_sre, col="red", pch=19, cex=2)
-#per mettere in evidenza il plot si utilizza il rosso, con "pch" si intende il 
+#Per mettere in evidenza il plot si utilizza il rosso, il "pch" si intende il 
 #simbolo che si vuole utilizzare e "cex" indica la dimensione del parametro grafico
 #che si è scelto.
 
@@ -612,10 +609,10 @@ p224r63_2011res <- aggregate(p224r63_2011, fact=10)
 #ricampionamento (ovvero quante volte s vuole diminuire la risoluzione oppure 
 #quante volte si vuole aumentare la grandezza del pixel) pari a 10.
 #Il pixel non sarà più di 30m ma di 300m -->aumentare la grandezza del pixel 
-#significa diminuire la risoluzione, maggiore è il dettaglio, più fitta è la risoluzione.
+#significa diminuire la risoluzione. Maggiore è il dettaglio, più fitta è la risoluzione.
 p224r63_2011res
 
-#Per plottare le due immagini e metterle a confronto si utilizza il comando "par":
+#Per plottare le due immagini e metterle a confronto si utilizza il comando par:
 par(mfrow=c(2,1))
 #Si plotta con RGB l'immagine 30x30 pixel (si riporta l'immagine originale (p224r63_2011),
 #alla componente rossa si mette la banda dell'infrarosso, a quella verde si mette
@@ -625,17 +622,17 @@ plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="lin")
 plotRGB(p224r63_2011res, r=4, g=3, b=2, stretch="lin")
 
 #La funzione PCA ("Principal Components Analysis) consiste nel prendere i 
-#dati originali e si  fa passare un asse lungo la variabilità maggiore e l'altro asse
+#dati originali e si passa un asse lungo la variabilità maggiore e l'altro asse
 #lungo la variabilità minore.
-#La rasterPCA-->prende il pacchetto di dati e va a compattarli in un numero 
+#La "rasterPCA"-->prende il pacchetto di dati e va a compattarli in un numero 
 #minore di bande.
-#Alla funzione rasterPCA si fa seguire l'immagine che si è appena ricampionata
+#Alla funzione "rasterPCA" si fa seguire l'immagine che si è appena ricampionata
 #e la si associa ad un nuovo nome/oggetto (p224r63_2011res_pca).
 p224r63_2011res_pca <-rasterPCA(p224r63_2011res)
 
-#La funzione "summary" ci dà un sommario del modello. Alla funzine "summary", si fa 
+#La funzione "summay" ci dà un sommario del modello. Alla funzine "summary", si fa 
 #seguire il nome di quello che si è appena generato e lo si lega con il simbolo 
-#del $ al modello.
+#del dollaro al modello.
 summary(p224r63_2011res_pca$model)
 #Questo risultato afferma che la PC1 spiega il 99,83% della variabilità del sistema.
 #Mentre con tutte le bande si arriverà al 100%. 
@@ -645,12 +642,12 @@ plot(p224r63_2011res_pca$map)
 #Da questo plot si ottiene che la prima componente ha tanta deformazione
 #quindi, con tanta variabilità mentre l'ultima componente ha il residuo.
 #Il PC1 ha tutte le informazioni: si vede bene la foresta, la parte agricola;
-#nella PC7 non si distingue più nulla.
+#la PC7 non si distingue più nulla.
 #SINTESI: La prima componente è quella che spiega più variabilità.
 
 #Si hanno tutte le informazioni:
 p224r63_2011res_pca
-dev.off()
+dev.off()#funzione che serve per chiudere la finestra precedente.
 
 #Si esegue un plotRGB con le prime 3 componenti principali:
 plotRGB(p224r63_2011res_pca$map, r=1, g=2, b=3, stretch="lin")
@@ -662,7 +659,7 @@ plotRGB(p224r63_2011res_pca$map, r=1, g=2, b=3, stretch="lin")
 plot(p224r63_2011res_pca$map$PC1, p224r63_2011res_pca$map$PC2)
 
 #Per vedere tutti i blocchi del file e quali informazioni possono dare sulla 
-#struttura informatica del file si utilizza il comando str:
+#struttura informatica del file si utilizza il comando "str":
 str(p224r63_2011res_pca)
 
 #--------------------------------------------------------------------------------
