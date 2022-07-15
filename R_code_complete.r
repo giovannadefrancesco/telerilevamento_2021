@@ -1015,7 +1015,7 @@ levelplot(copNDVI)
 #tipi (classi) di copertura fisica della superficie terrestre, ad es. foreste, 
 #praterie, colture, laghi, zone umide. 
 #Le mappe dinamiche della copertura del suolo includono le transizioni delle 
-#classi di copertura del suolo nel tempo e quindi, catturano i cambiamenti della
+#classi di copertura del suolo nel tempo e quindi catturano i cambiamenti della
 #copertura del suolo. Le mappe dell'uso del suolo contengono informazioni spaziali 
 #sulle disposizioni, le attività e gli input che le persone intraprendono in un 
 #determinato tipo di copertura del suolo per produrlo, modificarlo o mantenerlo.
@@ -1058,18 +1058,18 @@ ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 
 #Si procede con il caricare la seconda immagine del 2006 tramite la funzione "brick":
 defor2 <-brick ("defor2.jpg")
-#Vengono plottate le immagini con la funzione plotRGB:
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
-#Vengono plottate le immagini con la funzione ggRGB:
+#Vengono plottate le immagini con la funzione "plotRGB":
+plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
+#Vengono plottate le immagini con la funzione "ggRGB":
 ggRGB(defor2, r=1, g=2, b=3, stretch="lin")#si utilizza uno strech lineare.
 
 #Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#"par" su 1 riga e 2 colonne:
+#"par" su una righe e due colonne:
 par(mfrow=c(1,2))
-plotRGB(defor1, r=1, g=2, b=3, stretch="lin")
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin")
+plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
+plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 
-#E' possibile disporre le immagini anche per il plot della funzione ggRGB, non 
+#E' possibile disporre le immagini anche per il plot della funzione "ggRGB", non 
 #più con "par" ma con un'altra funzione chiamata "grid.arrange".
 #Multiframe with ggplot2 and gridExtra
 p1 <- ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
@@ -1079,24 +1079,24 @@ grid.arrange(p1, p2, nrow=2)
 
 #Per la 1 IMMAGINE del 1992.
 #Unsupervised classification--> Classificazione non supervisionata, significa 
-#che fa tutto il sistema/software, in questo modo ques'ultimo crea le classi e 
+#che fa tutto il sistema/software, in questo modo quest'ultimo crea le classi e 
 #poi va avanti con la classificazione.
-#La funzione unsuperClass ha come sintassi: (l'immagine da inserire, il numero
+#La funzione "unsuperClass" ha come sintassi: (l'immagine da inserire, il numero
 #di campioni che si lascerà di default, numero di calssi):
 d1c <- unsuperClass(defor1, nClasses=2)
 #Per avere informazioni su quello che si è appena creato:
 d1c
 #Viene plottata dc1 insieme alla mappa:
 plot(d1c$map)
-#Dal plot esce fuori che la clsse 1 indica foresta mentre la 
+#Dal plot esce fuori che la classe 1 indica foresta mentre la 
 #classe 2: la zona agricola
 
-#La funzione set.seed () permette di ottenere lo stesso risultato.
+#La funzione "set.seed" () permette di ottenere lo stesso risultato.
 
 #Per la 2 IMMAGINE del 2006.
 #unsupervised classification--> classificazione non supervisionata.
 d2c <- unsuperClass(defor2, nClasses=2)
-#Per avere informazioni su dc2:
+#Per avere informazioni su dc2
 d2c
 #Viene plottata dc2 insieme alla mappa:
 plot(d2c$map)
@@ -1124,7 +1124,6 @@ somma1 <- 305195 + 36097
 somma1
 #e poi si imposta la proporzione:
 prop1 <- freq(d1c$map)/ somma1
-#Per vedere i valori di "prop1":
 prop1
 #value     count
 #[1,] 2.930042e-06 0.8954678 --> 89.54% di foresta
@@ -1136,7 +1135,6 @@ defor2
 somma2 <-342726
 #Per calcolare la proporzione dell'immagine del 2006:
 prop2 <- freq(d2c$map)/ somma2
-#Per vedere i valori di "prop1":
 prop2
 #value     count
 #[1,] 2.917783e-06 0.4789861 --> 47.89% parte agricola
@@ -1150,20 +1148,19 @@ cover <- c("Forest", "Agricolture") #Si mette la "c" perchè si tratta di un vet
 percent_1992 <- c(89.54, 10.45)
 percent_2006 <- c(52.10, 47.89)
 #La funzione per creare un dataframe è-->data.frame a cui poi si assegna un nome.
-percentages <- data.frame(cover, percent_1992, percent_2006)
-#Se si vogliono vedere le informazioni:
+percentages <- data.frame(cover, percent_1992, percent_2006 )
 percentages
 #cover percent_1992 percent_2006
 #1      Forest        89.54        52.10
 #2 Agricolture        10.45        47.89
 
-#Si esegue un grafico con ggplot per il 1992, più precisamente un grafico a barre.
-#PRIMO PERIODO:
+#Si esegue un grafico con "ggplot" per il 1992, più precisamente un grafico a barre
+#PRIMO PERIODO
 ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(stat="identity", fill="white")
 #Da questo plot si osserva che la parte agricola è molto meno rispetto alla foresta
 
 #Plot dell'immagine del 2006
-#SECONDO PERIODO:
+#SECONDO PERIODO
 ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 #Da questo plot le due barre si sono molto avvicinate, la parte agricola è molto
 #simile alla foresta.
@@ -1172,7 +1169,7 @@ ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="
 p1 <- ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(stat="identity", fill="white")
 p2 <- ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 
-#Funzione per assemblare più grafici su una stessa schermata:
+#Funzione per assemblare più grafici su una pagina:
 grid.arrange(p1, p2, nrow=1)
 
 #--------------------------------------------------------------------------------
