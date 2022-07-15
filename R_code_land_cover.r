@@ -34,7 +34,7 @@ setwd("C:/lab/") # Windows
 #B2=red;
 #B3=green.
 
-#Si utilizza la funzione brick che serve a caricare l'intero pacco di dati della
+#Si utilizza la funzione "brick" che serve a caricare l'intero pacco di dati della
 #prima immagine del 1992:
 defor1 <-brick ("defor1.jpg")
 #Vengono plottate le immagini con la funzione plotRGB:
@@ -44,21 +44,21 @@ ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 #si ha la stessa immagine plottata con la funzione plotRGB ma con gli assi x ed 
 #y e le varie coordinate spaziali dell'oggetto.
 
-#Si procede con il caricare la seconda immagine del 2006 tramite la funzione brick:
+#Si procede con il caricare la seconda immagine del 2006 tramite la funzione "brick":
 defor2 <-brick ("defor2.jpg")
-#Vengono plottate le immagini con la funzione plotRGB:
+#Vengono plottate le immagini con la funzione "plotRGB":
 plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
-#Vengono plottate le immagini con la funzione ggRGB:
+#Vengono plottate le immagini con la funzione "ggRGB":
 ggRGB(defor2, r=1, g=2, b=3, stretch="lin")#si utilizza uno strech lineare.
 
 #Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#par su una righe e due colonne:
+#"par" su una righe e due colonne:
 par(mfrow=c(1,2))
-plotRGB(defor1, r=1, g=2, b=3, stretch="lin")
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin")
+plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
+plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 
-#E' possibile disporre le immagini anche per il plot della funzione ggRGB, non 
-#più con par ma con un'altra funzione chiamata grid.arrange.
+#E' possibile disporre le immagini anche per il plot della funzione "ggRGB", non 
+#più con "par" ma con un'altra funzione chiamata "grid.arrange".
 #Multiframe with ggplot2 and gridExtra
 p1 <- ggRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 p2 <- ggRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
@@ -67,19 +67,19 @@ grid.arrange(p1, p2, nrow=2)
 
 #Per la 1 IMMAGINE del 1992.
 #Unsupervised classification--> Classificazione non supervisionata, significa 
-#che fa tutto il sistema/software, in questo modo ques'ultimo crea le classi e 
+#che fa tutto il sistema/software, in questo modo quest'ultimo crea le classi e 
 #poi va avanti con la classificazione.
-#La funzione unsuperClass ha come sintassi: (l'immagine da inserire, il numero
+#La funzione "unsuperClass" ha come sintassi: (l'immagine da inserire, il numero
 #di campioni che si lascerà di default, numero di calssi):
 d1c <- unsuperClass(defor1, nClasses=2)
 #Per avere informazioni su quello che si è appena creato:
 d1c
 #Viene plottata dc1 insieme alla mappa:
 plot(d1c$map)
-#Dal plot esce fuori che la clsse 1 indica foresta mentre la 
+#Dal plot esce fuori che la classe 1 indica foresta mentre la 
 #classe 2: la zona agricola
 
-#La funzione set.seed () permette di ottenere lo stesso risultato.
+#La funzione "set.seed" () permette di ottenere lo stesso risultato.
 
 #Per la 2 IMMAGINE del 2006.
 #unsupervised classification--> classificazione non supervisionata.
@@ -142,7 +142,7 @@ percentages
 #1      Forest        89.54        52.10
 #2 Agricolture        10.45        47.89
 
-#Si esegue un grafico con ggplot per il 1992, più precisamente un grafico a barre
+#Si esegue un grafico con "ggplot" per il 1992, più precisamente un grafico a barre
 #PRIMO PERIODO
 ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(stat="identity", fill="white")
 #Da questo plot si osserva che la parte agricola è molto meno rispetto alla foresta
@@ -157,5 +157,5 @@ ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="
 p1 <- ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(stat="identity", fill="white")
 p2 <- ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 
-#Funzione per assemblare più grafici su una stessa schermata:
+#Funzione per assemblare più grafici su una pagina:
 grid.arrange(p1, p2, nrow=1)
