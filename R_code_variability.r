@@ -1,4 +1,4 @@
-#R_code_variability_temp.r
+# R_code_variability_temp.r
 
 #Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
 #install.packages("raster") #Viene installato il pacchetto raster.
@@ -23,7 +23,7 @@ library (viridis) #Viene caricato il pacchetto viridis per colorare i plot di gg
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/") # Windows
 
-#Viene importata l'immagine tramite la funzione brick a cui si assegna un nome: 
+#Viene importata l'immagine tramite la funzione "brick" a cui si assegna un nome: 
 sent <- brick("sentinel.png")
 
 #Le bande sono divise in questo modo:
@@ -50,11 +50,11 @@ nir <- sent$sentinel.1
 #Banda numero 2 è il red:
 red <- sent$sentinel.2
 
-#Si esegue il calcolo del ndvi:
+#Si esegue il calcolo del NDVI:
 ndvi <- (nir-red) / (nir+red)
-#Per plottare il calcolo appena eseguito si scrive:
+#Si procede con il plottare il calcolo appena eseguito:
 plot(ndvi)
-#Dal plot dove si vede il bianco e il marroncino non c'è vegetazione (si tratta 
+#Dal plot si vede che dove c'è il bianco e il marroncino non c'è vegetazione (si tratta 
 #di acqua, rocce e crepacci), le parti in giallino e verde più chiaro sono le 
 #parti di bosco e le parti in verde scuro sono le praterie sommitali.
 
@@ -72,11 +72,11 @@ plot(ndvisd3)
 clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
 #Si esegue il plot:
 plot(ndvisd3, col=clsd)
-#Dal plot si nota che dove di vedono colori tendenti al rosso e al giallo si ha
-#una deviazione standard più alta verde e blu un pò più bassa ed è presente nelle 
-#zone più omogenee dove c'è la roccia nuda mentre aumenta, quindi è più verde, 
-#nelle zone dove si passa da roccia nuda alla parte vegetata, poi la deviazione 
-#standard ritorna ad essere omogenea su tutte le parti vegetate.
+#Dal plot si nota che dove si vedono colori tendenti al rosso e al giallo si ha
+#una deviazione standard più alta mentre dove ci sonon il verde e blu un pò più
+#bassa ed è presente nelle zone più omogenee dove c'è la roccia nuda mentre aumenta, 
+#quindi è più verde nelle zone dove si passa da roccia nuda alla parte vegetata.
+#Poi la deviazione standard ritorna ad essere omogenea su tutte le parti vegetate.
 #Si hanno delle piccole zone a nord in rosa che hanno una deviazione standard 
 #in aumento che corrispondono ai picchi più alti dei crepacci.
 
@@ -88,8 +88,8 @@ clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red
 #Si esegue il plot:
 plot(ndvimean3, col=clsd)
 #Dal plot esce che i valori molto alti (colore giallo) si hanno nelle praterie 
-#di alta quota e quindi nella parte semi-naturale (boschi, coniferi e latifoglie)
-#e invece dei valori più bassi per quanto riguarda la roccia nuda.
+#di alta quota, ovvero nella parte semi-naturale (boschi, coniferi e latifoglie)
+#mentre i valori più bassi riguardano la roccia nuda.
 
 #Si sceglie di utilizzare come grandezza della griglia (13x13)
 ndvisd13 <- focal(ndvi, w=matrix(1/169, nrow=13, ncol=13), fun=sd)
@@ -108,7 +108,7 @@ plot(ndvisd5, col=clsd)
 #PCA
 #Si prende un sistema a multibande, si calcola una PCA e si utilizza solo la 
 #prima componente principale.
-#La funzione rasterPCA che si trova nel pacchetto RStoolbox, calcola la PCA in
+#La funzione "rasterPCA" che si trova nel pacchetto RStoolbox, calcola la PCA in
 #modalità R e restituisce un RasterBrick con più livelli di punti PCA:
 sentpca <- rasterPCA(sent)
 #Si esegue il plot del modello insieme alla mappa:
@@ -119,7 +119,7 @@ plot(sentpca$map)
 #Per vedere le informazioni:
 sentpca
   
-#Summary del modello per vedere quanta variabilità iniziale spiegano le singole
+#"Summary" del modello per vedere quanta variabilità iniziale indicano le singole
 #componenti. Si vedrà qual è la proporzione di variabilità spiegata da ogni 
 #singola componente. 
 summary(sentpca$model)
@@ -157,15 +157,15 @@ source ("source_ggplot.r.txt")
 #https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
 
 #THE COLOR SCALES
-#The package contains eight color scales: “viridis”, the primary choice, and five
-#alternatives with similar properties - “magma”, “plasma”, “inferno”, “civids”,
-#“mako”, and “rocket” -, and a rainbow color map - “turbo”.
+#The package contains eight color scales: "viridis", the primary choice, and five
+#alternatives with similar properties - "magma", "plasma", "inferno", "civids",
+#"mako", and "rocket" -, and a rainbow color map - "turbo".
 
-#Si vuole plottare tramite ggplot i dati, quinid prima cosa da fare è creare 
+#Si vuole plottare tramite "ggplot" i dati, quindi prima cosa da fare è creare 
 #una finestra vuota tramite la funzione ggplot, poi si definisce il tipo di geometria 
-#tramite il comando geom_raster che in questo caso sarà rettangolare e infine si passano 
+#tramite il comando "geom_raster" che in questo caso sarà rettangolare e infine si passano 
 #a definire le estetiche (ovvero cosa si vuole plottare) che in questo caso sono
-#la x e la y-->le coordinate geografiche e come fill, quindi valore di riempimento 
+#la x e la y-->le coordinate geografiche e come "fill", ovvero il valore di riempimento 
 #si mette lo strato/layer. Dentro c'è il valore della deviazione standard.
 p1 <- ggplot() +
   geom_raster(pc1sd5, mapping = aes(x = x, y = y, fill = layer)) +
@@ -186,4 +186,3 @@ p3 <- ggplot() +
 
 #Per mettere le 3 immagini in un'unica schermata si utilizza grid.arrange:
 grid.arrange(p1, p2, p3, nrow=1) #1 riga e 3 colonne con le rispettive legende.
-
