@@ -477,8 +477,8 @@ levelplot(melt_amount, col.regions=clb)
 library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgolette 
                 #perchè è già in R.
 
-#install.packages("ncdf4") #serve per installare il pacchetto ncdf4 ed è la 
-                           #libreria per leggere netCDF, si tratta di un formato di dati.
+install.packages("ncdf4") #serve per installare il pacchetto ncdf4 ed è la 
+#libreria per leggere netCDF, si tratta di un formato di dati.
 library(ncdf4) #Viene caricato il pacchetto ncdf4, non vengono messe le virgolette 
                #perchè è già in R.
 
@@ -493,12 +493,12 @@ albedo <-raster("c_gls_ALBH_202006130000_GLOBE_PROBAV_V1.5.1.nc")
 #Si vedono tutte le informazioni del dataset:
 albedo
 
-#Si assegnano dei colori tramite una ColorRampPalette:
+#Si assegnano dei colori tramite un ColorRamPalette:
 cl <- colorRampPalette(c('light blue','green','red','yellow'))(100) 
-#Si plotta la variabile albedo:
+#Plot della variabile albedo:
 plot(albedo, col=cl)
 #Dal plot si nota che la zona rossa è dove viene riflessa più energia solare
-#(ovviamente la parte dei deserti è quella che riflette di più, in qunato il 
+#(ovviamente la parte dei deserti è quella che riflette di più, in quanto il 
 #suolo è tutto esposto).
 
 #Fase di RESAMPLING (ricampionamento):
@@ -509,7 +509,7 @@ plot(albedo, col=cl)
 #albedo con un certo fattore di ricampionamento (100), la quale poi viene assegnata 
 #al nome albedores.
 albedores <- aggregate(albedo, fact=100)
-#si è utilizzato un fattore 100, quindi un accorpamento di 10 000 volte il dato 
+#Si è utilizzato un fattore 100, quindi un accorpamento di 10 000 volte il dato 
 #originale, avendo così dei file in uscita molto più grezzi.
 
 #Si esegue il plot con i colori precedenti:
