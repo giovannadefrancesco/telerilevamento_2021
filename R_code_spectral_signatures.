@@ -1,5 +1,5 @@
 #R_code_spectral_signatures.r
-#Le spectrak signature non sono altro che delle impronte digitali 
+#Le spectral signature non sono altro che delle impronte digitali 
 #delle immagini satellitari.
 
 #Si richiamano i pacchetti da installare e le librerie di cui si ha bisogno:
@@ -18,7 +18,7 @@ library(ggplot2) #Viene caricato il pacchetto ggplot2.
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/") # Windows
 
-#Si esegue un brick in modo da caricare tutte le bande e si associa un nome:
+#Si esegue un "brick" in modo da caricare tutte le bande e si associa un nome:
 defor2 <- brick("defor2.jpg")
 #Se si vogliono vedere le informazioni:
 defor2 #si nota che ci sono 3 bande: 
@@ -86,7 +86,7 @@ ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le ba
                                 #sull'asse y le riflettanze della foresta e dell'acqua.
   geom_line(aes(y = forest), color ="green") + #geom_line connette le osservazioni
                                                #che si hanno a seconda del dato 
-                                               #che si #è definito sulla x.
+                                               #che si è definito sulla x.
   geom_line(aes(y = water), color ="blue") + #da cui esce che l'acqua ha un comportamento
                                              #diametralmente opposto rispetto alla vegetazione.
   labs(x="band",y="reflectance") #si aggiungono le etichette agli assi.
@@ -193,7 +193,7 @@ ggplot(spectrals, aes(x=band))+
 #Si esegue lo stesso esercizio ma prendendo un'immagine da Earth Observatory
 #e la si mette nella cartella lab.
 
-#Si esegue un brick in modo da caricare tutte le bande e si associa un nome:
+#Si esegue un "brick" in modo da caricare tutte le bande e si associa un nome:
 eo <- brick("June_puzzler.jpg")
 #Si esegue un plot di questa immagine:
 plotRGB (eo, r=1, g=2, b=3, stretch="his") #histogram strech
@@ -216,7 +216,7 @@ stratumyellow <- c(172,113,0) #si inseriscono i valori dell'immagine per la zona
 stratumgreen <- c(11,150,0) #si inseriscono i valori dell'immagine per la zona green
 stratumblue <- c(36,33,26) #si inseriscono i valori dell'immagine per la zona blue
 
-#La funzione per fare la tabella è data.frame:
+#La funzione per fare la tabella è "data.frame":
 spectralsg <- data.frame(band, stratumyellow, stratumgreen, stratumblue)
 #Per visualizzare la tabella:
 spectralsg 
@@ -232,4 +232,4 @@ ggplot(spectralsg, aes(x=band))+
   geom_line(aes(y = stratumgreen), color ="green") + 
   geom_line(aes(y = stratumblue), color ="blue") 
   labs(x="band",y="reflectance")
-#Si mota che le 3 formazioni che si sono individuate si differenziano molto.
+#Si nota che le 3 formazioni che si sono individuate si differenziano molto.
