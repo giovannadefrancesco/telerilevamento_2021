@@ -855,6 +855,7 @@ library(RStoolbox) #Viene caricato il pacchetto RStoolbox per calcolare l'indice
 
 #install.packages("rasterdiv") #serve per installare il pacchetto rasterdiv.
 library(rasterdiv) #Viene caricato il pacchetto rasterdiv per l'NDVI mondiale.
+library(rasterVis) #Viene caricato il pacchetto rasterVis.
 
 #Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
@@ -872,13 +873,13 @@ defor2 <- brick("defor2.jpg")
 #B3=green.
 
 #Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#"par" su 2 righe e 1 colonna:
+#"par" su due righe e 1 colonna:
 par(mfrow=c(2,1))
-plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
-plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare.
+plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
+plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 #Rispetto alla prima immagine, nella seconda immagine si vede che in questa
 #zona c'è stato un considerevole impatto dell'agricoltura.
-#Inoltre, si nota che il fiume nell'imagine sopra aveva molti più solidi disciolti
+#Inoltre si nota che il fiume nell'imagine sopra aveva molti più solidi disciolti
 #e quindi il colore appare molto diverso rispetto a quella di sotto, dove molto
 #probabilmente in quel momento aveva meno solidi disciolti.
 
@@ -892,7 +893,7 @@ defor2
 #Per calcolare questo indice bisogna fare la differenza tra il near infrared 
 #della defor1, (ovvero defor1.1 ) meno il red della defor1 (defor1.2).
 dvi1 <- defor1$defor1.1 - defor1$defor1.2
-dev.off() #per togliere la disposizione del "par" precedente.
+dev.off() #per togliere la disposizione del par precedente.
 
 #Questo plot evidenzia molto bene quanta e in che stato di salute è la vegetazione:
 plot (dvi1)
@@ -905,7 +906,7 @@ plot (dvi1)
 #indice di vegetazione.
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
 #Si effettua il plot:
-plot(dvi1, col=cl, main="DVI at time 1") #main serve per aggiungere il titolo al plot.
+plot(dvi1, col=cl, main="DVI at time 1") #"main" serve per aggiungere il titolo al plot.
 #Tutto quello che è rosso fortissimo è vegetazione mentre tutto quello che è 
 #giallo sono le coltivazioni.
 
@@ -913,17 +914,17 @@ plot(dvi1, col=cl, main="DVI at time 1") #main serve per aggiungere il titolo al
 #difference vegetation index
 #Si fa la stessa cosa ma per DVI2:
 dvi2 <- defor2$defor2.1 - defor2$defor2.2
-#Il plot evidenzia molto bene la differenza di vegetazione:
+#Il plot evidenzia molto bene la differenza di vegetazione
 plot (dvi2)
 
 #Specifying a color scheme
 #Si sceglie una nuova colorRampPalette per rendere ancora meglio l'idea di questo
-#indice di vegetazione:
+#indice di vegetazione.
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
 #Si effettua il plot:
 plot(dvi2, col=cl, main="DVI at time 2")
 
-#Tramite la funzione "par" si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
+#Tramite la funzione par si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
 par(mfrow=c(2,1))
 plot(dvi1, col=cl, main="DVI at time 1")
 plot(dvi2, col=cl, main="DVI at time 2")
@@ -937,14 +938,15 @@ cld <- colorRampPalette(c('blue','white','red'))(100)
 #Si effettua il plot:
 plot(difdvi, col=cld)
 #Dove si hanno valori di differenza più alti, si ha il colore rosso mentre dove
-#la differenza è più bassa si hanno le parti bianche e ele parti celesti. 
+#la differenza è più bassa si hanno le parti bianche e le parti celesti. 
 #La restituzione di questa mappa dice quali sono i punti dove c'è stata una 
 #"sofferenza", si intende la deforestazione da parte della vegetazione nel tempo.
 
-#Calcolo di ndvi, ovvero si normalizza dvi, per le 2 situazioni:
+#Calcolo di NDVI, ovvero si normalizza dvi, per le 2 situazioni:
 #NDVI1=(NIR-RED)/(NIR+RED), con NDVI si possono paragonare immagini che hanno
 #risoluzione radiometrica diversa in entrata, cioè qualsiasi tipo di immagine.
 #Il range del NDVI varia tra -1 e 1.
+
 #Calcolo del NDVI1:
 ndvi1 <- (defor1$defor1.1 - defor1$defor1.2) / (defor1$defor1.1 + defor1$defor1.2)
 #Si effettua il plot:
@@ -962,7 +964,7 @@ plot(ndvi2, col=cl)
 
 #Per fare in modo che si effettuino questi calcoli in modo più speditivo, è
 #possibile utilizzare nel pacchetto RStoolbox una funzione che si chiama 
-#spectralIndices che calcola direttamente diversi indici, come appunto NDVI oppure 
+#"spectralIndices" che calcola direttamente diversi indici, come appunto NDVI oppure 
 #il SAVI che riguarda i suoli etc.
 
 #RStoolbox:spectralIndices che si imposta in questo modo e si esegue per entrambe
@@ -994,10 +996,10 @@ copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
 #Si effettua il plot:
 plot(copNDVI)
 #Si nota che all'equatore, nella parte del Nord Europa e nel Nord America si ha 
-#NDVI più alto mentre è più passo in corrispondenza dei deserti. 
+#NDVI più alto mentre è più basso in corrispondenza dei deserti. 
 
-#La funzione levelplot serve per vedere la media dei valori sulle righe e sulle 
-#colonne e si trova all'interno del pacchetto rasterVis.
+#La funzione "levelplot" serve per vedere la media dei valori sulle righe e sulle 
+#colonne e si trova all'interno del pacchetto "rasterVis".
 levelplot(copNDVI) 
 #Questo plot è una rappresentazione dei valori medi di come respira la terra dal 
 #1999 al 2017: i valori più alti sono quelli della foresta amazzonica, delle foreste
