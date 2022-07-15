@@ -12,7 +12,7 @@ library(rasterVis) #Viene caricato il pacchetto rasterVis.
 #la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
 setwd("C:/lab/") # Windows
 
-#Si utilizza la funzione brick che serve a caricare un pacco di dati.
+#Si utilizza la funzione "brick" che serve a caricare un pacco di dati.
 #Prima immagine:
 defor1 <- brick("defor1.jpg")
 #Seconda immagine:
@@ -24,7 +24,7 @@ defor2 <- brick("defor2.jpg")
 #B3=green.
 
 #Vengono plottate le immagini con plotRGB e vengono disposte tramite la funzione
-#par su due righe e 1 colonna:
+#"par" su due righe e 1 colonna:
 par(mfrow=c(2,1))
 plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
@@ -45,6 +45,7 @@ defor2
 #della defor1, (ovvero defor1.1 ) meno il red della defor1 (defor1.2).
 dvi1 <- defor1$defor1.1 - defor1$defor1.2
 dev.off() #per togliere la disposizione del par precedente.
+
 #Questo plot evidenzia molto bene quanta e in che stato di salute è la vegetazione:
 plot (dvi1)
 #Tutta la parte del fiume e dei primi punti agricoli sono molto chiare, tendenti 
@@ -56,7 +57,7 @@ plot (dvi1)
 #indice di vegetazione.
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
 #Si effettua il plot:
-plot(dvi1, col=cl, main="DVI at time 1") #main serve per aggiungere il titolo al plot.
+plot(dvi1, col=cl, main="DVI at time 1") #"main" serve per aggiungere il titolo al plot.
 #Tutto quello che è rosso fortissimo è vegetazione mentre tutto quello che è 
 #giallo sono le coltivazioni.
 
@@ -82,19 +83,21 @@ plot(dvi2, col=cl, main="DVI at time 2")
 #Si effettua una differenza dell'indice di vegetazione fra i 2 DVI:
 difdvi <- dvi1 - dvi2
 dev.off() #per togliere la disposizione del par precedente
+
 #Si sceglie una nuova colorRampPalette:
 cld <- colorRampPalette(c('blue','white','red'))(100)
 #Si effettua il plot:
 plot(difdvi, col=cld)
 #Dove si hanno valori di differenza più alti, si ha il colore rosso mentre dove
-#la differenza è più bassa si hanno le parti bianche e ele parti celesti. 
+#la differenza è più bassa si hanno le parti bianche e le parti celesti. 
 #La restituzione di questa mappa dice quali sono i punti dove c'è stata una 
 #"sofferenza", si intende la deforestazione da parte della vegetazione nel tempo.
 
-#Calcolo di ndvi, ovvero si normalizza dvi, per le 2 situazioni:
+#Calcolo di NDVI, ovvero si normalizza dvi, per le 2 situazioni:
 #NDVI1=(NIR-RED)/(NIR+RED), con NDVI si possono paragonare immagini che hanno
 #risoluzione radiometrica diversa in entrata, cioè qualsiasi tipo di immagine.
 #Il range del NDVI varia tra -1 e 1.
+
 #Calcolo del NDVI1:
 ndvi1 <- (defor1$defor1.1 - defor1$defor1.2) / (defor1$defor1.1 + defor1$defor1.2)
 #Si effettua il plot:
@@ -112,7 +115,7 @@ plot(ndvi2, col=cl)
 
 #Per fare in modo che si effettuino questi calcoli in modo più speditivo, è
 #possibile utilizzare nel pacchetto RStoolbox una funzione che si chiama 
-#spectralIndices che calcola direttamente diversi indici, come appunto NDVI oppure 
+#"spectralIndices" che calcola direttamente diversi indici, come appunto NDVI oppure 
 #il SAVI che riguarda i suoli etc.
 
 #RStoolbox:spectralIndices che si imposta in questo modo e si esegue per entrambe
@@ -144,10 +147,10 @@ copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
 #Si effettua il plot:
 plot(copNDVI)
 #Si nota che all'equatore, nella parte del Nord Europa e nel Nord America si ha 
-#NDVI più alto mentre è più passo in corrispondenza dei deserti. 
+#NDVI più alto mentre è più basso in corrispondenza dei deserti. 
 
-#La funzione levelplot serve per vedere la media dei valori sulle righe e sulle 
-#colonne e si trova all'interno del pacchetto rasterVis.
+#La funzione "levelplot" serve per vedere la media dei valori sulle righe e sulle 
+#colonne e si trova all'interno del pacchetto "rasterVis".
 levelplot(copNDVI) 
 #Questo plot è una rappresentazione dei valori medi di come respira la terra dal 
 #1999 al 2017: i valori più alti sono quelli della foresta amazzonica, delle foreste
