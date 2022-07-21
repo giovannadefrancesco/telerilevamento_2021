@@ -624,7 +624,7 @@ click(powell2021, id=T, xy=T, cell=T, type="o", pch=16, col="magenta")
 #       x     y    cell lakepowell_2021.1 lakepowell_2021.2 lakepowell_2021.3
 #1 1938.5 711.5 3049333               246               213               172
 
-# Creo un dataset, definendo l'impostazione delle colonne e riportando i valori dei "click":
+# Creo un dataframe, definendo l'impostazione delle colonne e riportando i valori dei "click":
 band <- c(1,2,3)
 time2017_p1<- c(8,35,52)
 time2017_p2<- c(6,25,42)
