@@ -63,7 +63,7 @@ powell2021
 # bande sono divise in questo modo:
 # B1=NI; 
 # B2=red; 
-# B3=green-
+# B3=green
 
 # Decido di plottare le immagini con il "plot" della funzione ggRGB.
 ggRGB(powell2017, r=1, g=2, b=3, stretch="lin") # si utilizza uno strech lineare.
@@ -128,7 +128,7 @@ set.seed(42)
 # Applico la funzione UnsuperClass utilizzando 3 classi:
 clasimm2017<-unsuperClass(powell2017, nClasses=3)
 # Assegno una nuova colorRampPalette per vedere come sono state distribuite le classi
-cl2017<-colorRampPalette(c("sandybrown", "dodgerblue","brown"))(100)
+cluc<-colorRampPalette(c("sandybrown", "dodgerblue","brown"))(100)
 # L'assegnazione delle classi cambia ogni volta che si esegue un run.
 # Mostro a video la conta dei pixel per ogni classe:
 freq(clasimm2017$map) 
@@ -138,7 +138,7 @@ freq(clasimm2017$map)
 #[3,]     3 1677944  # altopiano formato da materiale più scuro
 # Plotto la mappa delle classi con la colorRampPalette assegnata in precedenza
 # e decido di far vedere le zone bagnate
-plot(clasimm2017$map, col=cl2017)
+plot(clasimm2017$map, col=cluc)
 
 # Creo un dataframe con i pixel categorizzati:
 df1<-data.frame(freq(clasimm2017$map))
@@ -184,20 +184,19 @@ p9<-ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
 # Anche in questo caso per fare in modo che una classificazione sia sempre la 
 # stessa, si utilizza la funzione "set.seed".
 # Quindi, rendo le classi discrete:
-set.seed(42)
+ set.seed(42)
 # Applico la funzione UnsuperClass utilizzando 3 classi:
 clasimm2021<-unsuperClass(powell2021, nClasses=3)
 # Utilizzo la stessa colorRampPalette precedente ma le assegno una nuova variabile:
-cl2021<-colorRampPalette(c("dodgerblue", "sandybrown"," brown"))(100)
+cluc<-colorRampPalette(c("sandybrown", "dodgerblue","brown"))(100)
 # L'assegnazione delle classi cambia ogni volta che si esegue un run.
 # Mostro a video la conta dei pixel per ogni classe:
 freq(clasimm2021$map)
-#     value  count
 #[1,]     1  675626  # a questa classe associo l'acqua del lago
 #[2,]     2 2459724  # altopiano formato da materiale più chiaro
 #[3,]     3 1861500  # altopiano formato da materiale più scuro
 # Eseguo il plot da cui si vedrà l'area prosciugata del lago:
-plot(clasimm2021$map, col=cl2021) 
+plot(clasimm2021$map, col=cluc)
 # Creo un dataframe con i pixel categorizzati:
 df2<-data.frame(freq(clasimm2021$map))
 # Vedo le informazioni del dataframe:
@@ -237,8 +236,8 @@ p10<-ggplot(df2,aes(x=classe,y=perc_2021, fill=classe))+
 # Creo un multiframe, disponendo le immagine del 2017 e del 2021 in una riga e
 # 2 colonne:
 par(mfrow=c(1,2))
-plot(clasimm2017$map, col=cl2017)
-plot(clasimm2021$map, col=cl2021)
+plot(clasimm2017$map, col=cluc)
+plot(clasimm2021$map, col=cluc)
 
 # Plotto le unsuperclass del 2017 e del 2021 in un'unica figura:
 grid.arrange(p9,p10,nrow=1,top="Confronto tra unsuperClass del 2017 e 2021") 
@@ -277,7 +276,7 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 
 # Per prima cosa si sceglie una colorRampPalette per visualizzare meglio l'indice 
 # di acqua differenziale normalizzato:
-cndwi<-colorRampPalette(c("green","magenta","dodgerblue","white"))(100)
+cndwi<-colorRampPalette(c("forestgreen","aquamarine","royalblue","violet","white"))(100)
 
 # NDWI2017 normalized difference water index 2017
 # NDWI = (GREEN - NIR) / (GREEN + NIR)
@@ -316,9 +315,9 @@ dev.off() #funzione che serve per chiudere la finestra precedente
 # Calcolo la differenza dei due NDWI:
 # NDWI2021-NDWI2017
 # Eseguo la differenza dell'indice:
-ndwi_diff<- ndwi2017-ndwi2021
+ndwi_diff<- ndwi2021-ndwi2017
 #Eseguo il plot a cui aggiungo un titolo:
-plot(ndwi_diff, col=cldif, main="Differenza tra NDWI del 2017 e NDWI del 2021")
+plot(ndwi_diff, col=cldif, main="Differenza tra NDWI del 2021 e NDWI del 2017")
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
 
@@ -377,9 +376,9 @@ dev.off() #funzione che serve per chiudere la finestra precedente
 # Decido di asseganre  una nuova colorRampalette per far vedere meglio le 
 # differenze fra il 2021 e il 2017
 # Eseguo la differenza dell'indice:
-savi_diff<- savi2017-savi2021
+savi_diff<- savi2021-savi2017
 #Eseguo il plot a cui aggiungo un titolo:
-plot(savi_diff, col=cldif, main="Differenza tra SAVI del 2017 e SAVI del 2021")
+plot(savi_diff, col=cldif, main="Differenza SAVI 2021-2017")
 
 dev.off() #funzione che serve per chiudere la finestra precedente
 #################################  PCA  ########################################
@@ -413,7 +412,7 @@ plot(nir2021, green2021, col="red", pch=19, cex=1)
 #che si è scelto.
 
 # Decido di plottare tutte le correlazioni possibili fra tutte le variabili 
-#del dataset e per fare questo Si utilizza la funzione "pairs". 
+#del dataset e per fare questo si utilizza la funzione "pairs". 
 pairs(powell2017)
 # La correlazione fra le tre bande del 2017 è del 84%
 pairs(powell2021)
@@ -586,15 +585,15 @@ ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le ba
   labs(x="band",y="reflectance") #si aggiungono le etichette agli assi.
 
 #################################  MULTITEMPORAL  #############################
-# Termino il programma facendo un'analisi multitemporale delle due immagini:
+# Termino il codice facendo un'analisi multitemporale delle due immagini:
 
 # Eseguo un plot dell'immagine 2017
 plotRGB (powell2017, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare
 
-# Utilizzo la funzione per "click" per creare firme spettrali si chiama
+# Utilizzo la funzione per "click" per creare firme spettrali:
 click(powell2017, id=T, xy=T, cell=T, type="o", pch=16, col="magenta")
 
-# Decido di cliccare dei punti sull'immagine 2017, dove successivamente nell'iimagine
+# Decido di cliccare dei punti sull'immagine 2017, dove successivamente nell'immagine
 # del 2021 vedrò il ritiro dell'acqua
 #      x     y    cell lakepowell_2017.1 lakepowell_2017.2 lakepowell_2017.3
 #1 163.5 672.5 3154340                 8                35                52
@@ -610,7 +609,7 @@ click(powell2017, id=T, xy=T, cell=T, type="o", pch=16, col="magenta")
 # Eseguo un plot dell'immagine 2021
 plotRGB (powell2021, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare
 
-# Utilizzo la funzione per "click" per creare firme spettrali si chiama
+# Utilizzo la funzione per "click" per creare firme spettrali:
 click(powell2021, id=T, xy=T, cell=T, type="o", pch=16, col="magenta")
 
 # Decido di cliccare circa gli stessi punti dell'immagine precedente
@@ -625,7 +624,7 @@ click(powell2021, id=T, xy=T, cell=T, type="o", pch=16, col="magenta")
 #       x     y    cell lakepowell_2021.1 lakepowell_2021.2 lakepowell_2021.3
 #1 1938.5 711.5 3049333               246               213               172
 
-#creo il dataset definiamo le colonne del dataset
+# Creo un dataset, definendo l'impostazione delle colonne e riportando i valori dei "click":
 band <- c(1,2,3)
 time2017_p1<- c(8,35,52)
 time2017_p2<- c(6,25,42)
