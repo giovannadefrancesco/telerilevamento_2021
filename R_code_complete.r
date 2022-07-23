@@ -630,7 +630,7 @@ plotRGB(p224r63_2011res, r=4, g=3, b=2, stretch="lin")
 #e la si associa ad un nuovo nome/oggetto (p224r63_2011res_pca).
 p224r63_2011res_pca <-rasterPCA(p224r63_2011res)
 
-#La funzione "summay" ci dà un sommario del modello. Alla funzine "summary", si fa 
+#La funzione "summary" ci dà un sommario del modello. Alla funzine "summary", si fa 
 #seguire il nome di quello che si è appena generato e lo si lega con il simbolo 
 #del dollaro al modello.
 summary(p224r63_2011res_pca$model)
