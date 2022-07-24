@@ -436,7 +436,7 @@ pairs(powell2021)
 powell2017_pca <- rasterPCA(powell2017)
 powell2021_pca <- rasterPCA(powell2021)
 
-# La funzione "summay" mi dà un sommario del modello. Alla funzine "summary", si fa 
+# La funzione "summary" mi dà un sommario del modello. Alla funzine "summary", si fa 
 # seguire il nome di quello che si è appena generato e lo si lega con il simbolo 
 # del dollaro al modello.
 summary(powell2017_pca$model)
