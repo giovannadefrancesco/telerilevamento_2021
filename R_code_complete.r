@@ -23,12 +23,12 @@
 #Il mio primo codice in R per il telerilevamento!
 
 setwd("C:/lab/")#Serve per impostare la cartella di lavoro, nella quale verranno
-                #salvati/cercati di default i file.      
+#salvati/cercati di default i file.      
 
 #install.packages("raster") #serve per installare il pacchetto raster.
 
 library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgolette 
-                #perchè è già in R.
+#perchè è già in R.
 
 #La funzione brick serve ad importare un'immagine satellitare infatti,
 #importa tutte le bande delle immagini satellitari in un'unica immagine 
@@ -85,7 +85,7 @@ plot(p224r63_2011, col=cls)
 # B7: infrarosso medio 
 
 #dev.off-->questa funzione serve a ripulire la finestra grafica
-dev.off() #funzione che serve per chiudere la finestra precedente.
+dev.off()
 
 #Si vuole vedere plottata solo la banda blu, B1 dell'immagine.
 #Il simbolo del $ viene sempre utilizzato per legare due blocchi, in questo caso
@@ -139,8 +139,8 @@ plot(p224r63_2011$B4_sre)
 par(mfrow=c(2,2)) #si visualizza il grafico in modo che abbia 2 righe e 2 colonne
 #Si crea una colorRamPalette che ricorda il blu
 clb <- colorRampPalette(c("dark blue","blue","light blue")) (100) 
-#Si è plottata la banda del blu con questa colorRamPalette
-plot(p224r63_2011$B1_sre, col=clb) 
+#Si è plottata la ban da del blu con questa colorRamPalette
+plot(p224r63_2011$B1_sre, col=clb)
 
 #Si aggiunge la banda del verde:
 clg <- colorRampPalette(c("dark green","green","light green")) (100)
@@ -184,20 +184,20 @@ p224r63_2011 <- brick("p224r63_2011_masked.grd")
 #che contiene tutte le bande,poi bisogna specificare quali componenti si vogliono 
 #associare ad ogni singola banda di Landsat:
 plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")#Stretch serve per "stirare" 
-                                                   #le immagini da cui uscirà 
-                                                   #un'immagine a colori naturali.
+#le immagini da cui uscirà un'immagine a colori naturali.
+
 #Si è saltata una banda per utilizzare l'infrarosso vicino montandolo sulla componente
 #red dello schema RGB.
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin") #in questo caso tutta la 
-                                                    #vegetazione è rossa.
+#vegetazione è rossa.
 
 #Si è utilizzato l'infrarosso vicino montandolo sulla componente green dello schema RGB.
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin") #in questo caso tutta la 
-                                                    #vegetazione è verde.
+#vegetazione è verde.
 
 #Si è utilizzato l'infrarosso vicino montandolo sulla componente blu dello schema RGB.
 plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin") #in questo caso tutta la 
-                                                    #vegetazione è blu.
+#vegetazione è blu.
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
 #Exercise:mount a 2X2 multiframe, 
@@ -214,22 +214,24 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 #Si esegue un altro tipo di stretch:
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin") #stretch lineare.
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist") #histogram stretching aumenta 
-                                                     #lo strech e ha una penenza 
-                                                     #+ elevata nei valori intermedi.
+#lo strech e ha una pendenza + elevata nei valori intermedi.
+
 dev.off() #funzione che serve per chiudere la finestra precedente.
+
 #"par" natural colours, false colour and false colours with histogram stretching. 
 #"par" con colori naturali, falsi colori e falsi colori con  histogram stretching. 
 par(mfrow=c(3,1)) #la disposizione delle immagini sarà in 3 righe e 1 colonna
 plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin") #stretch lineare.
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin") #stretch lineare.
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist") #histogram stretching, si 
-#Si evidenziano differenze potenzilai all'interno della foresta, facendo uno stretch
+#evidenziano differenze potenzilai all'interno della foresta, facendo uno stretch
 #ancora più ampio, tutta la parte fucsia è vegetazione.
+
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
 ##### GIORNO 5
 #install.packages("RStoolbox") #serve per installare il pacchetto RStoolbox.
-library(RStoolbox)##Carico il pacchetto RStoolbox.
+library(RStoolbox) #Carico il pacchetto RStoolbox.
 
 #Multitemporal set: si inserisce anche l'immagine del 1988
 # p224r63_1988_masked
@@ -253,7 +255,7 @@ plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin") #plot in colori naturali del
 #Si è saltata una banda per utilizzare l'infrarosso vicino montandolo sulla componente
 #red dello schema RGB.
 plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin") #tutto quello in rosso rappresenta
-                                                    #la vegetazione nel 1988.
+#la vegetazione nel 1988.
 
 #Per vedere le differenze tra il 1988 e il 2011 si mettono a confronto le 2 immagini 
 #in 2 righe e 1 colonna   
