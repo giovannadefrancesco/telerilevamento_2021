@@ -450,12 +450,14 @@ summary(powell2017_pca$model)
 
 # Si esegue il plot dell'immagine2017_pca legata alla mappa.
 plot(powell2017_pca$map) 
-# Da questo plot si ottiene che la prima componente ha tanta deformazione
+# Da questo plot si ottiene che la prima componente ha tanta informazione
 # quindi, con tanta variabilità mentre l'ultima componente ha il residuo.
 # Il PC1 ha tutte le informazioni: si vede il lago e la parte degli altopiani 
 # del gran Canyon mentre la PC3 non si distingue più nulla.
 # SINTESI: La prima componente è quella che spiega più variabilità.
 
+# Serve per mostrare a video le informazioni:
+powell2017_pca$map
 # Names      :        PC1,        PC2,        PC3 
 # min values : -225.67711,  -93.59984,  -52.14022 
 # max values :  186.15028,   96.89894,   31.99906 
@@ -467,15 +469,19 @@ summary(powell2021_pca$model)
 # Standard deviation     94.6110896 25.15438628 5.003193942
 # Proportion of Variance  0.9315462  0.06584878 0.002605043
  #Cumulative Proportion   0.9315462  0.99739496 1.000000000
+# Questo risultato afferma che la PC1 spiega il 93,15% della variabilità del sistema.
+# Mentre con la seconda banda si arriverà al 99% e la terza banda al 100%. 
 
 # Si esegue il plot dell'immagine2021_pca legata alla mappa.
 plot(powell2021_pca$map)
+
+# Serve per mostrare a video le informazioni:
 powell2021_pca$map
 # names      :        PC1,        PC2,        PC3 
 # min values : -246.61865,  -93.04823,  -34.78544 
 # max values :  170.92637,   91.99455,   44.33611 
 
-# Eseguo il plot di ggRGB dell'analisi sfruttando le componenti principali e decido 
+# Eseguo il plot di ggRGB dell'analisi sfruttando le 3 componenti principali e decido 
 # di utilizzare un stretch lineare
 c1 <-ggRGB(powell2017_pca$map, r=1,g=2,b=3, stretch="lin")
 c2 <-ggRGB(powell2021_pca$map, r=1,g=2,b=3, stretch="lin") 
