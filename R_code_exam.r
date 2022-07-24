@@ -255,13 +255,17 @@ df2
 #classe_2   Classe 2   2459724   49.22549
 #classe_3   Classe 3   1861500   37.25347
 
+# Assegno a una variabile (val17) il valore più basso della colonna "count" 
+#del dataframe "df1" che indica la classe dell'area bagnata per il 2017.
+val17<-min(df1$count)
+# Assegno a una variabile (val21) il valore più basso della colonna "count" 
+#del dataframe "df2" che indica la classe dell'area bagnata per il 2021.
+val21<-min(df2$count)
 # Calcolo la percentuale di riduzione dell'area bagnata rispetto al 2017.
-# Agisco  sulla prima riga, terza colonna del df1 e sulla prima riga, terza colonna del df2.
-diff_perc<-(((df1[2,3])-(df2[1,3]))/df1[2,3])*100 
+diff_perc<-abs(((val21-val17))/val17)*100
 # Mostro a video il valore di percentuale che mi serve:
 diff_perc
 #[1] 31.06012 #Percentuale di riduzione dell'area bagnata rispetto al 2017
-.
 
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
@@ -321,27 +325,29 @@ plot(ndwi_diff, col=cldif, main="Differenza tra NDWI del 2021 e NDWI del 2017")
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
 
-############################# Soil-Adjusted Vegetation Index (SAVI) ###################################### 
+##################### Soil-Adjusted Vegetation Index (SAVI) ####################
 
 # Metodo SAVI
-# L'indice Soil-Adjusted Vegetation Index (SAVI) è un indice di vegetazione che 
-# tenta di ridurre l'influenza della luminosità del terreno utilizzando un apposito 
-# fattore di correzione. Spesso viene usato in regioni aride dove la copertura 
-# vegetativa è scarsa.
+# L'indice Soil-Adjusted Vegetation Index (SAVI) è un adoperato per correggere 
+#l'NDVI (indice che descrive il livello di vigoria della vegetazione) tenendo 
+#conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura
+#vegetativa. Viene utilizzato per l'analisi delle regioni aride con vegetazione 
+#rada (meno del 15\% dell'area totale) e superfici del suolo esposte.
+#La correzione viene valutata nel parametro L, fattore di correzione della luminosità del suolo
 
 # SAVI = ((NIR - Red) / (NIR + Red + L)) x (1 + L)
 
-# NIR e Rossa si riferiscono alle bande associate a tali lunghezze d'onda. 
+# NIR e RED si riferiscono alle bande associate a tali lunghezze d'onda. 
 # Il valore L varia a seconda della quantità di copertura di vegetazione verde.
 # In linea generale, nelle aree senza copertura di vegetazione verde, L=1; 
 # nelle aree a moderata copertura di vegetazione verde, L=0,5; nelle aree a elevata
 # copertura di vegetazione verde, L=0.
 
-# In questo caso specifico, dato che il lago Powell non è presente vegetazione, 
-# uso L=1
+# In questo caso specifico, dato che nelle vicinanze del lago Powell non è
+#presente vegetazione, uso L=1
 
 # Decido di scegliere una nuova colorRampPalette per visualizzare quest'altro indice:
-csavi<-colorRampPalette(c("yellow","orange","green","black","white"))(100)
+csavi<-colorRampPalette(c("royalblue2","lightskyblue","black","lightsalmon","white"))(100)
 # SAVI 2017
 # Banda dell'infrarosso:
 nir2017<-powell2017$lakepowell_2017.1
@@ -381,6 +387,7 @@ savi_diff<- savi2021-savi2017
 plot(savi_diff, col=cldif, main="Differenza SAVI 2021-2017")
 
 dev.off() #funzione che serve per chiudere la finestra precedente
+
 #################################  PCA  ########################################
 
 # Per prima cosa visualizzo i dettagli delle immagini:
@@ -407,12 +414,12 @@ plot(powell2021, col=clpca)
 par(mfrow=c(2,1))
 plot(nir2017, green2017, col="red", pch=19, cex=1)
 plot(nir2021, green2021, col="red", pch=19, cex=1)
-#Per mettere in evidenza il plot si utilizza il rosso, il "pch" si intende il 
-#simbolo che si vuole utilizzare e "cex" indica la dimensione del parametro grafico
-#che si è scelto.
+# Per mettere in evidenza il plot si utilizza il rosso, il "pch" si intende il 
+# simbolo che si vuole utilizzare e "cex" indica la dimensione del parametro grafico
+# che si è scelto.
 
 # Decido di plottare tutte le correlazioni possibili fra tutte le variabili 
-#del dataset e per fare questo si utilizza la funzione "pairs". 
+# del dataset e per fare questo si utilizza la funzione "pairs". 
 pairs(powell2017)
 # La correlazione fra le tre bande del 2017 è del 84%
 pairs(powell2021)
