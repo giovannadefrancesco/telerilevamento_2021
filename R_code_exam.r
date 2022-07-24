@@ -3,6 +3,7 @@
 # Area di studio: Lago Powell
 # Tema di studio: Abbassamento del livello di acqua nel Lago Powell dal 2017 al 2021
 # Fonti immagini: Landsat 8
+# Immagini processate: Earth observatory NASA
 # Data immagini: 1 settembre 2017 - 27 Agosto 2021
  
 # A cavallo del confine tra il sud-est dello Utah e il nord-est dell'Arizona, 
@@ -61,7 +62,7 @@ powell2021
 
 # Per questo progetto si sono utilizzate immagini prese da Landsat, in cui le 
 # bande sono divise in questo modo:
-# B1=NI; 
+# B1=NIR; 
 # B2=red; 
 # B3=green
 
@@ -400,9 +401,9 @@ plot(powell2017, col=clpca)
 plot(powell2021, col=clpca)
 
 #Essendo le bande  divise in questo modo:
-# B1=NI; 
+# B1=NIR; 
 # B2=red; 
-# B3=green-
+# B3=green.
 
 # Dato che sono le bande che ho già a disposizione nel dataset, in quanto mi sono 
 # serviti per calcolare i due indici di sopra, decido di plottare:
@@ -511,24 +512,24 @@ pc1sd5_2021 <- focal(pc1_2021, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 # metto lo strato/layer. Dentro c'è il valore della deviazione standard.
  ggplot() +
   geom_raster(pc1sd5_2017, mapping = aes(x = x, y = y, fill = layer)) +
-  scale_fill_viridis(option = "turbo")  +
+  scale_fill_viridis(option = "magma")  +
   ggtitle("Standard deviation of PC1_2017")
 
 ggplot() +
   geom_raster(pc1sd5_2021, mapping = aes(x = x, y = y, fill = layer)) +
-  scale_fill_viridis(option = "turbo")  +
+  scale_fill_viridis(option = "magma")  +
   ggtitle("Standard deviation of PC1_2021")
 dev.off
 #Decido di associare questi ggplot a delle variabili in modo da poterli visualizzare
 # insieme uno accanto all'altro:
 sd1 <- ggplot() +
   geom_raster(pc1sd5_2017, mapping = aes(x = x, y = y, fill = layer)) +
-  scale_fill_viridis(option = "turbo")  +
+  scale_fill_viridis(option = "magma")  +
   ggtitle("Standard deviation of PC1_2017")
 
 sd2 <- ggplot() +
   geom_raster(pc1sd5_2021, mapping = aes(x = x, y = y, fill = layer)) +
-  scale_fill_viridis(option = "turbo")  +
+  scale_fill_viridis(option = "magma")  +
   ggtitle("Standard deviation of PC1_2021")
 # Tramite la funzione "grid arrange" dispongo le immagini una affianco all'altra:
 grid.arrange(sd1,sd2, nrow = 1)
@@ -590,10 +591,10 @@ spectrals
 #A questo punto si esegue un plot con ggplot2.
 ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le bande e 
   #sull'asse y le riflettanze degli altopiani e dell'acqua.
-  geom_line(aes(y = altopiani), color ="brown") + #geom_line connette le osservazioni
+  geom_line(aes(y = altopiani), color ="brown",lwd=1.3) + #geom_line connette le osservazioni
   #che si hanno a seconda del dato 
   #che si è definito sulla x.
-  geom_line(aes(y = acqua), color ="blue") + #da cui esce che l'acqua ha un comportamento
+  geom_line(aes(y = acqua), color ="blue",lty=5,lwd=1.3) + #da cui esce che l'acqua ha un comportamento
   #diametralmente opposto rispetto alla vegetazione.
   labs(x="band",y="reflectance") #si aggiungono le etichette agli assi.
 
