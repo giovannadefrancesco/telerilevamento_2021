@@ -666,3 +666,11 @@ ggplot(spectralst2, aes(x=band)) +
   geom_line(aes(y = time2021_p4), color = "purple", lwd=1.3)+
   geom_line(aes(y = time2021_p5), color = "gold",lwd=1.3)+
   labs(x="band", y="reflectance")
+
+# L'acqua ha una riflettanza bassissima nelll'infrarosso, media alta nel rosso e
+# alta nel verde. Inoltre, l'acqua ha un comportamento diamentralmente opposto 
+# alla vegetazione e alla rocccia nuda. Quindi, nel vicino infrarosso l'acqua 
+# assorbe del tutto o quasi e si ha un valore molto basso.
+
+# Le riflettanze della roccia nuda o meglio, del suolo del Grand Canyon hanno un 
+# trend che tende a diminuire se si passa dalla banda del near infrared al verde.
