@@ -263,7 +263,7 @@ val17<-min(df1$count)
 #del dataframe "df2" che indica la classe dell'area bagnata per il 2021.
 val21<-min(df2$count)
 # Calcolo la percentuale di riduzione dell'area bagnata rispetto al 2017.
-diff_perc<-abs(((val21-val17))/val17)*100
+diff_perc<-abs(((val17-val21))/val17)*100
 # Mostro a video il valore di percentuale che mi serve:
 diff_perc
 #[1] 31.06012 #Percentuale di riduzione dell'area bagnata rispetto al 2017
@@ -520,7 +520,7 @@ ggplot() +
   scale_fill_viridis(option = "magma")  +
   ggtitle("Standard deviation of PC1_2021")
 dev.off
-#Decido di associare questi ggplot a delle variabili in modo da poterli visualizzare
+# Decido di associare questi ggplot a delle variabili in modo da poterli visualizzare
 # insieme uno accanto all'altro:
 sd1 <- ggplot() +
   geom_raster(pc1sd5_2017, mapping = aes(x = x, y = y, fill = layer)) +
@@ -541,54 +541,54 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 plotRGB (powell2017, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare
 #oppure
 plotRGB (powell2017, r=1, g=2, b=3, stretch="his")#facendo un histogram strech
-#che invece di utilizzare una linea per trasformare e ampliare la gamma dei 
-#valori, utilizza una curva (chiamata curva logistica),che aumenta la pendenza
-#e quindi le differenze tra i due plot saranno molto più accentuate. 
+# che invece di utilizzare una linea per trasformare e ampliare la gamma dei 
+# valori, utilizza una curva (chiamata curva logistica),che aumenta la pendenza
+# e quindi le differenze tra i due plot saranno molto più accentuate. 
 
-#La funzione per creare firme spettrali si chiama "click" che è contenuta 
-#nel pacchetto "rgdal". Serve per cliccare sulla mappa e avere a disposizione 
-#qualsiasi informazione (in questo caso informazioni relative alla riflettanza).
+# La funzione per creare firme spettrali si chiama "click" che è contenuta 
+# nel pacchetto "rgdal". Serve per cliccare sulla mappa e avere a disposizione 
+# qualsiasi informazione (in questo caso informazioni relative alla riflettanza).
 click(powell2017, id=T, xy=T, cell=T, type="o", pch=16, col="magenta")
 
-#Results:
-#Cliccando sulla mappa una zona di altopiani del gran canyon si ottiene:
+# Results:
+# Cliccando sulla mappa una zona di altopiani del gran canyon si ottiene:
 #       x     y      cell   lakepowell_2017.1   lakepowell_2017.2   lakepowell_2017.3
-#1 1403.5 361.5   4007098                 234                 183                 118
-#Si nota che la prima banda corrispondente al NIR ha un valore molto alto di 
-#riflettanza, nella seconda banda che corrisponde al red si ha un valore medio
-#in quanto assorbe e nella terza banda che sarebbe quella del green si ha un 
-#valore basso.
+# 1 1403.5 361.5   4007098                 234                 183                 118
+# Si nota che la prima banda corrispondente al NIR ha un valore molto alto di 
+# riflettanza, nella seconda banda che corrisponde al red si ha un valore medio
+# in quanto assorbe e nella terza banda che sarebbe quella del green si ha un 
+# valore basso.
 
-#Invece, cliccando su una zona dove è presente acqua si ottengono i seguenti risultati:
+# Invece, cliccando su una zona dove è presente acqua si ottengono i seguenti risultati:
 #       x     y      cell   lakepowell_2017.1   lakepowell_2017.2   lakepowell_2017.3
-#1 1584.5 932.5   2443881                   2                  19                  37
-#Si nota una riflettanza bassissima in NIR, una rifrettanza medio bassa in rosso e 
-#alta nel verde.
+# 1 1584.5 932.5   2443881                   2                  19                  37
+# Si nota una riflettanza bassissima in NIR, una rifrettanza medio bassa in rosso e 
+# alta nel verde.
 
-#Si passa a creare un dataframe.
-#Per creare un dataframe si fa uno storage dei dati.
+# Si passa a creare un dataframe.
+# Per creare un dataframe si fa uno storage dei dati.
 
-#Si farà una tabellina con tre colonne: nella prima si inseriranno il numero delle
-#bande, nella seconda la componente degli altopiani e nella terza la componente acqua.
+# Si farà una tabellina con tre colonne: nella prima si inseriranno il numero delle
+# bande, nella seconda la componente degli altopiani e nella terza la componente acqua.
 
-#Define the columns of dataset.
-#Si definiscono le colonne del dataset:
+# Define the columns of dataset.
+# Si definiscono le colonne del dataset:
 band <- c(1,2,3) #banda 1,2,3
 altopiani <- c(234,183,118) #si inseriscono i valori riportati prima per gli altopiani
 acqua <- c(2,19,37) #si inseriscono i valori riportati prima per l'acqua
 
-#La funzione per fare la tabella è data.frame:
+# La funzione per fare la tabella è data.frame:
 spectrals <- data.frame(band, altopiani, acqua)
 #Per visualizzare la tabella:
 spectrals 
-#da cui si visualizzerà a video la tabella:
-#band altopiani acqua
+# da cui si visualizzerà a video la tabella:
+# band altopiani acqua
 #1    1       166     1
 #2    2       108    22
 #3    3        84    41
 
-#Plot the spectral sign
-#A questo punto si esegue un plot con ggplot2.
+# Plot the spectral sign
+# A questo punto si esegue un plot con ggplot2.
 ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le bande e 
   #sull'asse y le riflettanze degli altopiani e dell'acqua.
   geom_line(aes(y = altopiani), color ="brown",lwd=1.3) + #geom_line connette le osservazioni
