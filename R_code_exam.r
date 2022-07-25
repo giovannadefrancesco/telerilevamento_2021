@@ -40,7 +40,7 @@ library(rgdal) # Viene caricato il pacchetto rgdal
 setwd("C:/Lago_Powell")
 
 ###############################  2017 VS 2021  ################################
-# Passaggi per il codice
+# Passaggi per il codice:
 # Carico con la funzione "brick" l'intero set di bande riferito all'immagine del 
 # Lago Powell del 2017 creando un RasterBrick (blocco di diversi raster messi tutti 
 # insieme) e lo assegno ad un nome:
@@ -60,7 +60,7 @@ powell2021
 #  lakepowell_2021.1, lakepowell_2021.2, lakepowell_2021.3 
 #      [NIR],              [red],             [green]
 
-# Per questo progetto si sono utilizzate immagini prese da Landsat, in cui le 
+# Per questo progetto si sono utilizzate immagini prese da Landsat8, in cui le 
 # bande sono divise in questo modo:
 # B1=NIR; 
 # B2=red; 
@@ -96,7 +96,7 @@ plot(rpowell2021)
 # ColorRampPalette--> stabilisce la variazione dei colori (i colori che si vedono
 # sono numeri, ovvero valori di riflettanza in una certa lunghezza d'onda).
 # La "c" prima delle parentesi indica una serie di elementi (vettore o array).
-# Il numero 100 tra parentesi indica quanti livelli diversi dei 3 colori 
+# Il numero 100 tra parentesi indica quanti livelli diversi dei colori 
 # scelti si vuole inserire nella scala di colori.
 # A tale funzione si associa un nome di variabile.
 cl <- colorRampPalette(c("black", "purple", "violetred", "orange", "seashell")) (100)
@@ -109,7 +109,7 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 
 # Eseguo la differenza tra le due immagini (2017-2021)
 powell_dif <- rpowell2021-rpowell2017
-# Decido di fare un'altra colorRampPalette 
+# Decido di fare un'altra colorRampPalette: 
 cldif <- colorRampPalette(c("blue","white","red"))(100)
 # Eseguo il plot:
 plot(powell_dif, col=cldif, main="Differenza tra il 2021 e il 2017")
@@ -134,9 +134,9 @@ cluc<-colorRampPalette(c("sandybrown", "dodgerblue","brown"))(100)
 # Mostro a video la conta dei pixel per ogni classe:
 freq(clasimm2017$map) 
 #     value   count
-#[1,]     1 2338884  # altopiano formato da materiale più chiaro
-#[2,]     2  980022  # a questa classe associo l'acqua del lago
-#[3,]     3 1677944  # altopiano formato da materiale più scuro
+#[1,]     1 2338884  # 
+#[2,]     2  980022  # questa classe indica l'acqua del lago
+#[3,]     3 1677944 
 # Plotto la mappa delle classi con la colorRampPalette assegnata in precedenza
 # e decido di far vedere le zone bagnate
 plot(clasimm2017$map, col=cluc)
@@ -169,11 +169,12 @@ df1$classe<-c("Classe 1","Classe 2","Classe 3")
 
 # Eseguo un grafico con "ggplot" per il 2017, più precisamente un grafico a barre:
 ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
-  geom_bar(stat="identity", color="black")+   ##"geom_bar" mi indica il tipo di grafico
+  geom_bar(stat="identity", color="black")+   #"geom_bar" mi indica il tipo di grafico
   labs(x="Classi",y="Percentuale",title="Percentuale per Classe 2017")+
   # "labs" sono i labels degli assi
   theme(legend.position="bottom")
 # theme" mi dà delle opzioni su come posizionare la legenda.
+
 # Per facilità associo il plot appena eseguito ad una varibile:
 p9<-ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
   geom_bar(stat="identity", color="black")+
@@ -181,7 +182,7 @@ p9<-ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
   theme(legend.position="bottom")
 
 
-# UnsuperClass dell'immagine 2021 (prosciugamento del Lago Sawa)
+# UnsuperClass dell'immagine 2021 (diminuzione livello dell'acqua del Lago Sawa)
 # Anche in questo caso per fare in modo che una classificazione sia sempre la 
 # stessa, si utilizza la funzione "set.seed".
 # Quindi, rendo le classi discrete:
@@ -193,9 +194,9 @@ cluc<-colorRampPalette(c("sandybrown", "dodgerblue","brown"))(100)
 # L'assegnazione delle classi cambia ogni volta che si esegue un run.
 # Mostro a video la conta dei pixel per ogni classe:
 freq(clasimm2021$map)
-#[1,]     1  675626  # a questa classe associo l'acqua del lago
-#[2,]     2 2459724  # altopiano formato da materiale più chiaro
-#[3,]     3 1861500  # altopiano formato da materiale più scuro
+#[1,]     1  675626  # questa classe indica l'acqua del lago
+#[2,]     2 2459724  
+#[3,]     3 1861500  
 # Eseguo il plot da cui si vedrà l'area prosciugata del lago:
 plot(clasimm2021$map, col=cluc)
 # Creo un dataframe con i pixel categorizzati:
@@ -325,7 +326,6 @@ ndwi_diff<- ndwi2021-ndwi2017
 plot(ndwi_diff, col=cldif, main="Differenza tra NDWI del 2021 e NDWI del 2017")
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
-
 ##################### Soil-Adjusted Vegetation Index (SAVI) ####################
 
 # Metodo SAVI
@@ -334,7 +334,7 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 #conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura
 #vegetativa. Viene utilizzato per l'analisi delle regioni aride con vegetazione 
 #rada (meno del 15\% dell'area totale) e superfici del suolo esposte.
-#La correzione viene valutata nel parametro L, fattore di correzione della luminosità del suolo
+#La correzione viene valutata tramite il parametro L, fattore di correzione della luminosità del suolo
 
 # SAVI = ((NIR - Red) / (NIR + Red + L)) x (1 + L)
 
