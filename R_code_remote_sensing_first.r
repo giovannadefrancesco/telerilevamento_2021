@@ -64,8 +64,7 @@ plot(p224r63_2011, col=cls)
 #riflettanza più alti in viola per ogni banda.
 
 ###GIORNO 3
-# Il software applica una scala di colori di dafault e le varie bande di LANDSAT sono:
-
+#Le varie bande di LANDSAT sono:
 # B1: blu (blue) 
 # B2: verde (green)
 # B3: rosso (red)
@@ -81,6 +80,7 @@ dev.off()
 #Il simbolo del $ viene sempre utilizzato per legare due blocchi, in questo caso
 #si lega l'immagine alla banda uno.
 plot(p224r63_2011$B1_sre)
+#La scala di colori è quella di dafault di R, dal bianco al verde.
 
 #Esercizio:
 #Plot band 1 with a predefined color ramp palette
@@ -103,7 +103,7 @@ plot(p224r63_2011$B1_sre)
 plot(p224r63_2011$B2_sre)
 
 #E' possibile anche invertire la disposizione delle immagini, ovvero disporre 
-#le immagigin in 2 righe e 1 colonna
+#le immagigin in 2 righe e 1 colonna:
 par(mfrow=c(2,1))
 plot(p224r63_2011$B1_sre)
 plot(p224r63_2011$B2_sre)
@@ -152,6 +152,7 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 ####GIORNO 4
 #Visualizing data by RGB plotting.
 #Si cercherà di capire cosa sia un plotting in RGB
+
 #Viene richiamata la libreria raster.
 library(raster)
 #Si seleziona la cartella di lavoro e quindi, di riferimento.
