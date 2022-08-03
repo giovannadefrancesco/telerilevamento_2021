@@ -20,6 +20,16 @@ p224r63_2011 <- brick("p224r63_2011_masked.grd")
 #risoluzione ecc) del file contenente le immagini satellitari
 p224r63_2011 #Si tratta della riserva Parakan
 
+#class      : RasterBrick 
+#dimensions : 1499, 2967, 4447533, 7  (nrow, ncol, ncell, nlayers)
+#resolution : 30, 30  (x, y)
+#extent     : 579765, 668775, -522705, -477735  (xmin, xmax, ymin, ymax)
+#crs        : +proj=utm +zone=22 +datum=WGS84 +units=m +no_defs 
+#source     : p224r63_2011_masked.grd 
+#names      :       B1_sre,       B2_sre,       B3_sre,       B4_sre,       B5_sre,        B6_bt,       B7_sre 
+#min values : 0.000000e+00, 0.000000e+00, 0.000000e+00, 1.196277e-02, 4.116526e-03, 2.951000e+02, 0.000000e+00 
+#max values :    0.1249041,    0.2563655,    0.2591587,    0.5592193,    0.4894984,  305.2000000,    0.3692634 
+
 #Questo comando serve per plottare le varie immagini
 plot(p224r63_2011)
 
