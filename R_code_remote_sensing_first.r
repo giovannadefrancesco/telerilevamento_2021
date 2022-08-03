@@ -208,12 +208,16 @@ plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist") #histogram stretching aumen
                                                      #lo strech e ha una penenza 
                                                      #+ elevata nei valori intermedi.
 dev.off() #funzione che serve per chiudere la finestra precedente.
+
 #"par" natural colours, false colour and false colours with histogram stretching. 
 #"par" con colori naturali, falsi colori e falsi colori con  histogram stretching. 
 par(mfrow=c(3,1)) #la disposizione delle immagini sarà in 3 righe e 1 colonna
-plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin") #stretch lineare.
-plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin") #stretch lineare.
-plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist") #histogram stretching, si 
+#Immagine in colori naturali e stretch lineare:
+plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
+#Immagine con l'infrarosso sul green e stretch lineare:
+plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin") 
+#immagine con l'infrarosso sul verde e histogram stretching:
+plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist")
 #Si evidenziano differenze potenzilai all'interno della foresta, facendo uno stretch
 #ancora più ampio, tutta la parte fucsia è vegetazione.
 dev.off() #funzione che serve per chiudere la finestra precedente.
