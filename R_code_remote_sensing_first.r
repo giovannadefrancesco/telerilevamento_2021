@@ -223,9 +223,6 @@ plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="hist")
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
 ##### GIORNO 5
-#install.packages("RStoolbox") #serve per installare il pacchetto RStoolbox.
-library(RStoolbox)##Carico il pacchetto RStoolbox.
-
 #Multitemporal set: si inserisce anche l'immagine del 1988
 # p224r63_1988_masked
 p224r63_1988 <- brick("p224r63_1988_masked.grd")
@@ -268,4 +265,10 @@ plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin") #stretch lineare.
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin") #stretch lineare.
 plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="hist") #histogram stretching.
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="hist") #histogram stretching.
+#Si nota che nell'immagine del 1988 c'è un passaggio graduale dalla componente
+#vegetale a quella umana (terreni coltivati) mentre nel 2011 si assiste a una 
+#soglia netta tra la foresta pluviale e l'impatto umano.
+#Con l'histogram stretching si nota una sorta di rumore all'interno delle 
+#immagini che non fa apprezzare le variazioni reali.
+
 dev.off() #funzione che serve per chiudere la finestra precedente.
