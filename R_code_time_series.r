@@ -29,6 +29,7 @@ setwd("C:/lab/greenland") # Windows
 #Importazione PRIMA IMMAGINE del 2000:
 #Si assegna la funzione raster all'oggetto lst_2000.tif (si utilizzano le virgolette 
 #perchè si esce da R), a sua volta si associa un nome (lst_2000).
+#lst-->land surface temperature:
 lst_2000 <- raster ("lst_2000.tif")
 #Viene plottata la prima immagine:
 plot(lst_2000)
