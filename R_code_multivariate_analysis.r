@@ -129,6 +129,7 @@ dev.off()#funzione che serve per chiudere la finestra precedente.
 #Si esegue un plotRGB con le prime 3 componenti principali:
 plotRGB(p224r63_2011res_pca$map, r=1, g=2, b=3, stretch="lin")
 #immagine con tutte e 3 le componenti.
+#Questa è l'immagine finale derivante da un'analisi della componente principale (PC1).
 
 #Per plottare una singola componente, nel senso che si è plottata la prima PC1 
 #contro la PC2 per vedere se fossero correlate tra loro e si nota che non c'è 
