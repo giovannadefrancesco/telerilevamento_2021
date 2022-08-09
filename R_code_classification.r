@@ -30,7 +30,7 @@ plotRGB(so, 1, 2, 3, stretch="lin")
 
 #"UnsuperClass classification"--> classificzione non supervisionata, ovvero non 
 #c'è nessun impatto da parte dell'utente di definire a monte le classi. 
-#Si lascia al software definire i "training sets" direttamente sulla base delle
+#Si lascia al software definire i "training sites" direttamente sulla base delle
 #riflettanze.
 
 #La funzione che si utilizza è "unsuperClass". 
@@ -43,7 +43,7 @@ soc <- unsuperClass(so, nClasses=3)
 #Successivamente, si plotta l'immagine classificata (soc) insieme alla mappa (map):
 plot(soc$map)
 #L'immagine che uscirà fuori da questo plot non sarà sempre uguale, in quanto una
-#volta lanciato il processo unsuperclass si è selezionato un training sets di 
+#volta lanciato il processo unsuperclass si è selezionato un training sites di 
 #pixel in entrata.
 
 #Per fare in modo che una classificazione sia sempre la stessa, si usa una 
