@@ -84,6 +84,12 @@ p224r63_2011res_pca <-rasterPCA(p224r63_2011res)
 #seguire il nome di quello che si è appena generato e lo si lega con il simbolo 
 #del dollaro al modello.
 summary(p224r63_2011res_pca$model)
+#Importance of components:
+#                          Comp.1      Comp.2       Comp.3       Comp.4       Comp.5       Comp.6       Comp.7
+#Standard deviation     1.2050671 0.046154880 0.0151509516 4.575220e-03 1.841357e-03 1.233374e-03 7.595367e-04
+#Proportion of Variance 0.9983595 0.001464535 0.0001578135 1.439091e-05 2.330990e-06 1.045814e-06 3.966085e-07
+#Cumulative Proportion  0.9983595 0.999824022 0.9999818357 9.999962e-01 9.999986e-01 9.999996e-01 1.000000e+00
+
 #Questo risultato afferma che la PC1 spiega il 99,83% della variabilità del sistema.
 #Mentre con tutte le bande si arriverà al 100%. 
 
@@ -97,6 +103,27 @@ plot(p224r63_2011res_pca$map)
 
 #Si hanno tutte le informazioni:
 p224r63_2011res_pca
+#$call
+#rasterPCA(img = p224r63_2011res)
+
+#$model
+#Call:
+#princomp(cor = spca, covmat = covMat[[1]])
+#Standard deviations:
+#      Comp.1       Comp.2       Comp.3       Comp.4       Comp.5       Comp.6       Comp.7 
+#1.2050671362 0.0461548802 0.0151509516 0.0045752199 0.0018413569 0.0012333745 0.0007595367 
+#7  variables and  41233 observations.
+
+#$map
+#class      : RasterBrick 
+#dimensions : 150, 297, 44550, 7  (nrow, ncol, ncell, nlayers)
+#resolution : 300, 300  (x, y)
+#extent     : 579765, 668865, -522735, -477735  (xmin, xmax, ymin, ymax)
+#crs        : +proj=utm +zone=22 +datum=WGS84 +units=m +no_defs 
+#source     : memory
+#names      :         PC1,         PC2,         PC3,         PC4,         PC5,         PC6,         PC7 
+#min values : -1.96808463, -0.30213565, -0.07212306, -0.02976086, -0.02695826, -0.01712903, -0.00744772 
+#max values : 6.065280099, 0.142898206, 0.114509980, 0.056825410, 0.008628344, 0.010537390, 0.005594290 
 dev.off()#funzione che serve per chiudere la finestra precedente.
 
 #Si esegue un plotRGB con le prime 3 componenti principali:
