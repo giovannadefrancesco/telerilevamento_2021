@@ -10,6 +10,10 @@ library(RStoolbox) #Viene caricato il pacchetto RStoolbox.
 #La funzione "brick" crea un oggetto RasterBrick, ovvero un oggetto raster 
 #multistrato a cui si associa un nome (so-->solar orbiter).
 so <- brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
+#L'immagine rappresenta, attraverso i raggi ultravioletti, i diversi livelli energetici
+#all'interno del sole. Si nontano esplosioni di gas piuttosto potenti sulla destra,
+#situazioni a più bassa energia nella parte centrale e situazioni intermedie nelle 
+#parti grigie.
 
 #Per vedere i livelli e le varie informazioni:
 so
