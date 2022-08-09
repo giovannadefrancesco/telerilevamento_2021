@@ -5,7 +5,8 @@
 setwd("C:/lab/greenland") # Windows
 
 
-#install.packages('knitr') #serve per installare il pacchetto knitr..
+#install.packages('knitr') #serve per installare il pacchetto knitr, di utilizzano le 
+                           #virgolette perchè si esce da R.
 #install.packages('tinytex')
 library (knitr) #Viene caricato il pacchetto knitr, non vengono messe le virgolette 
                 #perchè è già in R.
