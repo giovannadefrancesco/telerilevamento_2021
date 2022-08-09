@@ -56,7 +56,7 @@ pairs(p224r63_2011)
 #RESAMPLING-->ricampionamento:
 p224r63_2011res <- aggregate(p224r63_2011, fact=10)
 #Per vedere le informazioni riguardanti la diminuzione si utilizza un fattore di 
-#ricampionamento (ovvero quante volte s vuole diminuire la risoluzione oppure 
+#ricampionamento (ovvero quante volte si vuole diminuire la risoluzione oppure 
 #quante volte si vuole aumentare la grandezza del pixel) pari a 10.
 #Il pixel non sarà più di 30m ma di 300m -->aumentare la grandezza del pixel 
 #significa diminuire la risoluzione. Maggiore è il dettaglio, più fitta è la risoluzione.
