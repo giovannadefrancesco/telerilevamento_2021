@@ -111,7 +111,7 @@ freq(d1c$map)
 somma1 <- 305195 + 36097
 somma1
 #e poi si imposta la proporzione:
-prop1 <- freq(d1c$map)/ somma1
+prop1 <- freq(d1c$map)/somma1
 prop1
 #value     count
 #[1,] 2.930042e-06 0.8954678 --> 89.54% di foresta
