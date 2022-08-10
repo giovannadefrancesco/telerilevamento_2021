@@ -1,0 +1,379 @@
+\documentclass[10pt]{beamer}
+%\documentclass[aspectratio=169, 16pt]{beamer} 
+\usepackage[utf8]{inputenc}
+\usetheme[progressbar=frametitle]{Goettingen}
+\usecolortheme{default}
+\usepackage{listings}
+\setbeamertemplate{blocks} [rounded] [shadow=true]
+
+
+\title{Abbassamento del livello di acqua nel
+              \\Lago Powell dal 2017 al 2021}
+  \subtitle {\footnotesize corso \\ Telerilevamento Geo-Ecologico.}
+  \author{Giovanna De Francesco}
+  \institute {Alma Mater Studiorum University of Bologna\\ 
+  \bigskip
+  \includegraphics[width=0.4\textwidth]{figure/logo_unibo.png}}
+  \date{26 luglio 2022}
+
+\begin{document}
+   \maketitle
+
+ \AtBeginSection[]
+{   
+\begin{frame}
+\frametitle{Indice}
+\tableofcontents[currentsection,currentsubsection,currentsubsubsection]
+\end{frame}
+}
+
+\section {Introduzione}
+\begin{frame} 
+    \begin{itemize}
+      \item \textbf{Area di studio}
+    \end{itemize}
+            {\scriptsize Il lago Powell è il secondo bacino artificiale più grande degli Stati Uniti, si sviluppa lungo il fiume Colorado tramite la costruzione della diga di Glen Canyon.
+            \\Si trova a confine tra il Sud/Est dello Utah e il Nord/Est dell’Arizona ed è un'importante riserva idrica.\par}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/Area di studio.jpg}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} 
+    \begin{itemize}
+      \item \textbf{Confronto lago Powell 2017 vs 2021}
+    \end{itemize}
+            {\scriptsize Negli ultimi anni, il livello del lago Powell è sceso drasticamente, arrivando a registrare il dato più basso da quando è stato riempito nel 1980. 
+            \\Questo drastico calo del livello dell’acqua è  stato documentato da immagini catturate dal satellite Landsat8 riferite al 2017 e al 2021 .\par}
+            \bigskip 
+    \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/Confronto lago powel 2017 e 2021.png}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} 
+    \begin{itemize}
+      \item \textbf{Differenze evidenziate}
+    \end{itemize}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/Differenza 2021-2017.png}
+    \end{figure}
+    \begin{center}
+      {\large Vengono evidenziate in \textcolor{red}{rosso} le differenze maggiori.
+      \\La restituzione di questa immagine indica quali sono state le zone in cui c'è stato un ritiro maggiore dell'acqua.\par}
+    \end{center}
+\end{frame}
+
+
+\section{Classificazione}
+\begin{frame} 
+    \begin{itemize}
+      \item \textbf{UnsuperClasse}
+            \\{\scriptsize La classificazione non supervisionata permette di individuare zone che hanno valori simili di riflettanza e li ragruppa in classi. Codice per l'immagine del 2017\par}
+    \begin{mybox}
+      \tiny\lstinputlisting[language=R]{Unsuperclasse.txt}
+    \end{mybox}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame} {}
+     \centering
+     \\{Le immagini mostrano le classi a cui i pixel sono stati assegnati. 
+     \\L'assegnazione avviene in modalità random.\par}
+   \begin{figure}
+      \centering
+      \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/Unsuperclass.jpg}
+    \end{figure}
+    \begin{itemize}
+      \centering
+         \item 2017: l'area bagnata corrisponde alla calsse 2.
+         \item 2021: l'area bagnata corrisponde alla calsse 1.
+    \end{itemize}
+\end{frame}
+ 
+
+\begin{frame} {}
+    \begin{itemize}
+       \item \textbf{Confronto delle classi tramite grafici a barre.}
+    \end{itemize}
+    \begin{figure}
+      \centering
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/unsuperclass_barre.png}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{mybox}
+      \tiny\lstinputlisting[language=R]{percentuale acqua.txt}
+   \end{mybox}
+      \bigskip 
+      \centering
+      \\{Dato l'obiettivo del progetto, si è scelto di operare solo sul numero di pixel delle classi riferite all'area bagnata per le due immagini.\par} 
+      \bigskip 
+      {Si evince che la riduzione in percentuale dell'area baganta rispetto al 2017 è di circa \textcolor{red}{\large 31\%}.\par}
+\end{frame}
+
+
+\section {Indici di Analisi}
+\subsection {NDWI}
+\begin{frame} 
+    \begin{itemize}
+      \item \textbf{NDWI: Normalized Difference Water Index}
+      \\{\scriptsize Si tratta di un indice che viene utilizzato per monitorare i cambiamenti relativi al contenuto idrico nei corpi idrici. Poiché i corpi idrici assorbono fortemente la luce nello spettro elettromagnetico da visibile a infrarosso, NDWI utilizza le bande del verde e del vicino infrarosso per evidenziare i corpi idrici.\par} 
+    \begin{equation}
+       NDWI={\frac{(GREEN - NIR)}{(GREEN + NIR)}}
+    \end{equation}
+    \begin{mybox}
+       \tiny\lstinputlisting[language=R]{RcodeNDVI.txt}
+    \end{mybox}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Confronto NDWI tra il 2017 e il 2021.}
+    \end{itemize}
+    \begin{figure}
+      \centering
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/confrontoNDVI.PNG}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Differenza NDWI 2021-2017}
+    \end{itemize}
+    \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/Differenza NDWI.PNG}
+      {\\ Le zone a sfumature di \textcolor{blue}{ blu} indicano la maggior differenza dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ritiro del livello dell'acqua.\par}
+    \end{figure}
+\end{frame}
+
+
+\subsection {SAVI}
+\begin{frame}
+    \begin{itemize}
+      \item \textbf{SAVI: Soil-Adjusted Vegetation Index}
+      \\{\scriptsize E' un indice adoperato per correggere l'NDVI (indice che descrive il livello di vigoria della vegetazione) tenendo conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura vegetativa.
+      \\ Viene utilizzato per l'analisi delle regioni aride con vegetazione rada (meno del 15\% dell'area totale) e superfici del suolo esposte.
+      \\La correzione viene valutata tramite il parametro L, fattore di correzione della luminosità del suolo.\par} 
+
+    \begin{equation}
+       SAVI={\frac{((NIR - RED)}{(NIR + RED + L)}}*{(1+L)}
+    \end{equation}
+
+      \\{\scriptsize # NIR e RED si riferiscono alle bande associate a tali lunghezze d'onda. 
+      \\Il valore L varia a seconda della quantità di copertura di vegetazione verde:
+      \\-nelle aree senza copertura di vegetazione verde, L=1;
+      \\-nelle aree a moderata copertura di vegetazione verde, L=0,5;
+      \\-nelle aree a elevata copertura di vegetazione verde, L=0.
+      \bigskip
+      \\In questo caso specifico, dato che nelle vicinanze del lago Powell non è presente vegetazione, uso L=1.\par}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Confronto SAVI tra il 2017 e il 2021.}
+    \end{itemize}
+    \begin{figure}
+      \centering
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/Confronto SAVI.PNG}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Differenza SAVI 2021-2017}
+    \end{itemize}
+    \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/Differenza SAVI.PNG}
+      {\\Le zone \textcolor{red}{rosse} rappresentano la maggior differenza dell'indice SAVI negli anni esaminati. Ciò è sinonimo del fatto che, a causa della diminuzione del livello dell'acqua del lago Powell, è aumentata l'esposizione del suolo.\par}
+    \end{figure}
+\end{frame}
+
+
+\section {PCA}
+\begin{frame}
+    \begin{itemize}
+      \item \textbf{PCA: Principal Component Analysis}
+      {\\L'Analisi delle componenti principali è una tecnica che semplifica i dati derivanti da più variabili in un numero minore di variabili, limitando la perdita delle informazioni.
+      \bigskip 
+      \\ Più precisamente, consiste nel prendere i dati originali e si fa passare un asse lungo la variabilità maggiore e l'altro asse lungo la variabilità minore.\par} 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+      \item \textbf{Plot delle tre bande dell'immagine del 2017}
+    \end{itemize}
+    \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/pca_2017.PNG}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Plot delle tre bande dell'immagine del 2021}
+    \end{itemize}
+    \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/pca_2021.PNG}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} {}
+   \begin{itemize}
+     \item \textbf{Correlazione fra le bande del 2017 e del 2021}
+   \end{itemize}
+   \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/correlazione.PNG}
+   \end{figure}
+\end{frame}    
+
+
+\begin{frame} {}
+   \begin{itemize}
+     \item \textbf{Codice calcolo PCA per analisi multivariata}
+   \end{itemize}
+   \begin{mybox}
+     \tiny\lstinputlisting[language=R]{analisiPCA.txt}
+    \end{mybox}
+\end{frame}    
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Output PCA}
+    \end{itemize}
+    \begin{figure}
+      \bigskip 
+      \centering
+      \includegraphics[width=\textwidth, height=0.5\textheight,keepaspectratio]{figure/pca finale.PNG}
+    \end{figure}
+    \centering
+    {\\Immagini risultanti dall'analisi delle componenti principali. \par}
+    
+     \bigskip
+    {\\Grazie all'analisi PCA si sono create delle nuove componenti che diminuiscono la correlazione iniziale
+    fra tutte le bande e con un numero minore di componenti, è possibile spiegare l'immagine originale, togliendo la correlazione.\par}
+\end{frame}    
+
+
+\section {}
+\subsection {Variabilità locale}
+\begin{frame} 
+    \begin{itemize}
+      \item \textbf{R code Variabilità sulla PC1}
+    \end{itemize}
+    \begin{mybox}
+      \tiny\lstinputlisting[language=R]{variabilita.txt}
+    \end{mybox}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Deviazione standard derivante dalla PC1 del 2017 e del 2021}
+    \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.39\textheight,keepaspectratio]{figure/sd_finale.PNG}
+    \end{figure}
+    \end{itemize}
+\end{frame}
+
+
+\section {Spectral Signature}
+\begin{frame}
+    \begin{itemize}
+      \item \textbf{Spectral Signature}
+      {\\Le \textbf{FIRME SPETTRALI} servono per vedere se quello che si vede in termini di colori e quindi, di differenziazione nei tempi, corrisponde effettivamente a una variazione della riflettanza.
+      \bigskip 
+      \\ Vengono viste come una sorta di "impronte digitali" delle varie componenti che formano un qualsiasi ecosistema.
+\par} 
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \begin{itemize}
+      \item \textbf{Analisi multitemporale}
+    \end{itemize}
+      \centering
+      {Sono stati selezionati 5 punti nell'immagine del 2017 e 5 punti nell'immagine del 2021, aventi circa le stesse coordinate e sono stati utilizzati per ricavare le varie firme spettrali e fare l'analisi di multitemporalità.}
+    \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.35\textheight,keepaspectratio]{figure/sceltapunti.PNG}
+    \end{figure}
+     {\scriptsize Sono evidenziati in \textcolor{magenta}{magenta} i punti su cui si è calcolata la variabilità.\par}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{R code Spectral Signature}
+    \end{itemize}
+    \begin{mybox}
+      \tiny\lstinputlisting[language=R]{spectral signature.txt}
+    \end{mybox}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Creazione DataFrame}
+    \end{itemize}
+    \begin{figure}
+       \bigskip 
+       \includegraphics[width=\textwidth, height=0.4\textheight,keepaspectratio]{figure/dataframe.PNG}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame} {}
+    \begin{itemize}
+      \item \textbf{Risultati analisi multitemporale}
+    \end{itemize}
+    \begin{figure}
+      \bigskip 
+      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/Risultati_multitemporalePNG.PNG}
+    \end{figure}
+\end{frame}
+
+\section {Conclusioni}
+\begin{frame} 
+    \begin{itemize}
+      \item Grazie alla funzione \emph{UnsuperClass} si è stimato che il prosciugamento del lago Powell dal 2017 al 2021 sia del 31\%.
+      \item Gli indici {\textbf{NDWI e SAVI}}  hanno dimostrato che c'è stata:
+      \\-una diminuzione del livello dell'acqua;
+      \\-un aumento dell'esposizione del suolo dovuto al prosciugamento.
+      \item Elaborazione di mappe di variabilità locale utilizzando la PC1 per il 2017 e il 2021.
+      \item Le \emph{Spectral Signature} confermano l'esposizione del suolo a causa dell' assenza di acqua.
+    \end{itemize}
+\end{frame}
+
+\begin{frame} {}
+  \centering
+  \textbf{\huge Grazie per l'attenzione!\par}
+\end{frame}
+\end{document}
