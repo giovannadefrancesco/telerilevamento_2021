@@ -141,6 +141,9 @@ pc1sd5 <- focal (pc1, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100)
 #Si esegue il plot di pc1sd5:
 plot(pc1sd5, col=clsd)
+#Tutte le parti blu indicano la parte di vegetazione legata alle praterie di alta quota ed 
+#è quella più omogenea, mentre si ha un aumento di variabilià proprio in quelle zone dove c'è
+#il verde, il rosa, ovvero quelle zone di roccia dove c'è un cambiamento più forte.
 
 #La funzione "source" serve per richiamare un pezzo di codice che si è gia creato. 
 #Deviazione standard di una finestra 7x7 pixel
