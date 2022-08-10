@@ -74,6 +74,8 @@ plot (dvi2)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
 #Si effettua il plot:
 plot(dvi2, col=cl, main="DVI at time 2")
+#La parte gialla indica la parte in cui NON c'è più vegetazione, quindi i campi coltivati
+#mentre il rosso indica ciò che rimane della foresta.
 
 #Tramite la funzione par si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
 par(mfrow=c(2,1))
@@ -136,6 +138,7 @@ difndvi <- ndvi1 - ndvi2
 cld <- colorRampPalette(c('blue','white','red'))(100)
 #Si effettua il plot:
 plot(difndvi, col=cld)
+#Con il rosso si hanno le aree dove c'è stata maggior perdita di vegetazione.
 
 #Worldwide NDVI-->NDVI mondiale
 plot(copNDVI)
