@@ -159,3 +159,9 @@ p2 <- ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(
 
 #Funzione per assemblare più grafici su una pagina:
 grid.arrange(p1, p2, nrow=1)
+#Nella prima data, quella del 1992 si avrà la foresta che è molto elevata come valore,
+#mentre l'agricoltura ha un valore basso. La situazione è molto diversa nel secondo grafico,
+#quello riferito al 2006, dove l'agricoltura e la foresta hanno quasi lo stesso valore. 
+
+
+
