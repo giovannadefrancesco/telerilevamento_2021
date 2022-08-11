@@ -71,8 +71,8 @@ rlist <-list.files(pattern = "EN") #nel senso tutte le immgini hanno in comune "
 #Per vedere le informazioni di questa lista appena creata:
 rlist
 
-#A questo punto si applica la funzione "raster! tramite la funzione lapply a tutta 
-#la lista che si è realizzata e la si associa a un oggetto:
+#A questo punto si applica la funzione "raster" tramite la funzione lapply a tutta 
+#la lista che si è realizzata la si associa a un oggetto:
 import <-lapply(rlist,raster)
 #Si vedono le imformazioni di questo nuovo oggetto
 import
@@ -81,7 +81,7 @@ import
 #A questo punto è possibile fare uno stack di tutti questi layer:
 EN <- stack(import)
 #e infine si esegue il plot:
-plot(EN, col=cls) #si utilizza sempre il colore della ColorrampPalette scelta in 
+plot(EN, col=cls) #si utilizza sempre il colore della ColorRampPalette scelta in 
                   #precedenza.
 #Per vedere le informazioni di EN
 EN
@@ -100,7 +100,7 @@ plot(EN$EN_0013, col=cls)
 #Si ha un set composto da 13 bande e lo si diminuisce facendo una PCA:
 #Si esegue la PCA:
 ENpca <- rasterPCA(EN)
-#il summary:
+#Si esegue il summary:
 summary(ENpca$model)
 #Importance of components:
 # Comp.1      Comp.2      Comp.3      Comp.4      Comp.5     Comp.6      Comp.7
@@ -118,14 +118,14 @@ plotRGB(ENpca$map, r=1,g=2,b=3, stretch="lin") ##si utilizza uno strech lineare
 #Tutto quello che appare rosso sarebbe quello che si è mantenuto piuttosto stabile 
 #nel tempo.
 
-#Dal summary si vedono le varie componenti e si nota che con la pirma si 
+#Dal summary si vedono le varie componenti e si nota che con la primma si 
 #ha tutta la varianza del sistema.
 
 #10. Compute the local variability (local standard deviation) of the first PCA. 
 #Si esegue un calcolo della variabilità sulla prima componente della PCA.
 #Si esegue un calcolo della standard deviation sulla prima componente:
 PC1sd <- focal(ENpca$map$PC1, w=matrix(1/9, nrow=3, ncol=3), fun=sd) #fun=sd-->deviazione standard
-#Dato che ENpca$PC1 non è esattamente una mappa, in quanto PC1 è dentro il Raster
-#Brick che a sua volta è ENpca$map.
+#Dato che ENpca$PC1 non è esattamente una mappa, in quanto PC1 è dentro il RasterBrick 
+#che a sua volta è ENpca$map.
 #Si esegue il plot:
 plot(PC1sd, col=cls)
