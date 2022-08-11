@@ -40,5 +40,5 @@ albedores <- aggregate(albedo, fact=100)
 #Si è utilizzato un fattore 100, quindi un accorpamento di 10 000 volte il dato 
 #originale, avendo così dei file in uscita molto più grezzi.
 
-#Si esegue il plot con i colori precedenti:
+#Si esegue il plot con la colorRampPalette precedente:
 plot(albedores, col=cl)
