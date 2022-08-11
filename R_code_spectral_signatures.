@@ -34,9 +34,10 @@ plotRGB (defor2, r=1, g=2, b=3, stretch="his")#facendo un histogram strech
 #e quindi le differenze tra i due plot saranno molto più accentuate.
 
 #La funzione per creare firme spettrali si chiama "click" che è contenuta 
-#nel pacchetto "rgdal". Serve per cliccare sulla mappa e avere a disposizione 
+#nel pacchetto "raster". Serve per cliccare sulla mappa e avere a disposizione 
 #qualsiasi informazione (in questo caso informazioni relative alla riflettanza).
-click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
+click(defor2, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
+#T=true, p=punto e pch=tipo di punto
 
 #Results:
 #Cliccando sulla mappa una zona vegetata si ottiene:
