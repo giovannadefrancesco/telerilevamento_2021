@@ -231,8 +231,8 @@ spectralsg
 
 #A questo punto si esegue un plot con ggplot2:
 ggplot(spectralsg, aes(x=band))+
-  geom_line(aes(y = stratumyellow), color ="yellow")+ 
-  geom_line(aes(y = stratumgreen), color ="green") + 
-  geom_line(aes(y = stratumblue), color ="blue") 
+  geom_line(aes(y = stratum1), color ="yellow")+ 
+  geom_line(aes(y = stratum2), color ="green") + 
+  geom_line(aes(y = stratum3), color ="blue") 
   labs(x="band",y="reflectance")
 #Si nota che le 3 formazioni che si sono individuate si differenziano molto.
