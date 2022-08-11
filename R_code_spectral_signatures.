@@ -79,9 +79,7 @@ spectrals
 #   2    2      8    80
 #   3    3     23   124
 
-
-######## MULTITEMPORAL ###############
-#Plot the spectral sign
+#Plot the spectral signature.
 #A questo punto si esegue un plot con ggplot2.
 ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le bande e 
                                 #sull'asse y le riflettanze della foresta e dell'acqua.
@@ -92,6 +90,8 @@ ggplot(spectrals, aes(x=band))+ #per il grafico si mette sull'asse delle x le ba
                                              #diametralmente opposto rispetto alla vegetazione.
   labs(x="band",y="reflectance") #si aggiungono le etichette agli assi.
 
+
+################################## MULTITEMPORAL ##############################################
 #Si procede con il fare un'analisi multitemporale su una serie di pixel utilizzando 
 #come immagini la defor1 e la defor2.
 #Si carica l'immagine defor1:
@@ -99,9 +99,9 @@ defor1 <-brick("defor1.jpg")
 #Si esegue un plot dell'immagine defor1 con plotRGB:
 plotRGB (defor1, r=1, g=2, b=3, stretch="lin")#strech lineare
 
-#Spectral signatures defor1
+#Spectral signatures defor1.
 #Si procede creando delle sprectral signatures dell'immagine defor1:
-click(defor1, id=T, xy=T, cell=T, type="p", pch=16, col="yellow") #T=true, p=punto e pch=tipo di punto
+click(defor1, id=T, xy=T, cell=T, type="p", pch=16, col="yellow")
 
 #Si preme in una zona dove c'è stata deforestazione (sopra la prima ansa del fiume)
 #e si riportano i primi 5 valori.
@@ -190,6 +190,8 @@ ggplot(spectrals, aes(x=band))+
   labs(x="band",y="reflectance")
 #Si nota come si mantiene la stessa situazione.
 
+
+###################################################################################################
 #Image from Earth Observatory
 #Si esegue lo stesso esercizio ma prendendo un'immagine da Earth Observatory
 #e la si mette nella cartella lab.
