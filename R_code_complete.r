@@ -26,11 +26,10 @@ setwd("C:/lab/")#Serve per impostare la cartella di lavoro, nella quale verranno
                 #salvati/cercati di default i file.      
 
 #install.packages("raster") #serve per installare il pacchetto raster.
-
 library(raster) #Viene caricato il pacchetto raster, non vengono messe le virgolette 
                 #perchè è già in R.
 
-#La funzione brick serve ad importare un'immagine satellitare infatti,
+#La funzione "brick" serve ad importare un'immagine satellitare infatti,
 #importa tutte le bande delle immagini satellitari in un'unica immagine 
 #satellitare. In questo caso si usano le virgolette perchè questo file si 
 #trova esterno a R. In seguito, questa funzione viene associata ad un nome.
@@ -60,7 +59,7 @@ plot(p224r63_2011)
 #La "c" prima delle parentesi indica una serie di elementi che si chiama vettore 
 #o array. Il numero 100 tra parentesi indica quanti livelli diversi dei 3 colori 
 #scelti si vuole inserire nella scala di colori.
-#A tale funzione si associa un nome/un oggetto, in questo caso cl.
+#A tale funzione si associa un nome/un oggetto, in questo caso "cl".
 cl<-colorRampPalette(c("black", "grey","light grey"))(100)
 
 #Adesso, bisogna fare il plot della nuova immagine usando questa nuova scala di 
@@ -78,7 +77,7 @@ plot(p224r63_2011, col=cl)
 
 #Altra nuova scala di colori:
 cls<-colorRampPalette(c("red","pink","orange","purple"))(100)
-#sSi esegue il plot:
+#Si esegue il plot:
 plot(p224r63_2011, col=cls)
 #In questo caso si avranno i valori di riflettanza più bassi in rosso e valori di
 #riflettanza più alti in viola per ogni banda.
@@ -420,7 +419,7 @@ levelplot(TGr)#grafico con tutte e 4 le mappe.
 levelplot(TGr$lst_2000)#grafico con una singola mappa di come varia la temperatura
                        #nell'area in esame.
 #Dal grafico plottato si nota che dove sono presenti i ghiacci, si ha un valore 
-#di lst più basso.
+#di "lst" più basso.
 
 #Per cambiare i colori e abbelire il "plot" si utilizza una colorRampPalette
 cl<- colorRampPalette(c("blue","light blue", "pink","red"))(100)
@@ -528,7 +527,7 @@ plot(albedo, col=cl)
 #al nome albedores.
 albedores <- aggregate(albedo, fact=100)
 #Si è utilizzato un fattore 100, quindi un accorpamento di 10 000 volte il dato 
-#originale, avendo così dei file in uscita molto più grezzi.
+#originale, avendo così dei files in uscita molto più grezzi.
 
 #Si esegue il plot con la colorRampPalette precedente:
 plot(albedores, col=cl)
@@ -651,7 +650,7 @@ plotRGB(p224r63_2011res, r=4, g=3, b=2, stretch="lin")
 #e la si associa ad un nuovo nome/oggetto (p224r63_2011res_pca).
 p224r63_2011res_pca <-rasterPCA(p224r63_2011res)
 
-#La funzione "summay" ci dà un sommario del modello. Alla funzine "summary", si fa 
+#La funzione "summary" ci dà un sommario del modello. Alla funzine "summary", si fa 
 #seguire il nome di quello che si è appena generato e lo si lega con il simbolo 
 #del dollaro al modello.
 summary(p224r63_2011res_pca$model)
@@ -759,7 +758,7 @@ soc <- unsuperClass(so, nClasses=3)
 #Successivamente, si plotta l'immagine classificata (soc) insieme alla mappa (map):
 plot(soc$map)
 #L'immagine che uscirà fuori da questo plot non sarà sempre uguale, in quanto una
-#volta lanciato il processo unsuperclass si è selezionato un training sites di 
+#volta lanciato il processo unsuperclass si è selezionato un "training sites" di 
 #pixel in entrata.
 
 #Per fare in modo che una classificazione sia sempre la stessa, si usa una 
@@ -774,8 +773,8 @@ cl <- colorRampPalette(c('yellow','red','black'))(100)
 #Si plotta l'immagine classificata (soe) insieme alla mappa (map):
 plot(soc20$map)
 
-# Download an image from:
-# https://www.esa.int/ESA_Multimedia/Missions/Solar_Orbiter/(result_type)/images
+#Download an image from:
+#https://www.esa.int/ESA_Multimedia/Missions/Solar_Orbiter/(result_type)/images
 #Si utilizza di nuovo la funzione "brick" che crea un oggetto "RasterBrick", ovvero
 #un oggetto raster multistrato a cui si associa un nome (sun).
 sun <- brick("sun.png")
@@ -809,16 +808,17 @@ library(RStoolbox) #Viene caricato il pacchetto RStoolbox.
 setwd("C:/lab/") # Windows
 
 #Si procede con il caricare l'immagine tramite la funzione "brick", in quanto si
-#tratta di un immagine in RGB, formata da 3 livelli.
-#(Si ulitzzano le virgolette perchè si esce da R, si prende l'immagine e la si 
-#carica all'interno).In fine tale funzione si assegna ad un  oggetto (gc-->grand canyon).
+#tratta di un'immagine in RGB, formata da 3 livelli.
+#(Si utilizzano le virgolette perchè si esce da R, si prende l'immagine e la si 
+#carica all'interno). In fine, tale funzione si assegna ad un  oggetto (gc-->grand canyon).
 gc <- brick("dolansprings_oli_2013088_canyon_lrg.jpg")
 #Per visualizzare l'immagine si utilizza il comando plotRGB, ovvero si ha un 
 #oggetto Raster con più strati e con tale comando viene plottato.
 plotRGB(gc, r=1, g=2, b=3, stretch="lin") #si utilizza lo stretch lineare per 
                                           #aumentare la potenza visiva di tutti 
                                           #i colori possibili
-plotRGB(gc, r=1, g=2, b=3, stretch="hist") #si utilizza lo histogram stretching
+plotRGB(gc, r=1, g=2, b=3, stretch="hist") #si utilizza lo "histogram stretching"
+
 
 #Si utilizza la funzione "unsuperClass" per classificare l'immagine che si sta 
 #utilizzando e il numero di classi che in questo caso sono 2.
@@ -932,17 +932,17 @@ plotRGB(defor1, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 plotRGB(defor2, r=1, g=2, b=3, stretch="lin") #si utilizza uno strech lineare
 #Rispetto alla prima immagine, nella seconda immagine si vede che in questa
 #zona c'è stato un considerevole impatto dell'agricoltura.
-#Inoltre si nota che il fiume nell'imagine sopra aveva molti più solidi disciolti
-#e quindi il colore appare molto diverso rispetto a quella di sotto, dove molto
+#Inoltre, si nota che il fiume nell'imagine sopra aveva molti più solidi disciolti
+#e quindi, il colore appare molto diverso rispetto a quella di sotto, dove molto
 #probabilmente in quel momento aveva meno solidi disciolti.
 
 #Per visualizzare le informazioni delle immagini:
 defor1
 defor2
 
-#Calcolo dell'indice di vegetazione:
-#PRIMA SITUAZIONE
-#difference vegetation index
+#Calcolo dell'indice di vegetazione (difference vegetation index).
+
+#PRIMA SITUAZIONE:
 #Per calcolare questo indice bisogna fare la differenza tra il near infrared 
 #della defor1, (ovvero defor1.1 ) meno il red della defor1 (defor1.2).
 dvi1 <- defor1$defor1.1 - defor1$defor1.2
@@ -954,7 +954,7 @@ plot (dvi1)
 #al giallino/marronicio mentre tutta la parte della vegetazone della Foresta
 #Amazzonica è molto verde.
 
-#Specifying a color scheme
+#Specifying a color scheme.
 #Si sceglie una nuova colorRampPalette per rendere ancora meglio l'idea di questo
 #indice di vegetazione.
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
@@ -964,27 +964,26 @@ plot(dvi1, col=cl, main="DVI at time 1") #"main" serve per aggiungere il titolo 
 #giallo sono le coltivazioni.
 
 #SECONDA SITUAZIONE
-#difference vegetation index
-#Si fa la stessa cosa ma per DVI2:
+#Si fa la stessa cosa ma per dv2:
 dvi2 <- defor2$defor2.1 - defor2$defor2.2
 #Il plot evidenzia molto bene la differenza di vegetazione
 plot (dvi2)
 
-#Specifying a color scheme
+#Specifying a color scheme.
 #Si sceglie una nuova colorRampPalette per rendere ancora meglio l'idea di questo
 #indice di vegetazione.
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
 #Si effettua il plot:
 plot(dvi2, col=cl, main="DVI at time 2")
-#La parte gialla indica la parte in cui NON c'è più vegetazione, quindi i campi coltivati
+#La parte gialla indica la parte in cui NON c'è più vegetazione, ovvero i campi coltivati
 #mentre il rosso indica ciò che rimane della foresta.
 
-#Tramite la funzione par si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
+#Tramite la funzione "par" si mettono a confronto gli ultimi due plot (dvi1 e dvi2):
 par(mfrow=c(2,1))
 plot(dvi1, col=cl, main="DVI at time 1")
 plot(dvi2, col=cl, main="DVI at time 2")
 
-#Si effettua una differenza dell'indice di vegetazione fra i 2 DVI:
+#Si effettua una differenza dell'indice di vegetazione fra i 2 dvi:
 difdvi <- dvi1 - dvi2
 dev.off() #per togliere la disposizione del par precedente
 
@@ -1045,9 +1044,9 @@ plot(difndvi, col=cld)
 #Worldwide NDVI-->NDVI mondiale
 plot(copNDVI)
 #In questo plot è presente anche l'acqua (rappresentata in celeste), quindi bisogna 
-#trovare il modo di toglierla. A tal proposito esiste una funzione per cambiare
+#trovare il modo di toglierla. A tal proposito, esiste una funzione per cambiare
 #dei valori in altri valori e si chiama "reclassify" che serve a trasformare i 
-#pixels con i valori 253,254 e 255 (acqua) in non valori. 
+#pixels con i valori 253,254 e 255 (acqua) in NON VALORI. 
 copNDVI <- reclassify(copNDVI, cbind(253:255, NA))
 #Si effettua il plot:
 plot(copNDVI)
@@ -1071,7 +1070,7 @@ levelplot(copNDVI)
 #tipi (classi) di copertura fisica della superficie terrestre, ad es. foreste, 
 #praterie, colture, laghi, zone umide. 
 #Le mappe dinamiche della copertura del suolo includono le transizioni delle 
-#classi di copertura del suolo nel tempo e quindi catturano i cambiamenti della
+#classi di copertura del suolo nel tempo e quindi, catturano i cambiamenti della
 #copertura del suolo. Le mappe dell'uso del suolo contengono informazioni spaziali 
 #sulle disposizioni, le attività e gli input che le persone intraprendono in un 
 #determinato tipo di copertura del suolo per produrlo, modificarlo o mantenerlo.
@@ -1094,7 +1093,7 @@ library(gridExtra) #Viene caricato il pacchetto gridExtra per la disposizione
                    #della griglia.
 
 #Si sceglie la cartella da dove si andranno a leggere i dati. Serve per impostare 
-#la cartella di lavoro, nella quale verranno salvati/cercati di default i file.
+#la cartella di lavoro, nella quale verranno salvati/cercati di default i files.
 setwd("C:/lab/") # Windows
 
 #Le bande sono divise in questo modo:
