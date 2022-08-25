@@ -40,7 +40,7 @@ library(rgdal) # Viene caricato il pacchetto rgdal
 setwd("C:/Lago_Powell")
 
 ###############################  2017 VS 2021  ################################
-# Passaggi per il codice:
+# Passaggi per il codice
 # Carico con la funzione "brick" l'intero set di bande riferito all'immagine del 
 # Lago Powell del 2017 creando un RasterBrick (blocco di diversi raster messi tutti 
 # insieme) e lo assegno ad un nome:
@@ -60,12 +60,13 @@ powell2021
 #  lakepowell_2021.1, lakepowell_2021.2, lakepowell_2021.3 
 #      [NIR],              [red],             [green]
 
-# Per questo progetto si sono utilizzate immagini prese da Landsat8, in cui le 
+# Per questo progetto si sono utilizzate immagini prese da Landsat, in cui le 
 # bande sono divise in questo modo:
 # B1=NIR; 
 # B2=red; 
 # B3=green
 
+####################################  STRETCH LINEARE  #########################
 # Decido di plottare le immagini con il "plot" della funzione ggRGB.
 ggRGB(powell2017, r=1, g=2, b=3, stretch="lin") # si utilizza uno strech lineare.
 # Assegno il ggRGB a una variabile e utilizzo uno strech lineare:
@@ -76,10 +77,27 @@ ggRGB(powell2021, r=1, g=2, b=3, stretch="lin") # si utilizza uno strech lineare
 # Assegno il ggRGB a una variabile e utilizzo uno strech lineare:
 p2 <- ggRGB(powell2021, r=1, g=2, b=3, stretch="lin") +labs(title="Lago Powell 2021")
 
-# Utilizzo la funzione "grid arrange" per mostrare entrambe le immagini su un' unica riga.
-# Creo una figura unica che contiene le due immagini (RGB e IR).
-grid.arrange(p1,p2,nrow=1,top="Confronto Lago Powell tra il 2017 e il 2020") 
+# Utilizzo la funzione "grid arrange" per mostrare entrambe le immagini su un'unica riga.
+# Creo una figura unica che contiene le due immagini:
+grid.arrange(p1,p2,nrow=1,top="Confronto Lago Powell tra il 2017 e il 2021") 
 
+################################  HISTOGRAM STRETCHING  ########################
+# Decido di plottare di nuovo le immagini con il "plot" della funzione ggRGB ma 
+# in questo caso decido di utilizzare un HISTOGRAM STRETCHING:
+ggRGB(powell2017, r=1, g=2, b=3, stretch="hist")
+# Assegno il ggRGB a una variabile e utilizzo l'histogram stretching:
+p3 <- ggRGB(powell2017, r=1, g=2, b=3, stretch="hist") +labs(title="Lago Powell 2017")
+
+# Eseguo la stessa cosa per l'immagine del 2021:
+ggRGB(powell2021, r=1, g=2, b=3, stretch="hist")
+# Assegno il ggRGB a una variabile e utilizzo l'histogram stretching:
+p4 <- ggRGB(powell2021, r=1, g=2, b=3, stretch="hist") +labs(title="Lago Powell 2021")
+
+# Utilizzando la funzione "grid arrange", vengono mostrate entrambe le immagini su un'unica riga.
+# Creo una figura unica che contiene le due immagini:
+grid.arrange(p3,p4,nrow=1,top="Confronto Lago Powell tra il 2017 e il 2021")
+
+################################################################################
 # Decido di importare la prima immagine del 2017 tramite la funzione "raster" che 
 # serve a caricare i singoli dati e non un pacchetto di dati e la associo a un 
 # nome di variabile
@@ -96,7 +114,7 @@ plot(rpowell2021)
 # ColorRampPalette--> stabilisce la variazione dei colori (i colori che si vedono
 # sono numeri, ovvero valori di riflettanza in una certa lunghezza d'onda).
 # La "c" prima delle parentesi indica una serie di elementi (vettore o array).
-# Il numero 100 tra parentesi indica quanti livelli diversi dei colori 
+# Il numero 100 tra parentesi indica quanti livelli diversi dei 3 colori 
 # scelti si vuole inserire nella scala di colori.
 # A tale funzione si associa un nome di variabile.
 cl <- colorRampPalette(c("black", "purple", "violetred", "orange", "seashell")) (100)
@@ -107,18 +125,18 @@ plot(rpowell2021, col=cl, main="Lago Powell 2021") #aggiungo un titolo
 
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
+#########################  Difference between images  ##########################
 # Eseguo la differenza tra le due immagini (2017-2021)
 powell_dif <- rpowell2021-rpowell2017
-# Decido di fare un'altra colorRampPalette: 
-cldif <- colorRampPalette(c("blue","white","red"))(100)
+# Decido di fare una colorRampPalette con colori visibili anche ai daltonici 
+cldif <- colorRampPalette(c("yellow","turquoise4","purple4"))(100)
 # Eseguo il plot:
 plot(powell_dif, col=cldif, main="Differenza tra il 2021 e il 2017")
 
 #########################  UnsuperClass classification  ########################
-
 # "UnsuperClass classification"--> classificzione non supervisionata, ovvero non 
 # c'è nessun impatto da parte dell'utente di definire a monte le classi. 
-# Si lascia al software definire i "training sets" direttamente sulla base delle
+# Si lascia al software definire i "training sites" direttamente sulla base delle
 # riflettanze.
 # Si tratta di una funzione che è all'interno di RStoolbox e opera sulla classificazione 
 # non supervisionata.
@@ -129,14 +147,14 @@ set.seed(42)
 # Applico la funzione UnsuperClass utilizzando 3 classi:
 clasimm2017<-unsuperClass(powell2017, nClasses=3)
 # Assegno una nuova colorRampPalette per vedere come sono state distribuite le classi
-cluc<-colorRampPalette(c("sandybrown", "dodgerblue","brown"))(100)
+cluc<-colorRampPalette(c("sandybrown", "royalblue","brown"))(100)
 # L'assegnazione delle classi cambia ogni volta che si esegue un run.
 # Mostro a video la conta dei pixel per ogni classe:
 freq(clasimm2017$map) 
 #     value   count
-#[1,]     1 2338884  # 
-#[2,]     2  980022  # questa classe indica l'acqua del lago
-#[3,]     3 1677944 
+#[1,]     1 2338884  # altopiano formato da materiale più chiaro
+#[2,]     2  980022  # a questa classe associo l'acqua del lago
+#[3,]     3 1677944  # altopiano formato da materiale più scuro
 # Plotto la mappa delle classi con la colorRampPalette assegnata in precedenza
 # e decido di far vedere le zone bagnate
 plot(clasimm2017$map, col=cluc)
@@ -169,12 +187,11 @@ df1$classe<-c("Classe 1","Classe 2","Classe 3")
 
 # Eseguo un grafico con "ggplot" per il 2017, più precisamente un grafico a barre:
 ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
-  geom_bar(stat="identity", color="black")+   #"geom_bar" mi indica il tipo di grafico
+  geom_bar(stat="identity", color="black")+   ##"geom_bar" mi indica il tipo di grafico
   labs(x="Classi",y="Percentuale",title="Percentuale per Classe 2017")+
   # "labs" sono i labels degli assi
   theme(legend.position="bottom")
 # theme" mi dà delle opzioni su come posizionare la legenda.
-
 # Per facilità associo il plot appena eseguito ad una varibile:
 p9<-ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
   geom_bar(stat="identity", color="black")+
@@ -182,7 +199,7 @@ p9<-ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
   theme(legend.position="bottom")
 
 
-# UnsuperClass dell'immagine 2021 (diminuzione livello dell'acqua del Lago Sawa)
+# UnsuperClass dell'immagine 2021 (prosciugamento del Lago Sawa)
 # Anche in questo caso per fare in modo che una classificazione sia sempre la 
 # stessa, si utilizza la funzione "set.seed".
 # Quindi, rendo le classi discrete:
@@ -190,13 +207,13 @@ p9<-ggplot(df1,aes(x=classe,y=perc_2017, fill=classe))+
 # Applico la funzione UnsuperClass utilizzando 3 classi:
 clasimm2021<-unsuperClass(powell2021, nClasses=3)
 # Utilizzo la stessa colorRampPalette precedente ma le assegno una nuova variabile:
-cluc<-colorRampPalette(c("sandybrown", "dodgerblue","brown"))(100)
+cluc<-colorRampPalette(c("sandybrown", "royalblue","brown"))(100)
 # L'assegnazione delle classi cambia ogni volta che si esegue un run.
 # Mostro a video la conta dei pixel per ogni classe:
 freq(clasimm2021$map)
-#[1,]     1  675626  # questa classe indica l'acqua del lago
-#[2,]     2 2459724  
-#[3,]     3 1861500  
+#[1,]     1  675626  # a questa classe associo l'acqua del lago
+#[2,]     2 2459724  # altopiano formato da materiale più chiaro
+#[3,]     3 1861500  # altopiano formato da materiale più scuro
 # Eseguo il plot da cui si vedrà l'area prosciugata del lago:
 plot(clasimm2021$map, col=cluc)
 # Creo un dataframe con i pixel categorizzati:
@@ -273,7 +290,6 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 
 
 ##################  Normalized Difference Water Index (NDWI) ###################
-
 # L'NDWI viene utilizzato per monitorare i cambiamenti relativi al contenuto 
 # idrico nei corpi idrici. Poiché i corpi idrici assorbono fortemente la luce nello
 # spettro elettromagnetico da visibile a infrarosso, NDWI utilizza le bande del verde 
@@ -313,8 +329,8 @@ plot(ndwi2021, col=cndwi, main="NDWI del 2021")
 
 # Plotto NDWI del 2017 e NDWI del 2021 disposti su una riga e due colonne:
 par(mfrow=c(1,2))
-plot(ndwi2017,col=cndwi, main="NDVI del 2017") # main serve per aggiungere un titolo
-plot(ndwi2021,col=cndwi, main="NDVI del 2021") # main serve per aggiungere un titolo
+plot(ndwi2017,col=cndwi, main="NDWI del 2017") # main serve per aggiungere un titolo
+plot(ndwi2021,col=cndwi, main="NDWI del 2021") # main serve per aggiungere un titolo
 
 dev.off() #funzione che serve per chiudere la finestra precedente
 
@@ -326,6 +342,7 @@ ndwi_diff<- ndwi2021-ndwi2017
 plot(ndwi_diff, col=cldif, main="Differenza tra NDWI del 2021 e NDWI del 2017")
 dev.off() #funzione che serve per chiudere la finestra precedente.
 
+
 ##################### Soil-Adjusted Vegetation Index (SAVI) ####################
 
 # Metodo SAVI
@@ -334,7 +351,7 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 #conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura
 #vegetativa. Viene utilizzato per l'analisi delle regioni aride con vegetazione 
 #rada (meno del 15\% dell'area totale) e superfici del suolo esposte.
-#La correzione viene valutata tramite il parametro L, fattore di correzione della luminosità del suolo
+#La correzione viene valutata nel parametro L, fattore di correzione della luminosità del suolo
 
 # SAVI = ((NIR - Red) / (NIR + Red + L)) x (1 + L)
 
@@ -384,16 +401,34 @@ dev.off() #funzione che serve per chiudere la finestra precedente
 # differenze fra il 2021 e il 2017
 # Eseguo la differenza dell'indice:
 savi_diff<- savi2021-savi2017
-#Eseguo il plot a cui aggiungo un titolo:
+# Eseguo il plot a cui aggiungo un titolo:
 plot(savi_diff, col=cldif, main="Differenza SAVI 2021-2017")
 
 dev.off() #funzione che serve per chiudere la finestra precedente
 
 #################################  PCA  ########################################
-
 # Per prima cosa visualizzo i dettagli delle immagini:
 powell2017
+# class      : RasterBrick 
+# dimensions : 1825, 2738, 4996850, 3  (nrow, ncol, ncell, nlayers)
+# resolution : 1, 1  (x, y)
+# extent     : 0, 2738, 0, 1825  (xmin, xmax, ymin, ymax)
+# crs        : NA 
+# source     : lakepowell_2017.jpg 
+# names      : lakepowell_2017.1, lakepowell_2017.2, lakepowell_2017.3 
+# min values :                 0,                 0,                 0 
+# max values :               255,               255,               255 
+
 powell2021 
+#class      : RasterBrick 
+#dimensions : 1825, 2738, 4996850, 3  (nrow, ncol, ncell, nlayers)
+#resolution : 1, 1  (x, y)
+#extent     : 0, 2738, 0, 1825  (xmin, xmax, ymin, ymax)
+#crs        : NA 
+#source     : lakepowell_2021.jpg 
+#names      : lakepowell_2021.1, lakepowell_2021.2, lakepowell_2021.3 
+#min values :                 0,                 0,                 0 
+#max values :               255,               255,               255 
 
 # Scelgo una nuovacolorRampPalette e plotto le tre bande di ogni immagine:
 clpca <- colorRampPalette(c("blue","purple","magenta","orange","yellow")) (100)
@@ -501,7 +536,7 @@ pc1sd5_2017 <- focal(pc1_2017 , w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 # quindi la deviazione standard, unendo l'immagine del 2021 alla mappa e alla 
 # prima componente (PC1) e infine si associa ad una variabile:
 pc1_2021 <- powell2021_pca$map$PC1
-# Si misura la deviazione standard e si sceglie come grandezza della griglia (3x3):
+# Si misura la deviazione standard e si sceglie come grandezza della griglia (5x5):
 pc1sd5_2021 <- focal(pc1_2021, w=matrix(1/25, nrow=5, ncol=5), fun=sd)
 
 # Decido di plottare tramite "ggplot" i dati, quindi prima cosa da fare è creare 
