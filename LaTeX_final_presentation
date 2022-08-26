@@ -1,126 +1,123 @@
-\documentclass[10pt]{beamer}
-%\documentclass[aspectratio=169]{beamer}
+\documentclass[usenames,dvipsnames,10pt]{beamer} 
+% Add option 'aspectratio=169' for 16:9 widescreen 
+% Add option  'handout' to ignore animations
+% If you have a smaller amount of text, feel free to also try '11pt'! / Jesper
 
-% Document metadata
-\title{\Large Abbassamento del livello
-       \\ di acqua nel Lago Powell 
-       \\ dal 2017 al 2021}
-\subtitle{\scriptsize corso \\ Telerilevamento Geo-Ecologico}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usetheme{umu}
+\usepackage{listings}
+\setbeamertemplate{blocks} [rounded] [shadow=true]
+\usepackage[dvipsnames]{xcolor}
+% Some useful commands
+% pdf-friendly newline in links
+\newcommand{\pdfnewline}{\texorpdfstring{\newline}{ }} 
+% Fill the vertical space in a slide (to put text at the bottom)
+\newcommand{\framefill}{\vskip0pt plus 1filll}
+\renewcommand{\proofname}{\sffamily{Proof}}
 
-\author{Giovanna De Francesco}
-\institute{Alma Mater Studiorum University of Bologna}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% YOUR PRESENTATION BELOW %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title[Lago Powell]
+      {\textbf {Abbassamento del livello di acqua nel Lago Powell 
+      \\ dal 2017 al 2021}
+      \\\small corso Telerilevamento Geo-Ecologico}
 \date{29 agosto 2022}
 
-% Image for the title page (use includegraphics option to properly size/place it)
-\titlegraphic{\includegraphics[height=\paperheight]{figure/frontpage.PNG}}
-
-\usetheme[sectionstyle=style2]{trigon}
-
-% Define logos to use (comment if no logo)
-\biglogo{figure/logo_unibo.png} % Used on titlepage only
-%\smalllogo{logo_unibo.png} % Used on top right corner of regular frames
-
-% ------ If you want to change the theme default colors, do it here ------
-%\definecolor{tPrim}{HTML}{00843B}   % Green
-%\definecolor{tSec}{HTML}{289B38}    % Green light
-%\definecolor{tAccent}{HTML}{F07F3C} % Orange
-
-% ------ Packages and definitions used for this demo. Can be removed ------
-\usepackage{appendixnumberbeamer} % To use \appendix command
-\pdfstringdefDisableCommands{% Fix hyperref translate warning with \appendix
-\def\translate#1{#1}%
+\author[Giovanna De Francesco]{
+  \bigskip
+  \bigskip
+  \bigskip
+  \textbf {Giovanna De Francesco}
+  \pdfnewline
+  \texttt{giovannadefrancesco@studio.unibo.it}
 }
-\usepackage{pgf-pie} % For pie charts
-\usepackage{caption} % For subfigures
-\usepackage{subcaption} % For subfigures
-\usepackage{xspace}
-\newcommand{\themename}{\textbf{\textsc{trigon}}\xspace}
-\usepackage[scale=2]{ccicons} % Icons for CC-BY-SA
-\usepackage{booktabs} % Better tables
-\usepackage{listings}
+\institute{\small Alma Mater Studiorum University of Bologna}
 
-%==============================================================================
-%                               BEGIN DOCUMENT
-%==============================================================================
 \begin{document}
+ \AtBeginSection[]
+{   
+\begin{frame}
+\frametitle{Indice}
+\tableofcontents[currentsection,currentsubsection,currentsubsubsection]
+\end{frame}
+} 
 
-%--------------------------------------
-% Create title frame
-\titleframe
-
-%--------------------------------------
-%Table of contents
-\begin{frame}{Indice:}
- \setbeamertemplate{section in toc}[sections numbered]
- \tableofcontents[hideallsubsections]
+\begin{frame}
+\titlepage
 \end{frame}
 
+
 %==============================================
-\section {\Large Introduzione}
+\section {Introduzione}
 %==============================================
 \begin{frame} 
     \begin{itemize}
-      \item \textbf{\large Area di studio}
+      \item \textbf{Area di studio}
     \end{itemize}
-            {\scriptsize Il lago Powell è il secondo bacino artificiale più 
-            grande degli Stati Uniti, si sviluppa lungo il fiume Colorado tramite la 
-            costruzione della diga di Glen Canyon. Si trova a confine tra il Sud/Est 
-            dello Utah e il Nord/Est dell’Arizona ed è un'importante riserva idrica.\par}
+            {\footnotesize Il lago Powell è il secondo bacino artificiale più grande degli Stati Uniti, 
+            si sviluppa lungo il fiume Colorado tramite la costruzione della diga di Glen Canyon. 
+            Si trova a confine tra il Sud/Est dello Utah e il Nord/Est dell’Arizona ed è un'importante riserva idrica.\par}
     \begin{figure}
       \centering
-      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/Area di studio.jpg}
+      \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/Area di studio.jpg}
     \end{figure}
 \end{frame}
 
+
 \begin{frame} 
     \begin{itemize}
-      \item \textbf{\large Confronto lago Powell 2017 vs 2021}
+      \item \textbf{Confronto lago Powell 2017 vs 2021}
     \end{itemize}
-            {\scriptsize Negli ultimi anni, il livello del lago Powell è sceso drasticamente,
-            arrivando a registrare il dato più basso da quando è stato riempito nel 1980. 
-            Questo drastico calo del livello dell’acqua è stato documentato da immagini 
-            catturate dal satellite Landsat8 riferite al 2017 e al 2021 .\par}
+            {\footnotesize Negli ultimi anni, il livello del lago Powell è sceso drasticamente, arrivando 
+            a registrare il dato più basso da quando è stato riempito nel 1980. Questo drastico calo del 
+            livello dell’acqua è stato documentato da immagini catturate dal satellite Landsat8 riferite al 
+            2017 e al 2021 .\par}
             \bigskip 
     \begin{figure}
       \centering
-      \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/confronto.png}
+      \includegraphics[width=\textwidth, height=0.9\textheight,keepaspectratio]{figure/confronto.png}
     \end{figure}
 \end{frame}
 
+
 \begin{frame} 
     \begin{itemize}
-      \item \textbf{\large Differenze evidenziate:}
+      \item \textbf{Differenze evidenziate}
     \end{itemize}
     \begin{figure}
+      \centering
       \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/differenza.png}
     \end{figure}
-      {\scriptsize Vengono evidenziate in \textcolor{violet} {viola scuro} le differenze maggiori. 
-      La restituzione di questa immagine indica quali sono state le zone in cui c'è stato un ritiro 
-      maggiore dell'acqua.\par}
+         {\small Vengono evidenziate in \textcolor{violet}{viola scuro} le differenze maggiori.
+         \\La restituzione di questa immagine indica quali sono state le zone in cui c'è stato un 
+         ritiro maggiore dell'acqua.\par}
 \end{frame}
 
-%==============================================
-\section{\Large Classificazione}
-%==============================================
 
+%==============================================
+\section {Classificazione}
+%==============================================
 \begin{frame} 
     \begin{itemize}
-      \item \textbf{\large UnsuperClasse:} 
-      {\\\scriptsize La classificazione non supervisionata permette di individuare zone che hanno
-      valori simili di riflettanza e li ragruppa in classi.}
+      \item \textbf{UnsuperClasse}
+            \\{\footnotesize La classificazione non supervisionata permette di individuare zone 
+            che hanno valori simili di riflettanza e li ragruppa in classi.\par}
     \begin{mybox}
       \tiny\lstinputlisting[language=R]{Unsuperclasse.txt}
     \end{mybox}
     \end{itemize}
 \end{frame}
 
+
 \begin{frame} {}
       \bigskip
-      \centering
-      \\{\small Le immagini mostrano le classi a cui i pixel sono stati assegnati. 
-      \\L'assegnazione avviene in modalità random.\par}
+      \\{\footnotesize Le immagini mostrano le classi a cui i pixel sono stati assegnati.
+      L'assegnazione avviene in modalità random.\par}
    \begin{figure}
-      \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/unsuperclass.png}
+      \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/Unsuperclass.PNG}
     \end{figure}
     \begin{itemize}
       \centering
@@ -129,9 +126,10 @@
     \end{itemize}
 \end{frame}
 
+
 \begin{frame} {}
     \begin{itemize}
-       \item \textbf{\large Confronto delle classi tramite grafici a barre:}
+       \item \textbf{Confronto delle classi tramite grafici a barre:}
     \end{itemize}
     \begin{figure}
       \centering
@@ -140,73 +138,77 @@
     \end{figure}
 \end{frame}
 
+
 \begin{frame} {}
     \bigskip 
     \begin{mybox}
       \tiny\lstinputlisting[language=R]{percentuale acqua.txt}
    \end{mybox}
       \bigskip 
-      \centering
-      \\{\small Dato l'obiettivo del progetto, si è scelto di operare solo sul numero di pixel delle 
-      classi riferite all'area bagnata per le due immagini.\par} 
-      {La riduzione in percentuale dell'area baganta rispetto al 2017 è di circa il \textcolor{red}{\large 31\%}.\par}
+      \\{\footnotesize Dato l'obiettivo del progetto, si è scelto di operare solo sul numero di pixel 
+      delle classi riferite all'area bagnata per le due immagini.\par} 
+      \\
+      \\{\footnotesize La riduzione in percentuale dell'area baganta rispetto al 2017 è di circa il \textcolor{red}{31\%}.\par}
 \end{frame}
 
+
 %==============================================
-\section{\Large Indici di Analisi}
+\section {Indici di Anlisi}
 %==============================================
-\subtitle {NDWI: Normalized Difference Water Index}
-\begin{frame}
-\begin{itemize}
-      \item \textbf{\large NDWI: Normalized Difference Water Index}
-\end{itemize}
-       \\{\scriptsize Si tratta di un indice che viene utilizzato per monitorare i cambiamenti relativi al 
-       contenuto idrico nei corpi idrici. Poiché i corpi idrici assorbono fortemente la luce nello spettro
-       elettromagnetico da visibile a infrarosso, NDWI utilizza le bande del verde e del vicino infrarosso
-       per evidenziare i corpi idrici.\par} 
-       \begin{equation}
+\subsection {NDWI}
+\begin{frame} 
+    \begin{itemize}
+      \item \textbf{NDWI: Normalized Difference Water Index}
+      \\{\footnotesize Si tratta di un indice che viene utilizzato per monitorare i cambiamenti
+      relativi al contenuto idrico nei corpi idrici. Poiché i corpi idrici assorbono fortemente la 
+      luce nello spettro elettromagnetico da visibile a infrarosso, NDWI utilizza le bande del verde 
+      e del vicino infrarosso per evidenziare i corpi idrici.\par} 
+    \begin{equation}
        NDWI={\frac{(GREEN - NIR)}{(GREEN + NIR)}}
-\end{equation}
-\begin{mybox}
+    \end{equation}
+    \begin{mybox}
        \tiny\lstinputlisting[language=R]{RcodeNDVI.txt}
-\end{mybox}
+    \end{mybox}
+    \end{itemize}
 \end{frame}
+ 
 
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large Confronto NDWI tra il 2017 e il 2021:}
+      \item \textbf{Confronto NDWI tra il 2017 e il 2021:}
     \end{itemize}
     \begin{figure}
-     \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/confrontoNDWI.png}
+     \includegraphics[width=\textwidth, height=0.9\textheight,keepaspectratio]{figure/confrontoNDWI.png}
     \end{figure}
 \end{frame}
 
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large Differenza NDWI 2021-2017}
+      \item \textbf{ Differenza NDWI 2021-2017}
     \end{itemize}
     \begin{figure}
       \bigskip 
       \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/differenzaNDWI.jpg}
-      {\scriptsize \\ Le zone a sfumature di \textcolor{yellow}{ giallo} indicano la maggior differenza 
-      dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ritiro del livello dell'acqua.\par}
+\\{\footnotesize Le zone a sfumature di \textcolor{yellow}{ giallo} indicano la maggior differenza 
+dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ritiro del livello dell'acqua.\par}
     \end{figure}
 \end{frame}
 
+
+\subsection {SAVI}
 \begin{frame}
     \begin{itemize}
-      \item \textbf{\large SAVI: Soil-Adjusted Vegetation Index}
-      \\{\scriptsize E' un indice adoperato per correggere l'NDVI (indice che descrive il livello di vigoria
-      della vegetazione) tenendo conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura vegetativa.
-      \\ Viene utilizzato per l'analisi delle regioni aride con vegetazione rada (meno del 15\% dell'area totale)
-      e superfici del suolo esposte.
-      \\La correzione viene valutata tramite il parametro L, fattore di correzione della luminosità del suolo.\par} 
+      \item \textbf{SAVI: Soil-Adjusted Vegetation Index}
+      \\{\footnotesize E' un indice adoperato per correggere l'NDVI %(indice che descrive il livello di vigoria della vegetazione).
+      tenendo conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura vegetativa.
+      Viene utilizzato per l'analisi delle regioni aride con vegetazione rada (meno del 15\% dell'area totale) 
+      e superfici del suolo esposte. La correzione viene valutata tramite il parametro L, fattore di correzione della luminosità del suolo.\par} 
 
     \begin{equation}
        SAVI={\frac{((NIR - RED)}{(NIR + RED + L)}}*{(1+L)}
     \end{equation}
 
-      \\{\scriptsize # NIR e RED si riferiscono alle bande associate a tali lunghezze d'onda. 
+      \\{\footnotesize # NIR e RED si riferiscono alle bande associate a tali lunghezze d'onda. 
       \\Il valore L varia a seconda della quantità di copertura di vegetazione verde:
       \\-nelle aree senza copertura di vegetazione verde, L=1;
       \\-nelle aree a moderata copertura di vegetazione verde, L=0,5;
@@ -216,67 +218,72 @@
     \end{itemize}
 \end{frame}
 
+
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large Confronto SAVI tra il 2017 e il 2021.}
+      \item \textbf{Confronto SAVI tra il 2017 e il 2021.}
     \end{itemize}
     \begin{figure}
       \centering
       \bigskip 
-      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/confrontoSAVI.png}
+      \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/confrontoSAVI.png}
     \end{figure}
 \end{frame}
 
+
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large Differenza SAVI 2021-2017}
+      \item \textbf{Differenza SAVI 2021-2017}
     \end{itemize}
     \begin{figure}
       \bigskip 
       \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/differenzaSAVI.jpg}
-      \\{\scriptsize Le zone \textcolor{violet}{viola scuro} rappresentano la maggior differenza dell'indice SAVI 
-      negli anni esaminati. Ciò è sinonimo del fatto che, a causa della diminuzione del livello dell'acqua del lago Powell,
-      è aumentata l'esposizione del suolo.\par}
+      \\{\footnotesize Le zone \textcolor{violet}{viola scuro} rappresentano la maggior differenza dell'indice 
+      SAVI negli anni esaminati. Ciò è sinonimo del fatto che, a causa della diminuzione del livello dell'acqua 
+      del lago Powell, è aumentata l'esposizione del suolo.\par}
     \end{figure}
 \end{frame}
 
 %==============================================
-\section {\Large PCA}
+\section {PCA}
 %==============================================
 \begin{frame}
     \begin{itemize}
-      \item \textbf{\large PCA: Principal Component Analysis}
+      \item \textbf{PCA: Principal Component Analysis}
       \bigskip
-      \\{L'Analisi delle componenti principali è una tecnica che semplifica i dati derivanti da più variabili in un numero
-      minore di variabili, limitando la perdita delle informazioni.
+      \\{\footnotesize L'Analisi delle componenti principali è una tecnica che semplifica i dati derivanti 
+      da più variabili in un numero minore di variabili, limitando la perdita delle informazioni.
       \bigskip 
-      \\Più precisamente, consiste nel prendere i dati originali e si fa passare un asse lungo la variabilità maggiore e 
+      \\Consiste nel prendere i dati originali e si fa passare un asse lungo la variabilità maggiore e 
       l'altro asse lungo la variabilità minore.\par} \end{itemize}
 \end{frame}
 
+
 \begin{frame}
     \begin{itemize}
-      \item \textbf{\large Plot delle tre bande dell'immagine del 2017}
+      \item \textbf{Plot delle tre bande dell'immagine del 2017}
     \end{itemize}
     \begin{figure}
       \bigskip 
-      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/PCA2017.png}
+      \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/PCA2017.png}
     \end{figure}
 \end{frame}
+
 
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large Plot delle tre bande dell'immagine del 2021}
+      \item \textbf{Plot delle tre bande dell'immagine del 2021}
     \end{itemize}
     \begin{figure}
       \bigskip 
-      \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/PCA2021.png}
+      \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/PCA2021.png}
     \end{figure}
 \end{frame}
-
+ 
+ 
 \begin{frame} {}
    \begin{itemize}
-     \item \textbf{\large Correlazione fra le bande del 2017 e del 2021}
+     \item \textbf{Correlazione fra le bande del 2017 e del 2021}
    \end{itemize}
    \begin{figure}
       \bigskip 
@@ -287,40 +294,44 @@
 
 \begin{frame}
    \begin{itemize}
-     \item \textbf{\large Codice calcolo PCA per analisi multivariata}
+     \item \textbf{Codice calcolo PCA per analisi multivariata}
    \end{itemize}
    \begin{mybox}
      \tiny\lstinputlisting[language=R]{analisiPCA.txt}
     \end{mybox}
 \end{frame}
 
+
 \begin{frame} {}
     \begin{itemize}
       \item \textbf{\large Output PCA}
     \end{itemize}
-    \\{\small Immagini risultanti dall'analisi delle componenti principali: \par}
+    \\{\footnotesize Immagini risultanti dall'analisi delle componenti principali: \par}
        \begin{figure}
-          \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/pca_finale1.png}
+          \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/pca_finale1.png}
         \end{figure}
-    \\{\small Grazie all'analisi PCA si sono create delle nuove componenti che diminuiscono la correlazione iniziale
+    \\{\footnotesize Grazie all'analisi PCA si sono create delle nuove componenti che diminuiscono la correlazione iniziale
     fra tutte le bande e con un numero minore di componenti, è possibile spiegare l'immagine originale.\par}
 \end{frame}
 
+
 %==============================================
-\section {\Large Variabilità locale}
+\section {Variabilità locale}
 %==============================================
 \begin{frame} 
     \begin{itemize}
-      \item \textbf{\large R code Variabilità sulla PC1}
+      \item \textbf{ R code Variabilità sulla PC1}
     \end{itemize}
     \begin{mybox}
       \tiny\lstinputlisting[language=R]{variabilita.txt}
     \end{mybox}
 \end{frame}
 
+
 \begin{frame}
     \begin{itemize}
-      \item \textbf{\large Deviazione standard derivante dalla PC1 del 2017 e del 2021}
+      \item \textbf{Deviazione standard derivante dalla PC1 
+      \\del 2017 e del 2021}
     \begin{figure}
       \bigskip 
       \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/sdpc1.png}
@@ -328,37 +339,39 @@
     \end{itemize}
 \end{frame}
 
+
 %==============================================
-\section {\Large Spectral Signature}
+\section { Spectral Signature}
 %==============================================
 \begin{frame}
     \begin{itemize}
-      \item \textbf{\large Spectral Signature}
-      {\\Le \textbf{FIRME SPETTRALI} servono per vedere se quello che si vede in termini di colori e quindi, di 
-      differenziazione nei tempi, corrisponde effettivamente a una variazione della riflettanza.
+      \item \textbf{Spectral Signature}
+      \bigskip
+      {\\ \footnotesize Le \textbf{FIRME SPETTRALI} servono per vedere se quello che si vede in termini
+      di colori e quindi, di differenziazione nei tempi, corrisponde effettivamente a una variazione della riflettanza.
       \bigskip 
-      \\ Vengono viste come una sorta di "impronte digitali" delle varie componenti che formano un qualsiasi ecosistema.
-\par} 
+      \\ Vengono viste come una sorta di "impronte digitali" delle varie componenti che formano un qualsiasi ecosistema.\par} 
     \end{itemize}
 \end{frame}
+
 
 \begin{frame}
     \begin{itemize}
       \bigskip
-      \item \textbf{\large Analisi multitemporale}
+      \item \textbf{Analisi multitemporale}
     \end{itemize}
-    \\{\small Sono stati selezionati 5 punti nell'immagine del 2017 e 5 punti nell'immagine del 2021, aventi circa le
-    stesse coordinate e sono stati utilizzati per ricavare le varie firme spettrali e fare l'analisi di multitemporalità.}
+    \\{\footnotesize Sono stati selezionati 5 punti nell'immagine del 2017 e 5 punti nell'immagine del 2021, 
+    aventi circa le stesse coordinate e sono stati utilizzati per ricavare le varie firme spettrali e fare l'analisi di multitemporalità.}
     \begin{figure}
-     \includegraphics[width=\textwidth, height=0.7\textheight,keepaspectratio]{figure/sceltapunti.PNG}
+     \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/sceltapunti.PNG}
     \end{figure}
     \centering
-     {\small Sono evidenziati in \textcolor{magenta}{magenta} i punti su cui si è calcolata la variabilità.\par}
+     {\footnotesize Sono evidenziati in \textcolor{magenta}{magenta} i punti su cui si è calcolata la variabilità.\par}
 \end{frame}
 
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large R code Spectral Signature}
+      \item \textbf{ R code Spectral Signature}
     \end{itemize}
     \begin{mybox}
       \tiny\lstinputlisting[language=R]{spectral signature.txt}
@@ -367,7 +380,7 @@
 
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large Creazione DataFrame}
+      \item \textbf{Creazione DataFrame}
     \end{itemize}
     \begin{figure}
        \bigskip 
@@ -377,7 +390,7 @@
 
 \begin{frame} {}
     \begin{itemize}
-      \item \textbf{\large Risultati analisi multitemporale}
+      \item \textbf{Risultati analisi multitemporale}
     \end{itemize}
     \begin{figure}
       \bigskip 
@@ -386,7 +399,7 @@
 \end{frame}
 
 %==============================================
-\section {\Large Conclusioni}
+\section {Conclusioni}
 %==============================================
 \begin{frame} 
     \begin{itemize}
