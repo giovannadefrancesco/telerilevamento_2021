@@ -406,6 +406,19 @@ plot(savi_diff, col=cldif, main="Differenza SAVI 2021-2017")
 
 dev.off() #funzione che serve per chiudere la finestra precedente
 
+
+############################  SPECTRAL INDICES #################################
+clSI<- colorRampPalette(c("turquoise","thistle","magenta","orange","brown","yellow"))(100)
+#PRIMA IMMAGINE (powell2017):
+si1 <- spectralIndices(powell2017, green = 3, red = 2, nir = 1)
+#Si effettua il plot:
+plot(si1, col=clSI)
+
+#SECONDA IMMAGINE (powell2021):
+si2 <- spectralIndices(powell2021, green = 3, red = 2, nir = 1)
+#Si effettua il plot:
+plot(si2, col=clSI)
+
 #################################  PCA  ########################################
 # Per prima cosa visualizzo i dettagli delle immagini:
 powell2017
