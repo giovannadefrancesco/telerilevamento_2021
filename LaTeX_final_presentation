@@ -1,14 +1,381 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BeamerColorThemeUmu %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
+
+% Umeå University theme colors}
+\definecolor{UmUBlue}{RGB}{42,71,101}
+\definecolor{UmUGreen}{RGB}{115,167,144}
+\definecolor{UmUGold}{RGB}{215,177,124}
+\definecolor{UmUPink}{RGB}{234,186,185}
+
+% Normal text
+\setbeamercolor{normal text}{fg=black}
+
+% First page
+\setbeamercolor*{title}{fg=black,bg=gray}
+\setbeamercolor*{author}{fg=black,bg=gray}
+\setbeamercolor*{date}{fg=black,bg=gray}
+
+% Generic frames header and footer
+\setbeamercolor{titlelike}{fg=black}
+\setbeamercolor*{frametitle}{fg=white}
+\setbeamercolor*{framesubtitle}{fg=white}
+\setbeamercolor*{title in head/foot}{fg=black}
+\setbeamercolor*{author in head/foot}{fg=black}
+
+%Blocks
+\setbeamercolor{block title}{bg=UmUBlue,fg=white}
+\setbeamercolor{block title alerted}{bg=UmUPink,fg=white}
+\setbeamercolor{block title example}{bg=UmUGreen,fg=white}
+\setbeamercolor{block body}{bg=UmUBlue!15,fg=black}
+\setbeamercolor{block body alerted}{bg=UmUPink!20,fg=black}
+\setbeamercolor{block body example}{bg=UmUGreen!20,fg=black}
+
+% Lists
+\setbeamercolor*{item}{fg=UmUBlue}
+
+% Quotation and quote
+\setbeamercolor*{quotation}{fg=black,bg=UmUBlue!10}
+
+% Verse
+\setbeamercolor*{verse}{fg=black,bg=UmUBlue!10}
+
+% Abstract
+\setbeamercolor*{abstract}{fg=black,bg=UmUBlue!10}
+
+% Table of contents 
+\setbeamercolor*{structure}{fg=black}
+
+% Bibliography
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry location}{fg=black!50}
+\setbeamercolor*{bibliography entry note}{fg=black!50}
+
+
+\mode
+<all>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BeamerFontThemeUmu %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc} % Moved; old fonts indicated below /J
+% Maths
+\usefonttheme{serif}
+% UmU-font options provided by Jesper Erixon 
+
+% FONT OPTION 1: Sans Serif main text + Times math
+% FONT OPTION 2: Sans Serif main text + math 
+% FONT OPTION 3: Times main text + math 
+
+\def\fontoption{1} % Select font option by entering 
+                   % a number here
+                   
+                   % OR comment/select another number
+                   % (for example, 0) if you wish to 
+                   % use your own fonts
+                   
+% ----------------------------------------------------------
+\ifx\fontoption\undefined
+ % Do nothing if undefined 
+\else
+    \if\fontoption 1
+        \usepackage{newtxmath}
+        \usepackage[defaultfam,medium]{montserrat} % Sans-serif 
+        \renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}} 
+    \else
+        \if\fontoption 2
+            \usepackage[defaultfam,medium]{montserrat} % Sans-serif 
+            \usepackage{sfmath,sansmathaccent} % Math font
+            \renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}} 
+        \else
+            \if\fontoption 3
+                \usepackage{newtxmath,newtxtext}
+                \usepackage[medium]{montserrat} % Sans-serif
+                \renewcommand*\oldstylenums[1]{{\fontfamily{Montserrat-TOsF}\selectfont #1}} 
+            \else
+            \fi
+        \fi
+    \fi
+\fi
+
+% ----------------------------------------------------------
+
+
+% Old fonts below - commented fonts will clash with Umeå University guidelines /J
+% general font
+% \renewcommand*\rmdefault{ppl}
+% monospaced
+\renewcommand*\ttdefault{lmvtt} % Latin Modern Mono Proportional Font
+
+% Font sizes
+% Have added \sffamily to all title fonts below /J
+\setbeamerfont{title}{size=\LARGE}%} % Semibold title 
+\setbeamerfont{frametitle}{size=\Large\sffamily}
+\setbeamerfont{framesubtitle}{size=\normalsize}
+\setbeamerfont{title in head/foot}{size=\footnotesize\sffamily}
+\setbeamerfont{author in head/foot}{size=\footnotesize\sffamily}
+\setbeamerfont{block title}{size=\normalsize\sffamily}
+
+
+\setbeamerfont*{bibliography entry author}{series=\bfseries}
+\setbeamerfont*{bibliography entry title}{series=\bfseries}
+\setbeamerfont*{description item}{series=\bfseries}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BeamerInnerThemeUmu %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
+
+\setbeamertemplate{sections/subsections in toc}[circle]
+\setbeamertemplate{items}[circle]
+\usebeamercolor[fg]{normal text}
+
+\setbeamertemplate{background}{
+\begin{tikzpicture}
+  
+\ifnum\thepage>1\relax%
+% background for pages > 1 
+	%\fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+\else 
+  % background for the title page
+  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+  
+
+  % background image
+  \node[inner sep=0pt] (logo) at (.5\paperwidth,0.56\paperheight){\includegraphics[width=\paperwidth]{figure/frontpage1.jpg}};
+
+  % logo
+  \node[inner sep=0pt] (logo) at (.5\paperwidth,0.1\paperheight){\includegraphics[width=3cm]{figure/logo_unibo.png}};
+
+  % line between institute and author
+    %\fill[color=white] (0,7.1) rectangle(\the\paperwidth,7.15);  
+
+\fi
+% in debug mode, show the grid
+\ifdefined\DEBUG
+	\draw[help lines,xstep=1,ystep=1,gray] (current page.south west) grid (current page.north east);
+\fi
+\end{tikzpicture}
+}
+
+% Title page
+% \sffamily added to \insertauthor,\insertdate and \insertinstitute
+\defbeamertemplate*{title page}{umu}[1][]
+{
+\begin{textblock*}{10cm}(2cm,2.1cm)
+{\usebeamercolor[fg]{author}\usebeamerfont{author}\sffamily\fontseries{semibold}\selectfont\insertinstitute}
+\end{textblock*}
+
+\begin{textblock*}{10cm}(2cm,2.6cm)
+{\usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle}
+\end{textblock*}
+
+\begin{textblock*}{10cm}(2cm,4.75cm)
+{\usebeamercolor[fg]{author}\usebeamerfont{author}\sffamily\fontseries{semibold}\selectfont\insertauthor}
+\end{textblock*}
+
+\begin{textblock*}{10cm}(0.75\paperwidth,0.94\paperheight) % Previously (2cm,8.1cm)
+{\usebeamercolor[fg]{author}\usebeamerfont{author}\sffamily\fontseries{semibold}\selectfont\insertdate}
+\end{textblock*}
+
+}
+
+\mode
+<all>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BeamerOuterThemeUmu%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<presentation>
+
+% Frame title
+\defbeamertemplate*{frametitle}{umu}[1][]
+{
+
+\begin{tikzpicture}
+\useasboundingbox (0,-0.05) rectangle(\the\paperwidth,0.95);
+
+% Colored line
+\fill[color=UmUBlue] (-1,0) rectangle(\the\paperwidth,1);
+ 
+ % Logo in the top right
+%  \node[inner sep=0pt] (logo) at (11.1,0.5){\includegraphics[width=0.85cm]{graphics/}};
+\end{tikzpicture}
+
+% If we don't have a subtitle, put the title
+% at the center of the header
+\ifx\insertframesubtitle\@empty
+
+  \begin{textblock*}{10cm}(0.2cm,0.3cm)
+  {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle}
+  \end{textblock*}
+
+\else
+% If we have both title and subtitle, stack them
+  \begin{textblock*}{10cm}(0.2cm,0.1cm)
+  {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle}
+  \end{textblock*}
+
+  \begin{textblock*}{10cm}(0.2cm,0.6cm)
+  {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\insertframesubtitle}
+  \end{textblock*}
+
+\fi
+
+}
+
+% Frame footer
+\setbeamertemplate{footline}
+{
+\ifnum\thepage>1
+\begin{tikzpicture}
+\useasboundingbox (0,0) rectangle(\the\paperwidth,1);
+
+% Colored line
+\fill[color=UmUBlue] (0,1.25) rectangle(\the\paperwidth,1.3);
+
+\end{tikzpicture}
+
+\begin{textblock*}{0.9cm}(0.1cm,9.25cm)
+\raggedleft
+{\usebeamercolor[fg]{title in head/foot}\usebeamerfont{title in head/foot}\insertframenumber/\inserttotalframenumber}
+\end{textblock*}
+
+\begin{textblock*}{3cm}(2cm,9.25cm)
+{\usebeamercolor[fg]{author in head/foot}\usebeamerfont{author in head/foot}\insertshortauthor}
+\end{textblock*}
+
+\begin{textblock*}{7cm}(\dimexpr\the\paperwidth-7.8cm,9.25cm) 
+\raggedleft
+{\usebeamercolor[fg]{block}\usebeamerfont{title in head/foot}\insertshorttitle}
+\end{textblock*}
+
+\fi % \ifnum\thepage>1
+}
+
+\mode<all>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BeamerThemeUmu %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%										%%%%%
+%%%%%				~WARNING~				%%%%%
+%%%%%										%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Please note that including the option [usenames,dvipsnames] 
+% is MANDATORY when declaring the document class due to
+% compatibility issues between the packaged tikz and xcolor.
+% So, to use this theme, you MUST write
+% \documentclass[usenames,dvipsnames]{beamer}
+% as first command of your main presentation file.
+
+\mode<presentation>
+
+% comment/uncomment this line to enable/disable debug mode
+%\newcommand*{\DEBUG}{}
+
+% Requirement
+\RequirePackage{xcolor}	% colors
+\RequirePackage{tikz}	% drawing 
+\RequirePackage{soul} 	% text highlighting
+
+% in debug mode, show the boxes around the text
+\ifdefined\DEBUG
+\usepackage[absolute,overlay,showboxes]{textpos}
+\else
+\usepackage[absolute,overlay]{textpos}
+\fi
+
+% Settings
+\usefonttheme[onlymath]{serif} %För seriferad table of contents
+\useinnertheme{umu}
+\useoutertheme{umu}
+\usecolortheme{umu}
+\usefonttheme{umu}
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+% Squared blocks
+\setbeamertemplate{blocks}[rounded=false] 
+
+% Table of contents (outline) styling
+\setbeamertemplate{section in toc}[ball numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+% Bibliography styling
+\setbeamertemplate{bibliography item}[text]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%										%%%%%
+%%%%%			~BONUS COMMANDS~			            %%%%%
+%%%%%										%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% See the provided main.tex template for a tutorial
+% on how to use \framecard and \framepic.
+
+%%%%%										%%%%%
+%%%%%	~Frame with huge centered text~		%%%%%
+%%%%%										%%%%%
+\newcommand{\framecard}[2][UmUBlue]{
+    {\setbeamercolor{background canvas}{bg=#1}%
+      \begin{frame}[plain]%
+        \vfill%
+        \begin{center}%
+          {\color{white}\Huge\sffamily\textsf{%
+            {#2}%
+          }}%
+        \end{center}%
+        \vfill%
+      \end{frame}%
+  }
+}
+
+%%%%%										%%%%%
+%%%%%	~Frame with background image~		%%%%%
+%%%%%										%%%%%
+\newcommand{\framepic}[3][1]{
+  {
+    \usebackgroundtemplate{%
+    \tikz[overlay,remember picture] \node[opacity=#1, at=(current page.center)] {
+      \includegraphics[height=\paperheight]{#2}};
+    }
+    \begin{frame}[plain]
+      \huge{#3}
+    \end{frame}
+  }
+}
+
+%%%%%										%%%%%
+%%%%%	~Marker for text highlighting ~		%%%%%
+%%%%%										%%%%%
+
+% beamer/soul compatibility fix
+\makeatletter
+\newcommand\SoulColor{%
+  \let\set@color\beamerorig@set@color
+  \let\reset@color\beamerorig@reset@color}
+\makeatother
+
+\newcommand{\marker}[2][UmUPink]{{\SoulColor\sethlcolor{#1}\hl{#2}}}
+
+\mode<all>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%                    BEAMER                    %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[usenames,dvipsnames,10pt]{beamer} 
 % Add option 'aspectratio=169' for 16:9 widescreen 
 % Add option  'handout' to ignore animations
 % If you have a smaller amount of text, feel free to also try '11pt'! / Jesper
 
+% Elenco dei pacchetti che si utilizzeranno:
 \usepackage[utf8]{inputenc}
 \usepackage{verbatim}
 \usetheme{umu}
 \usepackage{listings}
 \setbeamertemplate{blocks} [rounded] [shadow=true]
-\usepackage[dvipsnames]{xcolor}
+\usepackage[dvipsnames]{xcolor} %per incrementare in numero di colori
+
 % Some useful commands
 % pdf-friendly newline in links
 \newcommand{\pdfnewline}{\texorpdfstring{\newline}{ }} 
@@ -17,10 +384,10 @@
 \renewcommand{\proofname}{\sffamily{Proof}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% YOUR PRESENTATION BELOW %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%                     YOUR PRESENTATION BELOW                        %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title[Lago Powell]
+\title[Abbassamento del Lago Powell]
       {\textbf {Abbassamento del livello di acqua nel Lago Powell 
       \\ dal 2017 al 2021}
       \\\small corso Telerilevamento Geo-Ecologico}
@@ -30,10 +397,11 @@
   \bigskip
   \bigskip
   \bigskip
-  \textbf {Giovanna De Francesco}
+    \textbf {Giovanna De Francesco}
   \pdfnewline
   \texttt{giovannadefrancesco@studio.unibo.it}
 }
+
 \institute{\small Alma Mater Studiorum University of Bologna}
 
 \begin{document}
@@ -57,9 +425,9 @@
     \begin{itemize}
       \item \textbf{Area di studio}
     \end{itemize}
-            {\footnotesize Il lago Powell è il secondo bacino artificiale più grande degli Stati Uniti, 
-            si sviluppa lungo il fiume Colorado tramite la costruzione della diga di Glen Canyon. 
-            Si trova a confine tra il Sud/Est dello Utah e il Nord/Est dell’Arizona ed è un'importante riserva idrica.\par}
+            {\footnotesize Il lago Powell è il secondo bacino artificiale più grande degli Stati Uniti, si sviluppa lungo il fiume Colorado 
+            tramite la costruzione della diga di Glen Canyon. Si trova a confine tra il Sud/Est dello Utah e il Nord/Est dell’Arizona ed è 
+            un'importante riserva idrica.\par}
     \begin{figure}
       \centering
       \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/Area di studio.jpg}
@@ -71,9 +439,9 @@
     \begin{itemize}
       \item \textbf{Confronto lago Powell 2017 vs 2021}
     \end{itemize}
-            {\footnotesize Negli ultimi anni, il livello del lago Powell è sceso drasticamente, arrivando 
-            a registrare il dato più basso da quando è stato riempito nel 1980. Questo drastico calo del 
-            livello dell’acqua è stato documentato da immagini catturate dal satellite Landsat8 riferite al 
+            {\footnotesize Negli ultimi anni, il livello del lago Powell è sceso drasticamente, arrivando a registrare il dato più basso da
+            quando è stato riempito nel 1980. 
+            \\Questo drastico calo del livello dell’acqua è stato documentato da immagini catturate dal satellite Landsat8 riferite al
             2017 e al 2021 .\par}
             \bigskip 
     \begin{figure}
@@ -92,8 +460,7 @@
       \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/differenza.png}
     \end{figure}
          {\small Vengono evidenziate in \textcolor{violet}{viola scuro} le differenze maggiori.
-         \\La restituzione di questa immagine indica quali sono state le zone in cui c'è stato un 
-         ritiro maggiore dell'acqua.\par}
+         \\La restituzione di questa immagine indica quali sono state le zone in cui c'è stato un ritiro maggiore dell'acqua.\par}
 \end{frame}
 
 
@@ -103,8 +470,8 @@
 \begin{frame} 
     \begin{itemize}
       \item \textbf{UnsuperClasse}
-            \\{\footnotesize La classificazione non supervisionata permette di individuare zone 
-            che hanno valori simili di riflettanza e li ragruppa in classi.\par}
+            \\{\footnotesize La classificazione non supervisionata permette di individuare zone che hanno valori simili di 
+            riflettanza e li ragruppa in classi.\par}
     \begin{mybox}
       \tiny\lstinputlisting[language=R]{Unsuperclasse.txt}
     \end{mybox}
@@ -114,8 +481,7 @@
 
 \begin{frame} {}
       \bigskip
-      \\{\footnotesize Le immagini mostrano le classi a cui i pixel sono stati assegnati.
-      L'assegnazione avviene in modalità random.\par}
+      \\{\footnotesize Le immagini mostrano le classi a cui i pixel sono stati assegnati. L'assegnazione avviene in modalità random.\par}
    \begin{figure}
       \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/Unsuperclass.PNG}
     \end{figure}
@@ -145,8 +511,8 @@
       \tiny\lstinputlisting[language=R]{percentuale acqua.txt}
    \end{mybox}
       \bigskip 
-      \\{\footnotesize Dato l'obiettivo del progetto, si è scelto di operare solo sul numero di pixel 
-      delle classi riferite all'area bagnata per le due immagini.\par} 
+      \\{\footnotesize Dato l'obiettivo del progetto, si è scelto di operare solo sul numero di pixel delle classi riferite all'area 
+      bagnata per le due immagini.\par} 
       \\
       \\{\footnotesize La riduzione in percentuale dell'area baganta rispetto al 2017 è di circa il \textcolor{red}{31\%}.\par}
 \end{frame}
@@ -159,10 +525,9 @@
 \begin{frame} 
     \begin{itemize}
       \item \textbf{NDWI: Normalized Difference Water Index}
-      \\{\footnotesize Si tratta di un indice che viene utilizzato per monitorare i cambiamenti
-      relativi al contenuto idrico nei corpi idrici. Poiché i corpi idrici assorbono fortemente la 
-      luce nello spettro elettromagnetico da visibile a infrarosso, NDWI utilizza le bande del verde 
-      e del vicino infrarosso per evidenziare i corpi idrici.\par} 
+      \\{\footnotesize Si tratta di un indice che viene utilizzato per monitorare i cambiamenti relativi al contenuto idrico nei corpi 
+      idrici. Poiché i corpi idrici assorbono fortemente la luce nello spettro elettromagnetico da visibile a infrarosso, NDWI utilizza
+      le bande del verde e del vicino infrarosso per evidenziare i corpi idrici.\par} 
     \begin{equation}
        NDWI={\frac{(GREEN - NIR)}{(GREEN + NIR)}}
     \end{equation}
@@ -189,8 +554,8 @@
     \begin{figure}
       \bigskip 
       \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/differenzaNDWI.jpg}
-\\{\footnotesize Le zone a sfumature di \textcolor{yellow}{ giallo} indicano la maggior differenza 
-dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ritiro del livello dell'acqua.\par}
+\\{\footnotesize Le zone a sfumature di \textcolor{yellow}{ giallo} indicano la maggior differenza dell'indice NDWI negli anni in esame,
+ovvero le zone dove è avvenuto maggior ritiro del livello dell'acqua.\par}
     \end{figure}
 \end{frame}
 
@@ -200,9 +565,9 @@ dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ri
     \begin{itemize}
       \item \textbf{SAVI: Soil-Adjusted Vegetation Index}
       \\{\footnotesize E' un indice adoperato per correggere l'NDVI %(indice che descrive il livello di vigoria della vegetazione).
-      tenendo conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura vegetativa.
-      Viene utilizzato per l'analisi delle regioni aride con vegetazione rada (meno del 15\% dell'area totale) 
-      e superfici del suolo esposte. La correzione viene valutata tramite il parametro L, fattore di correzione della luminosità del suolo.\par} 
+      tenendo conto dell'influenza della luminosità del suolo nelle aree con scarsa copertura vegetativa.Viene utilizzato per l'analisi 
+      delle regioni aride con vegetazione rada (meno del 15\% dell'area totale) e superfici del suolo esposte. La correzione viene 
+      valutata tramite il parametro L, fattore di correzione della luminosità del suolo.\par} 
 
     \begin{equation}
        SAVI={\frac{((NIR - RED)}{(NIR + RED + L)}}*{(1+L)}
@@ -238,9 +603,9 @@ dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ri
     \begin{figure}
       \bigskip 
       \includegraphics[width=\textwidth, height=0.6\textheight,keepaspectratio]{figure/differenzaSAVI.jpg}
-      \\{\footnotesize Le zone \textcolor{violet}{viola scuro} rappresentano la maggior differenza dell'indice 
-      SAVI negli anni esaminati. Ciò è sinonimo del fatto che, a causa della diminuzione del livello dell'acqua 
-      del lago Powell, è aumentata l'esposizione del suolo.\par}
+      \\{\footnotesize Le zone \textcolor{violet}{viola scuro} rappresentano la maggior differenza dell'indice SAVI negli 
+      anni esaminati. Ciò è sinonimo del fatto che, a causa della diminuzione del livello dell'acqua del lago Powell, è 
+      aumentata l'esposizione del suolo.\par}
     \end{figure}
 \end{frame}
 
@@ -251,11 +616,11 @@ dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ri
     \begin{itemize}
       \item \textbf{PCA: Principal Component Analysis}
       \bigskip
-      \\{\footnotesize L'Analisi delle componenti principali è una tecnica che semplifica i dati derivanti 
-      da più variabili in un numero minore di variabili, limitando la perdita delle informazioni.
+      \\{\footnotesize L'Analisi delle componenti principali è una tecnica che semplifica i dati derivanti da più variabili in 
+      un numero minore di variabili, limitando la perdita delle informazioni.
       \bigskip 
-      \\Consiste nel prendere i dati originali e si fa passare un asse lungo la variabilità maggiore e 
-      l'altro asse lungo la variabilità minore.\par} \end{itemize}
+      \\Consiste nel prendere i dati originali e si fa passare un asse lungo la variabilità maggiore e l'altro asse lungo la
+      variabilità minore.\par} \end{itemize}
 \end{frame}
 
 
@@ -347,8 +712,8 @@ dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ri
     \begin{itemize}
       \item \textbf{Spectral Signature}
       \bigskip
-      {\\ \footnotesize Le \textbf{FIRME SPETTRALI} servono per vedere se quello che si vede in termini
-      di colori e quindi, di differenziazione nei tempi, corrisponde effettivamente a una variazione della riflettanza.
+      {\\ \footnotesize Le \textbf{FIRME SPETTRALI} servono per vedere se quello che si vede in termini di colori e quindi, 
+      di differenziazione nei tempi, corrisponde effettivamente a una variazione della riflettanza.
       \bigskip 
       \\ Vengono viste come una sorta di "impronte digitali" delle varie componenti che formano un qualsiasi ecosistema.\par} 
     \end{itemize}
@@ -360,8 +725,8 @@ dell'indice NDWI negli anni in esame, ovvero le zone dove è avvenuto maggior ri
       \bigskip
       \item \textbf{Analisi multitemporale}
     \end{itemize}
-    \\{\footnotesize Sono stati selezionati 5 punti nell'immagine del 2017 e 5 punti nell'immagine del 2021, 
-    aventi circa le stesse coordinate e sono stati utilizzati per ricavare le varie firme spettrali e fare l'analisi di multitemporalità.}
+    \\{\footnotesize Sono stati selezionati 5 punti nell'immagine del 2017 e 5 punti nell'immagine del 2021, aventi circa le 
+    stesse coordinate e sono stati utilizzati per ricavare le varie firme spettrali e fare l'analisi di multitemporalità.}
     \begin{figure}
      \includegraphics[width=\textwidth, height=0.8\textheight,keepaspectratio]{figure/sceltapunti.PNG}
     \end{figure}
