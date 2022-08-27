@@ -247,7 +247,7 @@ dev.off() #funzione che serve per chiudere la finestra precedente.
 p224r63_1988 <- brick("p224r63_1988_masked.grd")
 #La funzione "brick" importa un intero set di bande, creando un RasterBrick (blocco 
 #di diversi raster messi tutti insieme).
-p224r63_1988 #serve per vedere le informazioni inirenti l'immagine del 1988.
+p224r63_1988 #serve per vedere le informazioni inerenti l'immagine del 1988.
 plot(p224r63_1988) #plotta le singole bande dell'immagine.
 
 #Le varie bande di LANDSAT:
@@ -1137,7 +1137,7 @@ grid.arrange(p1, p2, nrow=2)
 #che fa tutto il sistema/software, in questo modo quest'ultimo crea le classi e 
 #poi va avanti con la classificazione.
 #La funzione "unsuperClass" ha come sintassi: (l'immagine da inserire, il numero
-#di campioni che si lascerà di default, numero di calssi):
+#di campioni che si lascerà di default, numero di classi):
 d1c <- unsuperClass(defor1, nClasses=2)
 #Per avere informazioni su quello che si è appena creato:
 d1c
@@ -1502,7 +1502,7 @@ rlist
 #A questo punto si applica la funzione "raster" tramite la funzione lapply a tutta 
 #la lista che si è realizzata la si associa a un oggetto:
 import <-lapply(rlist,raster)
-#Si vedono le imformazioni di questo nuovo oggetto
+#Si vedono le informazioni di questo nuovo oggetto
 import
 #vengono visualizzati a video tutti i singoli layer importati.
 
@@ -1593,7 +1593,7 @@ plotRGB (defor2, r=1, g=2, b=3, stretch="lin")#tramite uno strech lineare
 #oppure
 plotRGB (defor2, r=1, g=2, b=3, stretch="his")#facendo un histogram strech
 #che invece di utilizzare una linea per trasformare e ampliare la gamma dei 
-#valori, utilizza una curva (chiamata curva logistica),che aumenta la pendenza
+#valori, utilizza una curva (chiamata curva logistica), che aumenta la pendenza
 #e quindi le differenze tra i due plot saranno molto più accentuate.
 
 #La funzione per creare firme spettrali si chiama "click" che è contenuta 
