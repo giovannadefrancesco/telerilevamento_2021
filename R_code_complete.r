@@ -357,7 +357,7 @@ plot(lst_2010)
 plot(lst_2015)
 
 #Metodo per importare tutte le immaginin insieme:
-#lapplay: si può applicare una certa funzione (raster) a una lista di file.
+#lapply: si può applicare una certa funzione (raster) a una lista di file.
 #Si procede creando una lista tramite la funzione "list.files" di tutti i file "lst"
 #e si applica a tutti la funzione "raster".
 rlist <- list.files(pattern="lst") #pattern è quella "scritta" che hanno in comune
