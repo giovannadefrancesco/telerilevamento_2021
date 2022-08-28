@@ -1799,3 +1799,5 @@ ggplot(spectralsg, aes(x=band))+
   geom_line(aes(y = stratum3), color ="blue") 
   labs(x="band",y="reflectance")
 #Si nota che le 3 formazioni che si sono individuate si differenziano molto.
+
+
