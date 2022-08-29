@@ -469,7 +469,7 @@
 %==============================================
 \begin{frame} 
     \begin{itemize}
-      \item \textbf{UnsuperClasse}
+      \item \textbf{UnsuperClass}
             \\{\footnotesize La classificazione non supervisionata permette di individuare zone che hanno valori simili di 
             riflettanza e li ragruppa in classi.\par}
     \begin{mybox}
@@ -570,7 +570,7 @@ ovvero le zone dove è avvenuto maggior ritiro del livello dell'acqua.\par}
       valutata tramite il parametro L, fattore di correzione della luminosità del suolo.\par} 
 
     \begin{equation}
-       SAVI={\frac{((NIR - RED)}{(NIR + RED + L)}}*{(1+L)}
+       SAVI={\frac{(NIR - RED)}{(NIR + RED + L)}}*{(1+L)}
     \end{equation}
 
       \\{\footnotesize # NIR e RED si riferiscono alle bande associate a tali lunghezze d'onda. 
